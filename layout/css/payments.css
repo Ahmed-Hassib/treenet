@@ -1,0 +1,19 @@
+.section-block .transaction-details {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 20px;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.section-block .transaction-details>p {
+  position: relative;
+  display: grid;
+  grid-template-rows: 1fr;
+  gap: 0px;
+}
+
+.section-block .transaction-details>p :first-child {
+  font-weight: 800
+}

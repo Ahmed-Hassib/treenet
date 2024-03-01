@@ -1,0 +1,7 @@
+# Prevent DIrectory Listing
+
+options -Indexes
+
+ErrorDocument 403 http://treenet.net/errors.php?err=403
+
+ErrorDocument 404 http://treenet.net/errors.php?err=404

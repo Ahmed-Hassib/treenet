@@ -1,0 +1,128 @@
+/* Start Login Form */
+.hero-image {
+	/* The image used */
+	background-image: url("../../assets/jsl.jpeg");
+
+	/* Add the blur effect */
+	filter: blur(8px);
+	-webkit-filter: blur(8px);
+
+	/* Full height */
+	height: 100%;
+
+	/* Center and scale the image nicely */
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.loginPageContainer {
+	position: relative;
+	width: 100%;
+	height: 100vh;
+	display: flex;
+}
+
+.loginPageContainer.website-login {
+	background-color: #ccc;
+}
+
+.imgBox {
+	position: relative;
+	width: 50%;
+	height: 100vh;
+	background: #fff;
+}
+
+.imgBox img {
+	position: absolute;
+	object-fit: fill;
+	width: 100%;
+	/* height: auto; */
+	height: 100%;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.contentBox {
+	display: flex;
+	width: 50%;
+	height: 100%;
+	justify-content: center;
+	align-items: center;
+	background-color: rgba(255, 255, 255, 1);
+}
+
+.contentBox .formBox {
+	width: 70%;
+}
+
+.contentBox .formBox .formBoxHeader .h2 {
+	color: #037dbd;
+	font-weight: 600;
+	font-size: 1.5em;
+	text-transform: uppercase;
+	margin-bottom: 20px;
+	display: block;
+	letter-spacing: 1px;
+	text-align: center;
+}
+
+.contentBox .formBox .login-form input,
+.contentBox .formBox .login-form button {
+	border-radius: 6px;
+}
+
+
+.login .show-pass {
+	position: absolute;
+	top: 8px;
+	right: 25px;
+	cursor: pointer;
+}
+
+.login .show-pass-left {
+	right: unset;
+	left: 25px;
+}
+
+@media (max-width: 786px) {
+	.imgBox {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100vh;
+	}
+
+	.imgBox img {
+		display: none;
+	}
+
+	.contentBox {
+		width: 100%;
+		z-index: 1;
+		/* background: none; */
+	}
+
+	.contentBox .formBox {
+		width: 100%;
+		margin: 1.5rem 1rem;
+		padding: 1.5rem 1rem;
+		background: rgba(255, 255, 255, 0.4);
+	}
+}
+
+/* End Login Form */
+
+/* start alert of login status */
+.alert-login-status {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	padding-left: 4rem;
+	max-width: 500px;
+}
+
+/* end alert of login status */

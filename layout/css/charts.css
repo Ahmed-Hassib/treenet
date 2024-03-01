@@ -1,0 +1,37 @@
+.section-block.p-sm-1 {
+  padding: 1rem !important;
+}
+
+.pr.around {
+  position: relative;
+  display: inline-block;
+  margin: 1rem;
+}
+
+.pr.around span {
+  color: navy;
+}
+
+.pr.around span.outer {
+  text-align: center;
+  position: absolute;
+  font-size: 25px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.pr.around span.value {
+  font-size: 25px;
+}
+
+.pr.css1 .progresspie-background {
+  stroke-dasharray: 1px 3px;
+  stroke: #bbb !important;
+}
+
+.dir_charts_canvas {
+  position: relative;
+  /* width: max(300px, 400px) !important; */
+  height: max(300px, 400px) !important;
+}

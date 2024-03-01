@@ -1,0 +1,99 @@
+.profile-img {
+  padding: 5px;
+  width: 400px;
+  height: 400px;
+  margin: auto;
+  border: 3px solid #5fcca4;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.profile-form {
+  width: 100% !important;
+}
+
+.profile-form[name="addDir"] {
+  margin: auto;
+  width: 500px !important;
+}
+
+.profile-form .avatar {
+  background-color: #fff;
+  width: 15rem;
+  height: 15rem;
+  margin: auto;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 4px 4px 8px #ccc;
+  cursor: pointer;
+}
+
+.employee-avatar {
+  border: 5px solid #5fcca4;
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.employee-avater.full-screen {
+  width: 100%;
+}
+
+.phone-container {
+  position: relative;
+  display: grid;
+  grid-template-columns: 70% 25%;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+@media (max-width: 576px) {
+  .phone-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+.permissions {
+  position: relative;
+  display: grid;
+  grid-template-rows: 1fr;
+  gap: 25px 10px;
+}
+
+.permissions .permission {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px 10px;
+}
+
+.permissions .permission_content {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px 10px;
+}
+
+@media (max-width: 991px) {
+  .permissions .permission_content {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.permissions .permission_content :nth-child(6) {
+  grid-column: 1/3;
+}
+
+.permissions .permission_content :nth-child(7) {
+  grid-column: 3/5;
+}
+
+@media (max-width: 991px) {
+
+  .permissions .permission_content :nth-child(6),
+  .permissions .permission_content :nth-child(7) {
+    grid-column: 1/3;
+  }
+}

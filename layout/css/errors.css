@@ -1,0 +1,19 @@
+.page-error-container {
+  position: relative;
+  text-align: center;
+  margin-top: 100px !important;
+}
+
+.page-error-container .page-error-header {
+  margin-bottom: 1rem;
+  text-shadow: 1px 1px 2px #5fcca4;
+  direction: ltr;
+}
+
+.page-error-container .error-img {
+  width: 350px;
+  max-width: 100%;
+  position: relative;
+  display: block;
+  margin: 0 auto 50px;
+}

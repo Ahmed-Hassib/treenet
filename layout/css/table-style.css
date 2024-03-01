@@ -1,0 +1,152 @@
+.page-item:first-child .page-link {
+  border-top-left-radius: unset !important;
+  border-bottom-left-radius: unset !important;
+  border-top-right-radius: 0.375rem !important;
+  border-bottom-right-radius: 0.375rem !important;
+}
+
+.page-item:last-child .page-link {
+  border-top-right-radius: unset !important;
+  border-bottom-right-radius: unset !important;
+  border-top-left-radius: 0.375rem !important;
+  border-bottom-left-radius: 0.375rem !important;
+}
+
+table.dataTable td.dt-control:before {
+  margin-top: 5px !important;
+}
+
+div.dataTables_scrollHead table.table-bordered {
+  width: 100% !important;
+}
+
+.container[dir=rtl] table.dataTable thead>tr>:where(th.sorting, th.sorting_asc, th.sorting_desc, th.sorting_asc_disabled, th.sorting_desc_disabled, td.sorting, td.sorting_asc, td.sorting_desc, td.sorting_asc_disabled, td.sorting_desc_disabled) {
+  text-align: right;
+  padding-left: 26px !important;
+  padding-right: 10px !important;
+}
+
+
+.container[dir=rtl] table.dataTable thead>tr>th.sorting:before,
+.container[dir=rtl] table.dataTable thead>tr>th.sorting:after,
+.container[dir=rtl] table.dataTable thead>tr>th.sorting_asc:before,
+.container[dir=rtl] table.dataTable thead>tr>th.sorting_asc:after,
+.container[dir=rtl] table.dataTable thead>tr>th.sorting_desc:before,
+.container[dir=rtl] table.dataTable thead>tr>th.sorting_desc:after,
+.container[dir=rtl] table.dataTable thead>tr>th.sorting_asc_disabled:before,
+.container[dir=rtl] table.dataTable thead>tr>th.sorting_asc_disabled:after,
+.container[dir=rtl] table.dataTable thead>tr>th.sorting_desc_disabled:before,
+.container[dir=rtl] table.dataTable thead>tr>th.sorting_desc_disabled:after,
+.container[dir=rtl] table.dataTable thead>tr>td.sorting:before,
+.container[dir=rtl] table.dataTable thead>tr>td.sorting:after,
+.container[dir=rtl] table.dataTable thead>tr>td.sorting_asc:before,
+.container[dir=rtl] table.dataTable thead>tr>td.sorting_asc:after,
+.container[dir=rtl] table.dataTable thead>tr>td.sorting_desc:before,
+.container[dir=rtl] table.dataTable thead>tr>td.sorting_desc:after,
+.container[dir=rtl] table.dataTable thead>tr>td.sorting_asc_disabled:before,
+.container[dir=rtl] table.dataTable thead>tr>td.sorting_asc_disabled:after,
+.container[dir=rtl] table.dataTable thead>tr>td.sorting_desc_disabled:before,
+.container[dir=rtl] table.dataTable thead>tr>td.sorting_desc_disabled:after {
+  right: unset;
+  left: 10px;
+}
+
+:where(td, th).custome-td {
+  width: 150px !important;
+}
+
+/* .dataTables_filter label {
+  display: inline-flex !important;
+}
+.container[dir=ltr] table.table-bordered.dataTable th,
+.container[dir=ltr] table.table-bordered.dataTable td {
+  text-align: left;
+  padding-right: 26px;
+  padding-left: 10px;
+}
+
+
+table.dataTable.pcs-data th:not(:nth-of-type(1)),
+table.dataTable.pcs-data td:not(:nth-of-type(1)) {
+  white-space: nowrap;
+  min-width: 150px !important;
+  max-width: 300px !important;
+}
+
+table.dataTable:not(.no-index) th:nth-of-type(1):not(.d-none),
+table.dataTable:not(.no-index) td:nth-of-type(1):not(.d-none) {
+  min-width: 5px !important;
+  max-width: 5px !important;
+}
+
+table.dataTable.pcs-data th:nth-of-type(2),
+table.dataTable.pcs-data td:nth-of-type(2) {
+  min-width: 25px !important;
+  max-width: 30px !important;
+}
+
+
+table.dataTable th.big-data,
+table.dataTable td.big-data {
+  min-width: 150px !important;
+  max-width: 150px !important;
+}
+
+table.dataTable th.date-data,
+table.dataTable td.date-data {
+  min-width: 100px !important;
+  max-width: 130px !important;
+}
+
+table.dataTable.pcs-data .datatables_row_details {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 5px;
+}
+
+table.dataTable thead th.dt-colresizable-hover {
+  cursor: col-resize !important;
+  background-color: rgba(255, 0, 0, .3) !important;
+}
+
+.btn-group span {
+  font-size: 12px !important;
+}
+
+.table tbody td {
+  background-color: #fff;
+  vertical-align: middle !important;
+}
+
+
+
+.table tbody td:last-child .btn,
+.list-group-item .btn {
+  padding: 3px 5px;
+  width: auto;
+  height: 25px;
+  margin: 2px;
+}
+
+.table tbody .btn.ping,
+.list-group-item .btn.ping {
+  width: 35px;
+  height: 25px;
+}
+
+#datatables-buttons {
+  direction: ltr;
+}
+
+.table>:not(caption)>*>* {
+  padding: 0.25rem 0.5rem;
+}
+
+.table.display {
+  margin-bottom: 0;
+}
+
+.table-responsive {
+  position: relative;
+} */

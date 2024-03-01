@@ -1,0 +1,145 @@
+/************/
+
+/* Start Login Form */
+.hero-image {
+  /* The image used */
+  background-image: url("../../assets/jsl.jpeg");
+
+  /* Add the blur effect */
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
+
+  /* Full height */
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.signupPageContainer {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  background-color: #fff;
+}
+
+.signupPageContainer.website-signup {
+  background-color: #ccc;
+}
+
+.imgBox {
+  position: relative;
+  width: 200px;
+  height: 100vh;
+}
+
+.imgBox img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  background-color: #fff;
+}
+
+.contentBox {
+  margin: auto;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 1);
+}
+
+.contentBox .formBox {
+  width: 80%;
+  margin: 1.5rem 1rem;
+  padding: 1.5rem 1rem;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.contentBox .formBox .formBoxHeader .h2 {
+  color: #5fcca4;
+  font-weight: 600;
+  font-size: 1.5em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  display: block;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+.contentBox .formBox .signup-form .section-header {
+  margin: 1rem 0;
+}
+
+.contentBox .formBox .signup-form input,
+.contentBox .formBox .signup-form button,
+.contentBox .formBox .signup-form a.btn {
+  border-radius: 6px;
+}
+
+.contentBox .formBox .signup-form label {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+
+.signup-form .show-pass {
+  position: absolute;
+  top: 8px;
+  right: 45px;
+  cursor: pointer;
+}
+
+.signup-form .show-pass-left {
+  right: unset;
+  left: 45px;
+}
+
+.signup-form .astrisk-left {
+  left: 35px
+}
+
+@media (max-width: 786px) {
+  .imgBox {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+  }
+
+  .imgBox img {
+    display: none;
+  }
+
+  .contentBox {
+    width: 100%;
+    z-index: 1;
+    /* background: none; */
+  }
+
+  .contentBox .formBox {
+    width: 100%;
+  }
+}
+
+.form-check .form-check-input {
+  float: none;
+}
+
+.signup-alert {
+  width: 50%;
+}
+
+@media (max-width: 768px) {
+  .signup-alert {
+    width: 70%!important;
+  }
+}
+
+/* End Login Form */

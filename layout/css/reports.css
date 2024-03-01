@@ -1,0 +1,35 @@
+.reports-container,
+.reports-container .report-form {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.reports-container .report-form {
+  grid-template-columns: repeat(auto-fill, minmax(200px, 250px));
+  gap: 10px;
+}
+
+.direction-list ::marker {
+  font-size: 24px;
+}
+
+.reports .section-header {
+  position: relative;
+  cursor: pointer;
+}
+
+.reports .section-header h5,
+.reports .section-header span {
+  margin-bottom: 0;
+}
+
+.reports .section-header .section-icon {
+  position: absolute;
+  top: 15px;
+  right: 10px;
+  font-size: 1.5rem;
+  width: 30px;
+  height: 30px;
+}

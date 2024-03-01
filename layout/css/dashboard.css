@@ -1,0 +1,115 @@
+.dashboard-container {
+  position: relative;
+  display: grid;
+  grid-template-columns: 65% 28%;
+  gap: 20px;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+@media (max-width: 768px) {
+  .dashboard-container {
+    grid-template-columns: 1fr;
+    gap: 20px
+  }
+}
+
+
+.search-container {
+  position: relative;
+}
+
+.search-container .search-icon {
+  position: absolute;
+  top: 15px;
+  color: #D8D8D8;
+}
+
+.search-container .search-icon.search-icon-left {
+  left: 20px;
+}
+
+.search-container .search-icon.search-icon-right {
+  right: 20px;
+}
+
+.search-container input[type=search] {
+  height: 50px;
+  border-radius: 20px;
+}
+
+.search-container input[type=search]::placeholder {
+  color: #D8D8D8;
+}
+
+.search-container input[type=search].search-left {
+  padding-left: 50px;
+}
+
+.search-container input[type=search].search-right {
+  padding-right: 50px;
+}
+
+.advs-container {
+  padding: 24px;
+}
+
+.advs-container:is(.card) .card-img-top {
+  width: 100%;
+  height: 230px;
+  border-radius: 8px;
+  object-fit: fit;
+}
+
+.advs-container:is(.card) .carousel-caption {
+  margin: 2rem 0;
+  position: relative;
+  color: #000;
+  right: unset;
+  left: unset;
+}
+
+
+.advs-container:is(.card) .carousel-caption .card-title {
+  font-size: 24px !important;
+  font-weight: 700;
+  line-height: 32px;
+}
+
+.advs-container:is(.card) .carousel-indicators [data-bs-target] {
+  background-color: #D5D5D9;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.advs-container:is(.card) .carousel-indicators .active {
+  background-color: #5FCCA5;
+}
+
+.contactus-section,
+.contact-form-alert {
+  position: relative;
+  max-width: 450px;
+}
+
+.contact-form-loading,
+.contact-form-alert {
+  text-align: center;
+}
+
+.contact-form-alert i {
+  font-size: 4rem;
+}
+
+.contact-form-alert a {
+  font-size: 20px !important;
+}
+
+@media (max-width: 576px) {
+
+  .contactus-section,
+  .contact-form-alert {
+    max-width: 350px;
+  }
+}
