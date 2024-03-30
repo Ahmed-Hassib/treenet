@@ -35,7 +35,7 @@ if ($is_exist == true) {
         <?php } ?>
         <?php if ($_SESSION['sys']['comb_delete'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) { ?>
           <div>
-            <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient py-1 fs-12" data-bs-toggle="modal" data-bs-target="#deleteCombModal" id="delete-comb" data-comb-id="<?php echo base64_encode($comb_info['comb_id']) ?>" onclick="put_comb_data_into_modal(this)">
+            <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient py-1 fs-12" data-bs-toggle="modal" data-bs-target="#deleteCombModal" id="delete-comb" data-combination-id="<?php echo base64_encode($comb_info['comb_id']) ?>" onclick="confirm_delete_combination(this, null, false)">
               <i class="bi bi-trash"></i>
               <?php echo lang('DELETE') ?>
             </button>
@@ -458,12 +458,6 @@ if ($is_exist == true) {
               <input type="file" id="cost-receipt" name="cost-receipt" accept="image/*" onchange="change_cost_receipt_img(this, 'cost-image-preview')">
             </label>
 
-            <!-- <div class="input-group mb-3" dir="ltr">
-                  <input type="file" class="form-control form-control-<?php echo $page_dir == 'rtl' ? 'left' : 'right' ?>" id="cost-receipt" name="cost-receipt" accept="image/*"
-                onchange="change_cost_receipt_img(this, 'cost-image-preview')">
-              <label class="input-group-text" for="cost-receipt">
-                <?php echo lang('COST RECEIPT', $lang_file) ?>
-              </label> -->
             <?php $cost_media_path = $uploads . "combinations/" . base64_decode($_SESSION['sys']['company_id']) . "/" . $comb_info['cost_receipt']; ?>
             <div id="cost-image-preview" class="cost-image-preview w-100 <?php echo empty($comb_info['cost_receipt']) || !file_exists($cost_media_path) ? "d-none" : '' ?>">
               <?php if (!empty($comb_info['cost_receipt']) && file_exists($cost_media_path)) { ?>
@@ -722,7 +716,7 @@ if ($is_exist == true) {
         <?php } ?>
         <?php if ($_SESSION['sys']['comb_delete'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) { ?>
           <div>
-            <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient py-1 fs-12" data-bs-toggle="modal" data-bs-target="#deleteCombModal" id="delete-comb" data-comb-id="<?php echo base64_encode($comb_info['comb_id']) ?>" onclick="put_comb_data_into_modal(this)">
+            <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient py-1 fs-12" data-bs-toggle="modal" data-bs-target="#deleteCombModal" id="delete-comb" data-combination-id="<?php echo base64_encode($comb_info['comb_id']) ?>" onclick="confirm_delete_combination(this, null, false)">
               <i class="bi bi-trash"></i>
               <?php echo lang('DELETE') ?>
             </button>
@@ -732,7 +726,7 @@ if ($is_exist == true) {
     </form>
     <!-- end form -->
     <?php if ($_SESSION['sys']['comb_delete'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) {
-      include_once 'delete-combination-modal.php';
+      include_once 'delete-modal.php';
     } ?>
 
     <!-- media modal -->

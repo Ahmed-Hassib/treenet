@@ -56,11 +56,11 @@ switch ($accepted) {
 switch ($period) {
   case 'today':
     $title .= " TODAY";
-    $conditionPeriod = " `created_at` = '" . get_date_now() . "'";
+    $conditionPeriod = " Date(`created_at`) = '" . get_date_now() . "'";
     break;
   case 'month':
     $title .= " MONTH";
-    $conditionPeriod = " `created_at` BETWEEN '" . Date('Y-m-1') . "' AND '" . Date('Y-m-30') . "'";
+    $conditionPeriod = " Date(`created_at`) BETWEEN '" . Date('Y-m-1') . "' AND '" . Date('Y-m-30') . "'";
     break;
   case 'previous-month':
     $title .= " PREV MONTH";
@@ -72,7 +72,7 @@ switch ($period) {
     $startDate = Date("Y-m-d", strtotime($start . $period));
     $endDate = Date("Y-m-d", strtotime($end . $period));
     // period condition
-    $conditionPeriod = " `created_at` BETWEEN '$startDate' AND '$endDate'";
+    $conditionPeriod = " Date(`created_at`) BETWEEN '$startDate' AND '$endDate'";
     break;
   default:
     $title = $target_year != Date('Y') ? "{$title}" : "TOTAL {$title}";
@@ -347,7 +347,7 @@ $count = $stmt->rowCount(); // get row count
                       </a>
                     <?php } ?>
                     <?php if ($_SESSION['sys']['comb_delete'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) { ?>
-                      <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12" data-bs-toggle="modal" data-bs-target="#deleteCombModal" id="delete-comb" data-comb-id="<?php echo base64_encode($row['comb_id']) ?>" onclick="put_comb_data_into_modal(this, true)" style="width: 80px">
+                      <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12" data-bs-toggle="modal" data-bs-target="#deleteCombModal" id="delete-comb" data-combination-id="<?php echo base64_encode($row['comb_id']) ?>" onclick="confirm_delete_combination(this, true)" style="width: 80px">
                         <i class="bi bi-trash"></i>
                         <?php echo lang('DELETE') ?>
                       </button>
@@ -362,7 +362,7 @@ $count = $stmt->rowCount(); // get row count
     </div>
     <!-- delete combination modal -->
     <?php if ($_SESSION['sys']['comb_delete'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) {
-      include_once 'delete-combination-modal.php';
+      include_once 'delete-modal.php';
     } ?>
   </div>
 <?php } else {

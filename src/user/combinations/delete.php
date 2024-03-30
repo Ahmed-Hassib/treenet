@@ -1,6 +1,6 @@
 <?php
 // get combination id
-$comb_id = isset($_GET['combid']) && !empty($_GET['combid']) ? base64_decode($_GET['combid']) : 0;
+$comb_id = isset($_GET['comb-id']) && !empty($_GET['comb-id']) ? base64_decode($_GET['comb-id']) : 0;
 // create an object of Combination
 $comb_obj = new Combination();
 // check if the current combination id is exist or not

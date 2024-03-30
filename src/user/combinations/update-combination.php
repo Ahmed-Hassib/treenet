@@ -139,7 +139,7 @@ function do_manager_updates($info)
     $updates = 'update combination';
   } else {
     // reset compination info
-    $is_updated = $comb_obj->reset_combination_info($tech_id, $comb_id);
+    $is_updated = $comb_obj->reset_combination_info(array($client_name, $client_phone, $client_address, $coordinates, $comment, $tech_id, $comb_id));
     $updates = 'reset combination';
   }
   // return status

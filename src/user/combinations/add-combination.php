@@ -24,66 +24,70 @@ if ($_SESSION['sys']['comb_add'] == 1 && $_SESSION['sys']['isLicenseExpired'] ==
         <div class="add-combination-container">
           <div class="row g-3">
             <!-- responsible for combination -->
-            <div class="col-sm-12 section-block">
-              <div class="section-header">
-                <h5>
-                  <?php echo lang('RESP COMB', $lang_file) ?>
-                </h5>
-                <hr />
-              </div>
-              <!-- Administrator name -->
-              <div class="mb-3 form-floating">
-                <input type="hidden" class="form-control" id="admin-id" name="admin-id" value="<?php echo $_SESSION['sys']['UserID'] ?>" autocomplete="off" required />
-                <input type="text" class="form-control" id="admin-name" name="admin-name" placeholder="<?php echo lang('ADMIN NAME', $lang_file) ?>" value="<?php echo $_SESSION['sys']['username'] ?>" autocomplete="off" required readonly />
-                <label for="admin-name">
-                  <?php echo lang('ADMIN NAME', $lang_file) ?>
-                </label>
-              </div>
-              <!-- Technical name -->
-              <div class="mb-3 form-floating">
-                <select class="form-select" id="technical-id" name="technical-id">
-                  <option value="default" disabled selected>
-                    <?php echo lang('SELECT TECH NAME', $lang_file) ?>
-                  </option>
-                  <?php
-                  // get Employees ID and Names
-                  $usersRows = $db_obj->select_specific_column("`UserID`, `username`, `fullname`", "`users`", "WHERE `is_tech` = 1 AND `job_title_id` = 2 AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']));
-                  // check the length of result
-                  if (count($usersRows) > 0) {
-                    // loop on result ..
-                    foreach ($usersRows as $userRow) { ?>
-                      <option value="<?php echo base64_encode($userRow['UserID']) ?>" <?php echo isset($_SESSION['request_data']) && base64_decode($_SESSION['request_data']['technical-id']) == $userRow['UserID'] ? 'selected' : '' ?>>
-                        <?php echo $userRow['fullname'] . " (" . $userRow['username'] . ")"; ?>
-                      </option>
+            <div class="col-sm-12">
+              <div class="section-block">
+                <div class="section-header">
+                  <h5>
+                    <?php echo lang('RESP COMB', $lang_file) ?>
+                  </h5>
+                  <hr />
+                </div>
+                <!-- Administrator name -->
+                <div class="mb-3 form-floating">
+                  <input type="hidden" class="form-control" id="admin-id" name="admin-id" value="<?php echo $_SESSION['sys']['UserID'] ?>" autocomplete="off" required />
+                  <input type="text" class="form-control" id="admin-name" name="admin-name" placeholder="<?php echo lang('ADMIN NAME', $lang_file) ?>" value="<?php echo $_SESSION['sys']['username'] ?>" autocomplete="off" required readonly />
+                  <label for="admin-name">
+                    <?php echo lang('ADMIN NAME', $lang_file) ?>
+                  </label>
+                </div>
+                <!-- Technical name -->
+                <div class="mb-3 form-floating">
+                  <select class="form-select" id="technical-id" name="technical-id">
+                    <option value="default" disabled selected>
+                      <?php echo lang('SELECT TECH NAME', $lang_file) ?>
+                    </option>
+                    <?php
+                    // get Employees ID and Names
+                    $usersRows = $db_obj->select_specific_column("`UserID`, `username`, `fullname`", "`users`", "WHERE `is_tech` = 1 AND `job_title_id` = 2 AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']));
+                    // check the length of result
+                    if (count($usersRows) > 0) {
+                      // loop on result ..
+                      foreach ($usersRows as $userRow) { ?>
+                        <option value="<?php echo base64_encode($userRow['UserID']) ?>" <?php echo isset($_SESSION['request_data']) && base64_decode($_SESSION['request_data']['technical-id']) == $userRow['UserID'] ? 'selected' : '' ?>>
+                          <?php echo $userRow['fullname'] . " (" . $userRow['username'] . ")"; ?>
+                        </option>
+                      <?php } ?>
                     <?php } ?>
-                  <?php } ?>
-                </select>
-                <label for="technical-id">
-                  <?php echo lang('TECH NAME', $lang_file) ?>
-                </label>
+                  </select>
+                  <label for="technical-id">
+                    <?php echo lang('TECH NAME', $lang_file) ?>
+                  </label>
+                </div>
               </div>
             </div>
             <!-- client coordinates -->
-            <div class="col-sm-12 section-block">
-              <div class="section-header">
-                <h5>
-                  <?php echo lang('COORDINATES', 'pieces') ?>
-                </h5>
-                <hr />
-              </div>
-              <div class="mb-3 form-floating">
-                <input type="text" class="form-control" id="coordinates" name="coordinates" placeholder="<?php echo lang('COORDINATES', 'pieces') ?>" required />
-                <label for="coordinates">
-                  <?php echo lang('COORDINATES', 'pieces') ?>
-                </label>
-              </div>
+            <div class="col-sm-12">
+              <div class="section-block">
+                <div class="section-header">
+                  <h5>
+                    <?php echo lang('COORDINATES', 'pieces') ?>
+                  </h5>
+                  <hr />
+                </div>
+                <div class="mb-3 form-floating">
+                  <input type="text" class="form-control" id="coordinates" name="coordinates" placeholder="<?php echo lang('COORDINATES', 'pieces') ?>" required />
+                  <label for="coordinates">
+                    <?php echo lang('COORDINATES', 'pieces') ?>
+                  </label>
+                </div>
 
-              <!-- <div class="<?php echo $page_dir == 'rtl' ? 'text-start' : 'text-end' ?>">
+                <!-- <div class="<?php echo $page_dir == 'rtl' ? 'text-start' : 'text-end' ?>">
                 <button type="button" class="btn btn-outline-primary" onclick="check_devices_destance('coordinates')">
                   <i class="bi bi-bullseye"></i>
                   <?php echo lang('NEARBY DEVICES', 'pieces') ?>
                 </button>
               </div> -->
+              </div>
             </div>
           </div>
 

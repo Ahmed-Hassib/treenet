@@ -27,9 +27,10 @@ include_once str_repeat("../", $level) . "etc/app-status.php";
 
 // some page flages
 $possible_back = true;
-$preloader = true;
 // refere to that this page have tables
 $is_contain_table = false;
+// preloader flag
+$preloader = true;
 
 // check system if under developing or not
 if ($is_developing == false) {
@@ -76,16 +77,25 @@ if ($is_developing == false) {
       $file_name = 'temp-delete.php';
       $page_subtitle = "delete comb";
       $possible_back = false;
+    } elseif ($query == 'deletes' && $_SESSION['sys']['isLicenseExpired'] == 0) {
+      // include delete combination page
+      $file_name = 'deletes.php';
+      $page_subtitle = "deletes";
+      $is_contain_table = true;
     } elseif ($query == 'delete' && $_SESSION['sys']['comb_delete'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) {
       // include delete combination page
       $file_name = 'delete.php';
       $page_subtitle = "delete comb";
       $possible_back = false;
+    } elseif ($query == 'restore' && $_SESSION['sys']['comb_delete'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) {
+      // include restore combination page
+      $file_name = 'restore.php';
+      $page_subtitle = "restore comb";
+      $possible_back = false;
     } else {
       // include page error module
       $file_name = $globmod . 'page-permission-error.php';
       $possible_back = false;
-      $preloader = false;
       $no_navbar = 'all';
       $no_footer = 'all';
     }
@@ -93,7 +103,6 @@ if ($is_developing == false) {
     // include permission error module
     $file_name = $globmod . 'permission-error.php';
     $possible_back = false;
-    $preloader = false;
     $no_navbar = 'all';
     $no_footer = 'all';
   }
