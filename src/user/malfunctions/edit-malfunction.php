@@ -15,7 +15,7 @@ if ($is_exist_mal == true) {
     if (base64_decode($_SESSION['sys']['UserID']) == $mal_info['tech_id']) {
       // update some info of this malfunction
       $updateQ = "UPDATE `malfunctions` SET `isShowed` = 1, `showed_at` = now() WHERE `mal_id` = ? AND `company_id` = ?";
-      $stmt = $con->prepare($q);
+      $stmt = $con->prepare($updateQ);
       $stmt->execute(array($mal_id, base64_decode($_SESSION['sys']['company_id']))); // execute data
     }
   }
@@ -130,7 +130,7 @@ if ($is_exist_mal == true) {
             </h5>
             <hr />
           </div>
-          <?php $client_details = $mal_obj->select_specific_column("`id`, `full_name`, `ip`, `is_client`, `notes`, `visit_time`, `device_type`", "`pieces_info`", "WHERE `id` = '" . $mal_info['client_id'] . "' LIMIT 1")[0]; ?>
+          <?php $client_details = $mal_obj->select_specific_column("`id`, `full_name`, `ip`, `is_client`, `notes`, `visit_time`, `device_type`,`address`, `coordinates`", "`pieces_info`", "WHERE `id` = '" . $mal_info['client_id'] . "' LIMIT 1")[0]; ?>
           <div class="victim-info-content">
             <!-- client name -->
             <div class="victim-info-content__row">
@@ -156,10 +156,10 @@ if ($is_exist_mal == true) {
                 <?php echo lang('ADDR', $lang_file) ?>
               </label>
               <div class="col-sm-12 col-md-7 position-relative position-relative">
-                <?php $client_addr = $mal_obj->select_specific_column("`address`", "`pieces_addr`", "WHERE `id` = '" . $mal_info['client_id'] . "' LIMIT 1"); ?>
+                <?php $client_addr = $client_details['address']; ?>
                 <?php if (!empty($client_addr)) { ?>
                   <span class="text-primary">
-                    <?php echo $client_addr[0]['address']; ?>
+                    <?php echo $client_addr; ?>
                   </span>
                 <?php } else { ?>
                   <span class="text-danger fw-bold">
@@ -265,9 +265,8 @@ if ($is_exist_mal == true) {
           </div>
         </div>
 
-        <?php $coordinates = $mal_obj->select_specific_column("`coordinates`", "`pieces_coordinates`", "WHERE `id` = " . $mal_info['client_id']) ?>
+        <?php $coordinates = $client_details['coordinates'] ?>
         <?php if (!empty($coordinates)) { ?>
-          <?php $coordinates = $coordinates[0]; ?>
           <div class="section-block section-block_row">
             <div class="section-header">
               <h5>
@@ -311,7 +310,7 @@ if ($is_exist_mal == true) {
                     // initialize map
                     const map = new google.maps.Map(document.getElementById("map"), {
                       zoom: 14,
-                      center: getLatLong('<?php echo $coordinates['coordinates'] ?>'),
+                      center: getLatLong('<?php echo $coordinates ?>'),
                       mapId: '<?php echo $conf['map_id'] ?>',
                       mapTypeId: 'roadmap',
                       mapTypeControlOptions: {
@@ -334,7 +333,7 @@ if ($is_exist_mal == true) {
                     // create point_marker
                     const point_marker = new google.maps.marker.AdvancedMarkerElement({
                       map,
-                      position: getLatLong('<?php echo $coordinates['coordinates'] ?>'),
+                      position: getLatLong('<?php echo $coordinates ?>'),
                       title: '<?php echo $client_details['full_name'] ?>',
                       content: pinStyle.element,
                     });
@@ -458,9 +457,7 @@ if ($is_exist_mal == true) {
               <?php echo lang('TECH COMMENT', $lang_file) ?>
             </label>
           </div>
-
         </div>
-
 
         <!-- cost receipt -->
         <div class="section-block">
@@ -509,7 +506,6 @@ if ($is_exist_mal == true) {
               <input type="file" id="cost-receipt" name="cost-receipt" accept="image/*" onchange="change_cost_receipt_img(this, 'cost-image-preview')">
             </label>
 
-            <?php echo $mal_id ?>
             <!-- cost image preview -->
             <?php $cost_media_path = $uploads . "malfunctions/" . base64_decode($_SESSION['sys']['company_id']) . "/" . $mal_info['cost_receipt']; ?>
             <div id="cost-image-preview" class="cost-image-preview w-100 <?php echo empty($mal_info['cost_receipt']) || !file_exists($cost_media_path) ? "d-none" : '' ?>">

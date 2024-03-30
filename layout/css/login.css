@@ -55,7 +55,8 @@
 }
 
 .contentBox .formBox {
-	width: 70%;
+	width: 60%;
+	max-width: 400px;
 }
 
 .contentBox .formBox .formBoxHeader .h2 {

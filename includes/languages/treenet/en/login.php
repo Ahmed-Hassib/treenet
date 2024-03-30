@@ -19,10 +19,10 @@ function login($phrase)
     'SELECT COUNTRY'  => 'إختر الدولة',
     'ADDRESS'         => 'العنوان',
     'PHONE'           => 'التليفون',
-    'ADMIN LOGIN INFO'=> 'بيانات مدير الشركة لتسجيل الدخول',
+    'ADMIN INFO' => 'بيانات المدير',
     'USERNAME'        => 'إسم المستخدم',
     'PASSWORD'        => 'الرقم السرى',
-    'CONFIRM PASSWORD'=> 'تأكيد الرقم السرى',
+    'CONFIRM PASSWORD' => 'تأكيد الرقم السرى',
     'FULLNAME'        => 'الإسم كامل',
     'GENDER'          => 'النوع',
     'SELECT GENDER'   => 'إختر النوع',
@@ -50,6 +50,7 @@ function login($phrase)
     'LICENSE INSERTED'  => 'تم تفعيل نسخة مجانية تجريبية لمدة شهر',
     'ADMIN INSERTED'    => 'تم إضافة بيانات مدير الشركة بنجاح',
   );
+
   // return the phrase
   return array_key_exists($phrase, $lang) ? $lang[$phrase] : null;
 }

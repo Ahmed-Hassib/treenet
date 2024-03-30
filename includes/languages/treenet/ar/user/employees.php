@@ -22,7 +22,7 @@ function employees($phrase)
     'EMAIL' => 'البريد الإلكتروني',
     'PHONE' => 'التليفون',
     'BIRTH' => 'تاريخ الميلاد',
-    'JOB INFO' => 'ملومات العمل',
+    'JOB INFO' => 'اختصاص الموظف',
     'JOB TITLE' => 'الوظيفة',
     'NOT JOB TITLE' => 'الوظيفة لم تُحدد',
     'ALL EMPLOYEES' => 'جميع الموظفين',

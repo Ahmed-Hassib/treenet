@@ -1,6 +1,6 @@
 /************/
 
-/* Start Login Form */
+/* Start Signup Form */
 .hero-image {
   /* The image used */
   background-image: url("../../assets/jsl.jpeg");
@@ -50,13 +50,14 @@
   margin: auto;
   display: flex;
   height: 100%;
+  width: 80%;
   justify-content: center;
   align-items: center;
   background-color: rgba(255, 255, 255, 1);
 }
 
 .contentBox .formBox {
-  width: 80%;
+  width: 50%;
   margin: 1.5rem 1rem;
   padding: 1.5rem 1rem;
   background: rgba(255, 255, 255, 0.4);
@@ -138,8 +139,22 @@
 
 @media (max-width: 768px) {
   .signup-alert {
-    width: 70%!important;
+    width: 70% !important;
   }
 }
 
-/* End Login Form */
+
+.formBox .signup-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+@media (max-width: 425px) {
+  .formBox .signup-row {
+    grid-template-columns: repeat(1, minmax(200px, 1fr));
+  }
+}
+
+/* End Signup Form */

@@ -1,4 +1,3 @@
-<!-- <pre dir="ltr"><?php print_r($_POST) ?></pre> -->
 <?php
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   // check license
@@ -34,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       // array of malfunction information
       $mal_info = array();
       // push info into the array
-      array_push($mal_info, $mng_id, $tech_id, $client_id, $descreption, get_date_now(), get_time_now(), base64_decode($_SESSION['sys']['company_id']));
+      array_push($mal_info, $mng_id, $tech_id, $client_id, $descreption, base64_decode($_SESSION['sys']['company_id']));
 
       // create an object of Malfunction class
       $mal_obj = new Malfunction();
@@ -63,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // create an object of Pieces class
         $pcs_obj = new Pieces();
         // get client info
-        $client_info = $pcs_obj->get_pieces("WHERE `id` = {$client_id}");
+        $client_info = $pcs_obj->get_pieces("WHERE `pieces_info`.`id` = {$client_id}");
         // send a notification to technical man
         $res = $mal_obj->send_notification($admin_info, $tech_info, $client_info, $descreption, $lang_file);
         // add an new detail record

@@ -288,7 +288,7 @@ if ($user_id == base64_decode($_SESSION['sys']['UserID']) || $_SESSION['sys']['u
                 </header>
                 <!-- strat twitter field -->
                 <div class="input-group mb-3">
-                  <span class="input-group-text bg-white <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'input-group-right' : 'input-group-left' ?>" id="twitter"><i class="bi bi-twitter text-primary"></i></span>
+                  <span class="input-group-text bg-white <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'input-group-right' : 'input-group-left' ?>" id="twitter"><i class="bi bi-twitter-x text-primary"></i></span>
                   <div class="form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
                     <input type="text" class="form-control <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'form-control-left' : 'form-control-right' ?>" name="twitter" value="<?php echo $user_info['twitter'] ?>" placeholder="<?php echo lang('NO DATA') ?>" aria-label="twitter" aria-describedby="twitter">
                     <label for="twitter">twitter</label>

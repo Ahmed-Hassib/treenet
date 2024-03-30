@@ -47,18 +47,18 @@
           </div> -->
         </div>
       </form>
-      <hr>
+      <!-- <hr>
       <div class="row g-2">
         <div class="col-6">
-          <a href="http://leadergroupegypt.com/" class="btn btn-outline-primary w-100 text-uppercase" target="_blank"><?php echo lang("SPONSOR") ?></a>
+          <a href="http://leadergroupegypt.com/" class="text-uppercase" target="_blank"><?php echo lang("SPONSOR") ?></a>
         </div>
         <div class="col-6">
-          <a href="<?php echo $conf['app_url'] ?>" class="btn btn-outline-primary w-100 text-uppercase align-items-center">
+          <a href="<?php echo $conf['app_url'] ?>" class="text-uppercase">
             <img src="<?php echo $treenet_assets ?>resized/treenet.png" width="15" alt="">
-            <span><?php echo lang('home') ?></span>
+            <span><?php echo lang('home') . " | " . lang('tree net') ?></span>
           </a>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>

@@ -36,7 +36,7 @@ if ($client_id != 0 && $is_exist_id) {
 
         <?php if ($_SESSION['sys']['clients_delete'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) { ?>
           <!-- delete button -->
-          <button type="button" class="btn btn-outline-danger py-1 fs-12" data-bs-toggle="modal" data-bs-target="#deleteClientModal" data-client-id="<?php echo base64_encode($client_data['id']) ?>" data-client-name="<?php echo $client_data['full_name'] ?>" onclick="confirm_delete_client(this)">
+          <button type="button" class="btn btn-outline-danger py-1 fs-12" data-bs-toggle="modal" data-bs-target="#deleteClientModal" data-client-id="<?php echo base64_encode($client_data['id']) ?>" data-client-name="<?php echo $client_data['fullname'] ?>" onclick="confirm_delete_client(this)">
             <i class="bi bi-trash"></i>
             <?php echo lang('DELETE'); ?>
           </button>
@@ -597,7 +597,7 @@ if ($client_id != 0 && $is_exist_id) {
 
         <?php if ($_SESSION['sys']['clients_delete'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) { ?>
           <!--  delete button -->
-          <button type="button" class="btn btn-outline-danger py-1 fs-12" data-bs-toggle="modal" data-bs-target="#deleteClientModal" data-client-id="<?php echo base64_encode($client_data['id']) ?>" data-client-name="<?php echo $client_data['full_name'] ?>" onclick="confirm_delete_client(this)">
+          <button type="button" class="btn btn-outline-danger py-1 fs-12" data-bs-toggle="modal" data-bs-target="#deleteClientModal" data-client-id="<?php echo base64_encode($client_data['id']) ?>" data-client-name="<?php echo $client_data['fullname'] ?>" onclick="confirm_delete_client(this)">
             <i class="bi bi-trash"></i>
             <?php echo lang('DELETE'); ?>
           </button>

@@ -101,8 +101,7 @@ span.spinner-border {
 }
 
 /* scroll bar style */
-body::-webkit-scrollbar,
-.sidebar-menu::-webkit-scrollbar {
+*::-webkit-scrollbar {
   width: 10px;
 }
 
@@ -110,24 +109,18 @@ body::-webkit-scrollbar,
   height: 15px;
 }
 
-body::-webkit-scrollbar-track,
-.sidebar-menu::-webkit-scrollbar-track,
-.dataTables_scrollBody::-webkit-scrollbar-track {
+*::-webkit-scrollbar-track {
   border-radius: 10px;
   background-color: #e4e4e4;
 }
 
-body::-webkit-scrollbar-thumb,
-.sidebar-menu::-webkit-scrollbar-thumb,
-.dataTables_scrollBody::-webkit-scrollbar-thumb {
+*::-webkit-scrollbar-thumb {
   background: #666;
   border-radius: 16px;
   transition: 0.5s;
 }
 
-body::-webkit-scrollbar-thumb:hover,
-.sidebar-menu::-webkit-scrollbar-thumb:hover,
-.dataTables_scrollBody::-webkit-scrollbar-thumb:hover {
+*::-webkit-scrollbar-thumb:hover {
   /* background: #5fcca4; */
   background: #5fcca4;
   transition: 0.5s;
@@ -238,8 +231,8 @@ header.header {
 .alert-flash-container {
   margin: auto !important;
   position: absolute !important;
-  top: 10px !important;
-  right: 0;
+  top: 30px !important;
+  right: 30px !important;
   width: auto !important;
   z-index: 999 !important;
   transition: all 0.3s ease;
@@ -287,6 +280,34 @@ input[type=number] {
   -o-appearance: textfield !important;
   -moz-appearance: textfield !important;
   -webkit-appearance: textfield !important;
+}
+
+.ui-selectmenu-menu .ui-menu.customicons .ui-menu-item-wrapper {
+  padding: 0.5em 0 0.5em 3em;
+}
+
+.ui-selectmenu-menu .ui-menu.customicons .ui-menu-item .ui-icon {
+  height: 24px;
+  width: 24px;
+  top: 0.1em;
+}
+
+option.flag {
+  background-repeat: no-repeat !important;
+}
+
+.flag.ui-icon {
+  background-size: contain;
+}
+
+.flag.ui-icon.ui-icon-left {
+  background-position: left center;
+  padding-left: 20px;
+}
+
+.flag.ui-icon.ui-icon-right {
+  background-position: right center;
+  padding-right: 20px;
 }
 
 .form-control.is-valid-right,
@@ -511,7 +532,8 @@ input.border-warning {
 
 
 /* cost image preview style */
-.cost-image-preview {
+.cost-image-preview,
+.image-preview {
   border-radius: 1rem;
   border: 5px solid rgb(13, 110, 253);
   margin-top: 1rem;

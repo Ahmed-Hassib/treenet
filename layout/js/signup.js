@@ -1,3 +1,4 @@
+
 (function () {
 })()
 
@@ -59,10 +60,9 @@ function check_company_name(input) {
         alert = create_alert('success', 'اسم الشركة صالح!', 'w-100');
       }
 
-      if (input.parentElement.contains(alerts)) {
-        alerts.remove();
-      }
-
+      // delete all company alerts if exxists
+      delete_alerts(input.parentElement);
+      // append new alert
       input.parentElement.appendChild(alert)
     })
   } else {
@@ -99,11 +99,9 @@ function username_validation(input) {
         input.dataset.valid = true;
         alert = create_alert('success', 'اسم مستخدم صالح!', 'w-100');
       }
-
-      if (input.parentElement.contains(alerts)) {
-        alerts.remove();
-      }
-
+      // delete all username alerts if exxists
+      delete_alerts(input.parentElement);
+      // append new alert
       input.parentElement.appendChild(alert)
     })
     // } else {
@@ -129,7 +127,7 @@ function create_alert(type, message, width = 'w-50') {
   // create alert container
   let alert_container = document.createElement('div');
   // add alert classes
-  alert_container.classList.add('alert', (type == 'warn' ? 'alert-warning' : 'alert-success'), width, 'mx-auto', 'my-1', 'signup-alert');
+  alert_container.classList.add('alert', (type == 'warning' ? 'alert-warning' : 'alert-success'), width, 'mx-auto', 'my-1', 'signup-alert');
   // add alert role
   alert_container.role = 'alert';
   // create a text node

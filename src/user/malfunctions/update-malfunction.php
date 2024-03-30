@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // check if malfunction is exist or not
     if ($mal_obj->is_exist("`mal_id`", "`malfunctions`", $mal_id)) {
       // get malfunction basics info
-      $mal_info = $mal_obj->get_malfunctions("WHERE `mal_id` = " . $mal_id . " AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']));
+      $mal_info = $mal_obj->get_malfunctions("`mal_id` = " . $mal_id . " AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']), 1);
       // check if exist again
       if (!is_null($mal_info)) {
         // get new malfunction info
@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         // check who is doing the update
         switch ($update_owner_job_id) {
-          /**
+            /**
            * updates for:
            * [1] The Manager
            * [2] Customer Services
@@ -44,10 +44,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
               add_updates_details($mal_id, $update_owner_id, $is_updated['updates'], base64_decode($_SESSION['sys']['company_id']));
             }
             break;
-          /**
-           * updates for:
-           * [1] Technical Man
-           */
+            /**
+             * updates for:
+             * [1] Technical Man
+             */
           case 2:
             $path = $uploads . "malfunctions/";
             // check who is doing the updates
@@ -131,7 +131,7 @@ function do_manager_updates($info)
     $updates = 'update malfunction';
   } else {
     // reset malfunction info
-    $is_updated = $mal_obj->reset_malfunction_info(array($tech_id, $descreption, get_date_now(), get_time_now(), $mal_id));
+    $is_updated = $mal_obj->reset_malfunction_info(array($tech_id, $descreption, $mal_id));
     $updates = 'reset malfunction';
   }
   // return status
@@ -214,7 +214,7 @@ function do_technical_updates($info, $cost_media, $media_path)
   }
 
   // get updated status
-  $is_updated = $mal_obj->update_malfunction_tech(array($mal_status, $cost, $cost_receipt_name, get_date_now(), get_time_now(), $tech_comment, $tech_comment_status, $tech_status, $mal_id));
+  $is_updated = $mal_obj->update_malfunction_tech(array($mal_status, $cost, $cost_receipt_name, $tech_comment, $tech_comment_status, $tech_status, $mal_id));
   // updates details
   $updates[] = 'update malfunction';
   // return status
@@ -230,10 +230,8 @@ function do_technical_updates($info, $cost_media, $media_path)
  */
 function upload_malfunction_media($media_files, $mal_id, $path)
 {
-  if (!isset($mal_obj)) {
-    // create an object of Malfunction class
-    $mal_obj = new Malfunction();
-  }
+  // create an object of Malfunction class
+  $mal_obj = new Malfunction();
   // files names
   $files_names = $media_files['mal-media']['name'];
   // files tmp name
@@ -293,7 +291,7 @@ function do_after_sales_updates($info)
     // create an object of Malfunction class
     $mal_obj = new Malfunction();
     // get updated status
-    $is_updated = $mal_obj->update_malfunction_review(array(get_date_now(), get_time_now(), $money_review, $service_qty, $tech_qty, $review_comment, $mal_id));
+    $is_updated = $mal_obj->update_malfunction_review(array($money_review, $service_qty, $tech_qty, $review_comment, $mal_id));
     $updates = 'update review';
   } else {
     $is_updated = null;
@@ -318,7 +316,7 @@ function do_after_sales_updates($info)
 function add_updates_details($mal_id, $updated_by, $updates, $company_id)
 {
   // create an object of Malfunction
-  $comb_obj = new Malfunction();
+  $mal_obj = new Malfunction();
   // add an new detail record
-  $comb_obj->add_malfunction_updates(array($mal_id, $updated_by, get_date_now('Y-m-d H:i:s'), $updates, $company_id));
+  $mal_obj->add_malfunction_updates(array($mal_id, $updated_by, $updates, $company_id));
 }

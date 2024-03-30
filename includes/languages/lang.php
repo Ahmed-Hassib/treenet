@@ -13,27 +13,12 @@ $global_lang = ['global', 'description'];
 
 // for sys tree
 $treenet_lang = [
-  'user' => ['landing', 'login', 'dashboard', 'directions', 'pieces', 'sugg_comp', 'employees', 'pcs_conn', 'clients', 'malfunctions', 'combinations', 'reports', 'settings', 'payment', 'services', 'deletes', 'not_found'],
+  'user' => ['landing', 'login', 'dashboard', 'directions', 'pieces', 'comp_sugg', 'employees', 'pcs_conn', 'clients', 'malfunctions', 'combinations', 'reports', 'settings', 'payment', 'services', 'deletes', 'errors'],
   'root' => ['dashboard_root', 'companies_root']
 ];
 
-// for website
-$website_lang = ['index', 'login', 'dashboard', 'sections', 'gallery', 'company', 'about', 'features', 'links', 'services', 'team'];
-
-// check page category
-switch ($page_category) {
-  case 'treenet':
-    $lang_files = $treenet_lang;
-    break;
-
-  case 'website':
-    $lang_files = $website_lang;
-    break;
-
-  default:
-    # code...
-    break;
-}
+// language file
+$lang_files = $treenet_lang;
 
 // loop on language files
 foreach ($global_lang as $file) {

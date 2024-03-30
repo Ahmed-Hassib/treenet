@@ -139,7 +139,7 @@ if ($dir_id != -1 && $src_id != -1) {
                   <?php if ($piece['direction_id'] == 0) { ?>
                     <i class="bi bi-exclamation-triangle-fill text-danger fw-bold" title="<?php echo lang("NOT ASSIGNED") ?>"></i>
                   <?php } ?>
-                  <?php if ($piece['created_at'] == date('Y-m-d')) { ?>
+                  <?php if (date_format(date_create($piece['created_at']), 'Y-m-d') == date('Y-m-d')) { ?>
                     <span class="badge bg-danger p-1 <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'me-1' : 'ms-1' ?>">
                       <?php echo lang('NEW') ?>
                     </span>
@@ -148,12 +148,8 @@ if ($dir_id != -1 && $src_id != -1) {
                 <!-- piece address -->
                 <td>
                   <?php
-                  // get piece address
-                  $addr = $pcs_obj->select_specific_column("`address`", "`pieces_addr`", "WHERE `id` = " . $piece['id']);
-                  // check result
-                  if (count($addr) > 0) {
-                    $addr_ = $addr[0]['address'];
-                    echo wordwrap($addr_, 50, "<br>");
+                  if (!is_null($piece['address'])) {
+                    echo wordwrap($piece['address'], 50, "<br>");
                   } else { ?>
                     <span class="text-danger fs-12 fw-bold">
                       <?php echo lang('NOT ASSIGNED') ?>
@@ -212,11 +208,8 @@ if ($dir_id != -1 && $src_id != -1) {
                 <!-- internet source -->
                 <td>
                   <?php
-                  // get internet source
-                  $coordinates = $pcs_obj->select_specific_column("`coordinates`", "`pieces_Coordinates`", "WHERE `id` = " . $piece['id']);
-                  // check result
-                  if (!empty($coordinates)) {
-                    echo $coordinates[0]['coordinates'];
+                  if (!is_null($piece['coordinates'])) {
+                    echo $piece['coordinates'];
                   } else { ?>
                     <span class="text-danger fs-12 fw-bold">
                       <?php echo lang('NOT ASSIGNED') ?>
@@ -283,7 +276,7 @@ if ($dir_id != -1 && $src_id != -1) {
                       <?php echo $source_name ?>
                     </span><br>
                     <?php if (isset($source_ip) && $source_ip != '0.0.0.0') { ?>
-                      <a href="<?php echo $source_ip ?>" target="_blank">
+                      <a href="http://<?php echo $source_ip ?>" target="_blank">
                         <?php echo $source_ip ?>
                       </a>
                     <?php } ?>
@@ -299,23 +292,23 @@ if ($dir_id != -1 && $src_id != -1) {
                 <td class="text-capitalize big-data" data-ip="<?php echo convert_ip($source_ip) ?>">
                   <?php
                   // get source info
-                  $alt_source_info = $db_obj->select_specific_column("`fullname`, `ip`, `port`", "`pieces_info`", "WHERE `id` = " . $piece['source_id']);
+                  $alt_source_info = $piece['alt_source_id'] > 0 ? $db_obj->select_specific_column("`full_name`, `ip`, `port`", "`pieces_info`", "WHERE `id` = " . $piece['alt_source_id']) : null;
                   // default info is null
                   $alt_source_name = null;
                   $alt_source_ip = null;
                   $alt_source_port = null;
                   // check info
-                  if (!empty($alt_source_info)) {
-                    $alt_source_name = trim($alt_source_info[0]['fullname'], ' ');
+                  if (!empty($alt_source_info) || !is_null($alt_source_info)) {
+                    $alt_source_name = trim($alt_source_info[0]['full_name'], ' ');
                     $source_ip = trim($alt_source_info[0]['ip'], ' ');
                     $alt_source_port = trim($alt_source_info[0]['port'], ' ');
-                  } elseif ($piece['source_id'] == 0) {
+                  } elseif ($piece['alt_source_id'] == 0) {
                     $alt_source_name = trim($piece['fullname'], ' ');
                     $alt_source_ip = trim($piece['ip'], ' ');
                     $alt_source_port = trim($piece['port'], ' ');
                   }
                   ?>
-                  <?php if ($alt_source_ip == null) { ?>
+                  <?php if (is_null($alt_source_ip)) { ?>
                     <span class="text-danger fs-12 fw-bold">
                       <?php echo lang("NOT ASSIGNED") ?>
                     </span>
@@ -328,7 +321,7 @@ if ($dir_id != -1 && $src_id != -1) {
                       <span class="pcs-ip" data-pcs-ip="<?php echo $alt_source_ip ?>">
                         <?php echo $alt_source_name ?>
                       </span><br>
-                      <a href="<?php echo $source_ip ?>" target="_blank">
+                      <a href="http://<?php echo $source_ip ?>" target="_blank">
                         <?php echo $alt_source_ip ?>
                       </a><br>
                     </span>
@@ -343,7 +336,7 @@ if ($dir_id != -1 && $src_id != -1) {
                 <!-- device type -->
                 <td class="text-capitalize">
                   <?php
-                  if ($piece['device_id'] <= 0) {
+                  if (is_null($piece['device_id']) || $piece['device_id'] <= 0) {
                     $device_type = lang('NOT ASSIGNED');
                     $device_class = 'text-danger fs-12 fw-bold';
                   } else {
@@ -358,7 +351,7 @@ if ($dir_id != -1 && $src_id != -1) {
                 <!-- device model -->
                 <td>
                   <?php
-                  if ($piece['device_model'] <= 0) {
+                  if (is_null($piece['device_model']) || $piece['device_model'] <= 0) {
                     $model_name = lang('NOT ASSIGNED');
                     $model_class = 'text-danger fs-12 fw-bold';
                   } else {
@@ -373,7 +366,7 @@ if ($dir_id != -1 && $src_id != -1) {
                 <!-- connection type -->
                 <td class="text-uppercase" data-value="<?php echo $piece['connection_type'] ?>">
                   <?php
-                  if ($piece['connection_type'] <= 0) {
+                  if (is_null($piece['connection_type']) || $piece['connection_type'] <= 0) {
                     $conn_name = lang('NOT ASSIGNED');
                     $conn_class = 'text-danger fs-12 fw-bold';
                   } else {
@@ -416,7 +409,7 @@ if ($dir_id != -1 && $src_id != -1) {
                 <!-- piece port -->
                 <td>
                   <?php
-                  if ($piece['port'] <= 0) {
+                  if (is_null($piece['port']) || $piece['port'] <= 0) {
                     $port_name = lang('NOT ASSIGNED');
                     $port_class = 'text-danger fs-12 fw-bold';
                   } else {
@@ -430,15 +423,11 @@ if ($dir_id != -1 && $src_id != -1) {
                 </td>
                 <!-- mac address -->
                 <td>
-                  <?php
-                  // get mac address
-                  $mac_addr_info = $db_obj->select_specific_column("`mac_add`", "`pieces_mac_addr`", "WHERE `id` = " . $piece['id']);
-                  // check result
-                  if (count($mac_addr_info) <= 0 || $mac_addr_info == null) {
+                  <?php if (is_null($piece['mac_add'])) {
                     $mac_addr = lang('NOT ASSIGNED');
                     $mac_class = 'text-danger fs-12 fw-bold';
                   } else {
-                    $mac_addr = $mac_addr_info[0]['mac_add'];
+                    $mac_addr = $piece['mac_add'];
                     $mac_class = '';
                   }
                   ?>
@@ -463,15 +452,11 @@ if ($dir_id != -1 && $src_id != -1) {
                 </td>
                 <!-- ssid -->
                 <td>
-                  <?php
-                  // get ssid
-                  $ssid_info = $db_obj->select_specific_column("`ssid`", "`pieces_ssid`", "WHERE `id` = " . $piece['id']);
-                  // check result
-                  if (count($ssid_info) <= 0 || $ssid_info == null) {
+                  <?php if (is_null($piece['ssid'])) {
                     $ssid = lang('NOT ASSIGNED');
                     $ssid_class = 'text-danger fs-12 fw-bold';
                   } else {
-                    $ssid = $ssid_info[0]['ssid'];
+                    $ssid = $piece['ssid'];
                     $ssid_class = '';
                   }
                   ?>
@@ -482,14 +467,11 @@ if ($dir_id != -1 && $src_id != -1) {
                 <!-- frequency -->
                 <td>
                   <?php
-                  // get frequency
-                  $frequency_info = $db_obj->select_specific_column("`frequency`", "`pieces_frequency`", "WHERE `id` = " . $piece['id']);
-                  // check result
-                  if (count($frequency_info) <= 0 || $frequency_info == null) {
+                  if (is_null($piece['frequency'])) {
                     $frequency = lang('NOT ASSIGNED');
                     $frequency_class = 'text-danger fs-12 fw-bold';
                   } else {
-                    $frequency = $frequency_info[0]['frequency'];
+                    $frequency = $piece['frequency'];
                     $frequency_class = '';
                   }
                   ?>
@@ -500,14 +482,11 @@ if ($dir_id != -1 && $src_id != -1) {
                 <!-- wave -->
                 <td>
                   <?php
-                  // get wave
-                  $wave_info = $db_obj->select_specific_column("`wave`", "`pieces_wave`", "WHERE `id` = " . $piece['id']);
-                  // check result
-                  if (count($wave_info) <= 0 || $wave_info == null) {
+                  if (is_null($piece['wave'])) {
                     $wave = lang('NOT ASSIGNED');
                     $wave_class = 'text-danger fs-12 fw-bold';
                   } else {
-                    $wave = $wave_info[0]['wave'];
+                    $wave = $piece['wave'];
                     $wave_class = '';
                   }
                   ?>
@@ -519,11 +498,11 @@ if ($dir_id != -1 && $src_id != -1) {
                 <td>
                   <?php
                   // check result
-                  if ($piece['created_at'] == '0000-00-00') {
+                  if (is_null($piece['created_at'])) {
                     $date = lang('NOT ASSIGNED');
                     $date_class = 'text-danger fs-12 fw-bold';
                   } else {
-                    $date = $piece['created_at'];
+                    $date = date_format(date_create($piece['created_at']), 'h:ia d-m-Y');
                     $date_class = '';
                   }
                   ?>

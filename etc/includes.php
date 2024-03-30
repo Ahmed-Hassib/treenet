@@ -38,6 +38,7 @@ $treenet_classes = [
 	'Companies',
 	'Session',
 	'CompSugg',
+	'CompSuggReplays',
 	'Countries',
 	'Pricing',
 	'PaymentMethods',

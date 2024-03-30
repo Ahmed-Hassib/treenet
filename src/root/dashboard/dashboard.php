@@ -47,6 +47,17 @@
           </h5>
         </div>
       </div>
+
+      <div class="dashboard-card card card-white bg-gradient">
+        <img class="card-img <?php echo $page_dir == 'ltr' ? 'card-img-right' : 'card-img-left' ?>" src="<?php echo $treenet_assets . "complaints_2.png" ?>" style="scale: 1.5" alt="">
+        <div class="card-body">
+          <h5 class="h5 text-capitalize">
+            <?php echo wordwrap(lang('THE COMPS & SUGGS', 'comp_sugg'), 20, "<br>") ?>
+          </h5>
+        </div>
+        <a href="<?php echo $nav_up_level ?>comp-sugg/index.php" class="stretched-link text-capitalize"></a>
+      </div>
+
     </div>
   </div>
   <!-- end stats -->

@@ -20,7 +20,7 @@ $page_category = "treenet";
 $page_role = "treenet_err";
 
 // language file
-$lang_file = "not_found";
+$lang_file = "errors";
 // level
 $level = 0;
 // nav level

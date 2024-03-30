@@ -91,7 +91,7 @@
             }
             ?>
             <!-- strst pieces table -->
-            <table class="table table-bordered table-striped display compact nowrap" data-scroll-x="false"  style="width:100%">
+            <table class="table table-bordered table-striped display compact nowrap" data-scroll-x="false" style="width:100%">
               <thead class="primary text-capitalize">
                 <tr>
                   <th>#</th>
@@ -144,17 +144,13 @@
                     </td>
                     <!-- piece address -->
                     <td>
-                      <?php
-                      // get piece address
-                      $addr = $pcs_obj->select_specific_column("`address`", "`pieces_addr`", "WHERE `id` = " . $piece['id']);
-                      // check result
-                      if (count($addr) > 0) {
-                        echo trim($addr[0]['address']);
-                      } else { ?>
+                      <?php if (is_null($piece['address'])) { ?>
                         <span class="text-danger fs-12 fw-bold">
                           <?php echo lang('NOT ASSIGNED') ?>
                         </span>
-                      <?php } ?>
+                      <?php } else {
+                        echo wordwrap(trim($piece['address']), "50", "<br>");
+                      } ?>
                     </td>
                     <!-- piece phone -->
                     <td>

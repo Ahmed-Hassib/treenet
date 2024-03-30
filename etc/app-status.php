@@ -24,3 +24,6 @@ require_once "system-architecture.php";
 // include_once the important files
 include_once $func . "func-conf.php";
 include_once $lan . "lang.php";
+
+// require vendor autoload
+require_once $vendor . "autoload.php";

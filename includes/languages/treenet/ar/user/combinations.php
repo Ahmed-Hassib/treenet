@@ -53,6 +53,7 @@ function combinations($phrase, $param = null)
     'UPDATES' => 'التعديلات',
     'ASSIGNED' => 'قام',
     'COMBS DETAILS' => 'تفاصيل التركيبات',
+    'DELETES' => 'المحذوفات',
 
 
     // large words

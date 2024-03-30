@@ -22,6 +22,8 @@ $lang_file = "login";
 $level = 0;
 // nav level
 $nav_level = 0;
+// preloader
+$preloader = true;
 // app status and global includes
 include_once str_repeat("../", $level) . "etc/app-status.php";
 
@@ -53,6 +55,20 @@ if ($is_developing == false) {
 } else {
   $file_name = $globmod . "under-developing.php";
 }
+
+// check if language was changed
+if (isset($_GET['lang']) && !empty($_GET['lang'])) {
+  // target language
+  $target_lang = trim($_GET['lang']);
+  // available languages
+  $available_langs = ['en', 'ar'];
+  // check if target language in available array
+  if (in_array($target_lang, $available_langs)) {
+    $_SESSION['sys']['lang'] = $target_lang;
+    redirect_home(null, "./signup.php", 0);
+  }
+}
+
 // pre configration of system
 include_once str_repeat("../", $level) . "etc/pre-conf.php";
 // initial configration of system

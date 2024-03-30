@@ -561,6 +561,6 @@
 
 .sidebar-menu .small-card-adv>.card-link-container>.card-link-container_content .card-link {
   line-height: unset;
-  top: 20px;
-  right: 0;
+  top: 15px;
+  right: 20px;
 }

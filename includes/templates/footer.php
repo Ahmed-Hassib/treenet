@@ -5,10 +5,8 @@ if (isset($page_category) && !isset($no_footer)) {
     $treenet_footer = get_page_dependencies("" . $page_category . "_global", 'footer')['root'];
     $tpl_type = "root_tpl";
   } else {
-    if ($is_developing == false) {
-      $treenet_footer = get_page_dependencies("" . $page_category . "_global", 'footer')['user'];
-      $tpl_type = "user_tpl";
-    }
+    $treenet_footer = get_page_dependencies("" . $page_category . "_global", 'footer')['user'];
+    $tpl_type = "user_tpl";
   }
 
   // check if footer set

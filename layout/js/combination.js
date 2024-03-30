@@ -1,14 +1,17 @@
 var delete_comb_btn = document.querySelectorAll('#delete-comb');
-var confirm_delete_combination = document.querySelector("#confirm-delete-combination");
+let deleted_combination_url_in_modal = document.querySelector('#deleted-combination-url');
 var modal = document.querySelector("#media-modal");
 var modal_content = document.querySelector("#media-modal-content");
 var modal_close_btn = document.querySelector("#media-modal-close");
 
 
-function put_comb_data_into_modal(btn, will_back = null) {
-  let comb_id = btn.dataset.combId;
-  let href = will_back != null ? `?do=temp-delete&comb-id=${comb_id}&back=true` : `?do=temp-delete&comb-id=${comb_id}`;
-  confirm_delete_combination.setAttribute('href', href);
+function confirm_delete_combination(btn, will_back = null, is_deleted = false) {
+  // get combination info
+  let combination_id = btn.dataset.combinationId;
+  // prepare url
+  let url = (is_deleted ? '?do=delete' : '?do=temp-delete') + `&comb-id=${combination_id}` + (will_back ? '&back=true' : '');
+  // put it into the modal
+  deleted_combination_url_in_modal.href = url;
 }
 
 

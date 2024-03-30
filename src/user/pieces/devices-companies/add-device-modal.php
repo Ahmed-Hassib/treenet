@@ -60,8 +60,8 @@
                 <?php echo lang('DEVICE NAME', $lang_file) ?>
               </label>
             </div>
-            <!-- end device name -->
             <?php if ($_SESSION['sys']['isLicenseExpired'] == 0) { ?>
+              <!-- end device name -->
               <button type="button" class="btn btn-outline-success me-auto fs-12 py-1" onclick="add_model(this)"
                 data-model-num="0">
                 <i class="bi bi-plus"></i>

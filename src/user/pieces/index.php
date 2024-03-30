@@ -121,6 +121,7 @@ if ($is_developing == false) {
     $possible_back = false;
     $no_navbar = 'all';
     $no_footer = 'all';
+    // $preloader = false;
   }
 
 
@@ -149,6 +150,7 @@ include_once str_repeat("../", $level) . "etc/system-alerts.php";
 
 // include file name
 include_once $file_name;
+
 // include footer
 include_once $tpl . "footer.php";
 include_once $tpl . "js-includes.php";

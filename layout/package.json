@@ -5,7 +5,7 @@
   "author": "Ahmed Hassib",
   "dependencies": {
     "bootstrap": "^5.2.3",
-    "bootstrap-icons": "^1.10.3",
+    "bootstrap-icons": "^1.11.3",
     "chart.js": "^4.4.0",
     "datatables.net": "^1.13.4",
     "datatables.net-bs5": "^1.13.4",

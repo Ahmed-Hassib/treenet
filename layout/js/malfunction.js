@@ -324,9 +324,6 @@ function open_media(src, type) {
 }
 
 
-
-
-
 function change_cost_receipt_img(btn, preview_id) {
   // get preview el
   let prev_el = document.querySelector(`#${preview_id}`);

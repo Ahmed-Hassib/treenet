@@ -4,6 +4,7 @@
 $classes = $up_level . "classes/";
 
 $etc = $up_level . "etc/";
+$vendor = $up_level . "vendor/";
 
 // src directory
 $src = $up_level . "src/"; // root directory
@@ -36,7 +37,7 @@ $user_tpl = $tpl . "user/"; // User templates
 // SYS TREE LAYOUT
 $treenet_user = $src . "user/";
 $treenet_root = $src . "root/";
-
+$treenet_sql_files = $treenet_user . "sql-files/";
 
 // ASSETS DIRECTORY
 $assets = $up_level . "assets/"; // Assets Directory

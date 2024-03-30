@@ -3,7 +3,7 @@
   <!-- start stats -->
   <div class="stats">
     <!-- buttons section -->
-    <div class="mb-3 hstack gap-3">
+    <div class="mb-4 hstack gap-3">
       <?php if ($_SESSION['sys']['connection_add'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) { ?>
         <!-- add new connection type -->
         <button type="button" class="btn btn-outline-primary shadow-sm py-1 fs-12" data-bs-toggle="modal" data-bs-target="#addNewPieceConnTypeModal">
@@ -34,8 +34,10 @@
     <?php
     // create an object of PiecesConn class
     $conn_obj = !isset($conn_obj) ? new PiecesConn() : $conn_obj;
+    // company id
+    $company_id = base64_decode($_SESSION['sys']['company_id']);
     // get all connections 
-    $conn_data = $conn_obj->get_all_conn_types(base64_decode($_SESSION['sys']['company_id']));
+    $conn_data = $conn_obj->get_all_conn_types($company_id);
     // data counter
     $types_count = $conn_data[0];
     // data rows
@@ -43,17 +45,19 @@
     // check types count
     if ($types_count > 0) {
     ?>
-      <div class="row row-cols-sm-2 row-cols-md-3 row-cols-lg-4 gx-3 gy-5">
+      <div class="row row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
         <?php
         // counter
         $i = 1;
         // loop on types
         foreach ($types_data as $key => $type) {
+          // type id
+          $type_id = $type['id'];
           // get count of pieces
-          $all_count = $conn_obj->count_records("`id`", "`pieces_info`", "WHERE `connection_type` = " . $type['id'] . " AND `pieces_info`.`company_id` = " . base64_decode($_SESSION['sys']['company_id']));
-          $pcs_count = $conn_obj->count_records("`id`", "`pieces_info`", "WHERE `is_client` = 0 AND `connection_type` = " . $type['id'] . " AND `pieces_info`.`company_id` = " . base64_decode($_SESSION['sys']['company_id']));
-          $clients_count = $conn_obj->count_records("`id`", "`pieces_info`", "WHERE `is_client` = 1 AND `connection_type` = " . $type['id'] . " AND `pieces_info`.`company_id` = " . base64_decode($_SESSION['sys']['company_id']));
-          $unknown_count = $conn_obj->count_records("`id`", "`pieces_info`", "WHERE `is_client` NOT IN (0, 1) AND `connection_type` = " . $type['id'] . " AND `pieces_info`.`company_id` = " . base64_decode($_SESSION['sys']['company_id']));
+          $all_count = $conn_obj->count_records("`id`", "`pieces_info`", "WHERE `connection_type` = {$type_id} AND `pieces_info`.`company_id` = {$company_id}");
+          $pcs_count = $conn_obj->count_records("`id`", "`pieces_info`", "WHERE `is_client` = 0 AND `connection_type` = {$type_id} AND `pieces_info`.`company_id` = {$company_id}");
+          $clients_count = $conn_obj->count_records("`id`", "`pieces_info`", "WHERE `is_client` = 1 AND `connection_type` = {$type_id} AND `pieces_info`.`company_id` = {$company_id}");
+          $unknown_count = $conn_obj->count_records("`id`", "`pieces_info`", "WHERE `is_client` NOT IN (0, 1) AND `connection_type` = {$type_id} AND `pieces_info`.`company_id` = {$company_id}");
           // check counter
           if ($i > 9) {
             $i = 1;
@@ -86,7 +90,7 @@
                   </div>
                 </div>
               </div>
-              <a href="?do=show-pieces-conn&conn-id=<?php echo base64_encode($type['id']) ?>" class="stretched-link text-black"></a>
+              <a href="?do=show-pieces-conn&conn-id=<?php echo base64_encode($type_id) ?>" class="stretched-link text-black"></a>
             </div>
           </div>
           <?php $i++; ?>
@@ -96,10 +100,10 @@
           <div class="card card-mal shadow-sm border border-1">
             <div class="card-body">
               <?php
-              $not_assigned = $conn_obj->count_records("`id`", "`pieces_info`", "WHERE `connection_type` = 0 AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']));
-              $not_assigned_pcs_count = $conn_obj->count_records("`id`", "`pieces_info`", "WHERE `is_client` = 0 AND `connection_type` = 0 AND `pieces_info`.`company_id` = " . base64_decode($_SESSION['sys']['company_id']));
-              $not_assigned_clients_count = $conn_obj->count_records("`id`", "`pieces_info`", "WHERE `is_client` = 1 AND `connection_type` = 0 AND `pieces_info`.`company_id` = " . base64_decode($_SESSION['sys']['company_id']));
-              $not_assigned_unknown_count = $conn_obj->count_records("`id`", "`pieces_info`", "WHERE `is_client` NOT IN (0, 1) AND `connection_type` = 0 AND `pieces_info`.`company_id` = " . base64_decode($_SESSION['sys']['company_id']));
+              $not_assigned = $conn_obj->count_records("`id`", "`pieces_info`", "WHERE `connection_type` = 0 AND `company_id` = {$company_id}");
+              $not_assigned_pcs_count = $conn_obj->count_records("`id`", "`pieces_info`", "WHERE `is_client` = 0 AND `connection_type` = 0 AND `pieces_info`.`company_id` = {$company_id}");
+              $not_assigned_clients_count = $conn_obj->count_records("`id`", "`pieces_info`", "WHERE `is_client` = 1 AND `connection_type` = 0 AND `pieces_info`.`company_id` = {$company_id}");
+              $not_assigned_unknown_count = $conn_obj->count_records("`id`", "`pieces_info`", "WHERE `is_client` NOT IN (0, 1) AND `connection_type` = 0 AND `pieces_info`.`company_id` = {$company_id}");
               ?>
               <h5 class="h5 card-title text-uppercase">
                 <?php echo lang('NOT ASSIGNED') ?>
@@ -134,6 +138,4 @@
     } ?>
       </div>
   </div>
-</div>
-</div>
 </div>

@@ -4,16 +4,16 @@ $pcs_obj = !isset($pcs_obj) ? new Pieces() : $pcs_obj;
 // get type
 $type = isset($_GET['type']) && !empty($_GET['type']) ? intval($_GET['type']) : 0;
 // get connection id
-$connection_id = isset($_GET['conn-id']) && !empty($_GET['conn-id']) ? base64_decode($_GET['conn-id']) : 0;
+$connection_id = isset($_GET['conn-id']) && !empty($_GET['conn-id']) ? base64_decode($_GET['conn-id']) : null;
 // show all clients of specific connection type
-$condition = "WHERE `pieces_info`.`connection_type` = $connection_id AND `pieces_info`.`company_id` = " . base64_decode($_SESSION['sys']['company_id']); // query condition
+$condition = "WHERE `pieces_info`.`connection_type` = {$connection_id} AND `pieces_info`.`company_id` = " . base64_decode($_SESSION['sys']['company_id']); // query condition
 // get connection name
-$conn_type_name = $pcs_obj->select_specific_column("`connection_name`", "`connection_types`", "WHERE `id` = $connection_id");
+$conn_type_name = $pcs_obj->select_specific_column("`connection_name`", "`connection_types`", "WHERE `id` = {$connection_id}");
 
 // check the connection id 
-if ($connection_id != 0) {
+if (!is_null($connection_id)) {
   // page subtitle
-  $subtitle = $conn_type_name;
+  $subtitle = $conn_type_name[0]['connection_name'];
 } else {
   // page subtitle
   $subtitle = '';
@@ -96,7 +96,7 @@ if (!is_null($all_data)) {
                     <?php echo lang("NOT ASSIGNED") ?>
                   </span>
                 <?php } else { ?>
-                  <a href="<?php echo trim($piece['ip'], ' \t\n\v') ?>" class="pcs-ip" data-pcs-ip="<?php echo trim($piece['ip'], ' \t\n\v') ?>">
+                  <a href="http://<?php echo trim($piece['ip'], ' \t\n\v') ?>" class="pcs-ip" data-pcs-ip="<?php echo trim($piece['ip'], ' \t\n\v') ?>">
                     <?php echo trim($piece['ip'], ' \t\n\v') ?>
                   </a>
                   <?php if ($_SESSION['sys']['isLicenseExpired'] == 0) { ?>
@@ -123,7 +123,7 @@ if (!is_null($all_data)) {
                 <?php if ($piece['direction_id'] == 0) { ?>
                   <i class="bi bi-exclamation-triangle-fill text-danger fw-bold" title="<?php echo lang("NOT ASSIGNED") ?>"></i>
                 <?php } ?>
-                <?php if ($piece['added_date'] == date('Y-m-d')) { ?>
+                <?php if (date_format(date_create($piece['created_at']), 'Y-m-d') == date('Y-m-d')) { ?>
                   <span class="badge bg-danger p-1 <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'me-1' : 'ms-1' ?>">
                     <?php echo lang('NEW') ?>
                   </span>
@@ -166,7 +166,7 @@ if (!is_null($all_data)) {
                     <?php echo lang("NOT ASSIGNED") ?>
                   </span>
                 <?php } else { ?>
-                  <a href="<?php echo trim($source_ip, ' \t\n\v') ?>" class="pcs-ip" data-pcs-ip="<?php echo trim($source_ip, ' \t\n\v') ?>">
+                  <a href="http://<?php echo trim($source_ip, ' \t\n\v') ?>" class="pcs-ip" data-pcs-ip="<?php echo trim($source_ip, ' \t\n\v') ?>">
                     <?php echo trim($source_ip, ' \t\n\v') ?>
                   </a>
                   <?php if ($_SESSION['sys']['isLicenseExpired'] == 0) { ?>
@@ -238,7 +238,19 @@ if (!is_null($all_data)) {
               </td>
               <!-- added date -->
               <td>
-                <?php echo $piece['added_date'] == '0000-00-00' ? lang("NOT ASSIGNED") : $piece['added_date'] ?>
+                <?php
+                // check result
+                if (is_null($piece['created_at'])) {
+                  $date = ucfirst(lang('NOT ASSIGNED'));
+                  $date_class = 'text-danger fs-12 fw-bold';
+                } else {
+                  $date = wordwrap(date_format(date_create($piece['created_at']), 'h:i:sa d-m-Y'), 11, "<br>");
+                  $date_class = '';
+                }
+                ?>
+                <span class="<?php echo isset($date_class) ? $date_class : '' ?>">
+                  <?php echo $date ?>
+                </span>
               </td>
               <!-- control -->
               <td>

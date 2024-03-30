@@ -6,20 +6,24 @@ $company_id = $db_obj->get_next_id('jsl_db', 'companies');
 $license_id = $db_obj->get_next_id('jsl_db', 'license');
 $user_id = $db_obj->get_next_id('jsl_db', 'users');
 // get company info
-$company_name = $_POST['company-name'];
-$company_code = $_POST['company-code'];
-$manager_name = $_POST['manager-name'];
-$manager_phone = $_POST['manager-phone'];
+$company_name = trim($_POST['company-name']);
+$company_code = trim($_POST['company-code']);
+$manager_name = trim($_POST['fullname']);
+$company_phone = trim($_POST['company-phone']);
 $country = $_POST['country'];
+$agent = $_POST['agent'];
 // admin of this company info
-$fullname = $_POST['fullname'];
+$fullname = $manager_name;
 $username = $_POST['username'];
-$password = $_POST['password'];
+$password = trim($_POST['password']);
+$confirm_password = trim($_POST['confirm_pass']);
+$admin_phone = trim($_POST['admin-phone']);
+$admin_email = filter_var($_POST['admin-email'], FILTER_VALIDATE_EMAIL);
 $enc_password = sha1($password);
 $gender = $_POST['gender'];
 
 // array of error
-$err_arr = array();
+$err_arr = [];
 
 // check company name
 if (empty($company_name)) {
@@ -36,7 +40,7 @@ if (!is_triple_parts_name($manager_name)) {
 }
 
 // check manager phone
-if (empty($manager_phone)) {
+if (empty($company_phone)) {
   $err_arr[] = 'phone empty';
 }
 
@@ -63,6 +67,8 @@ if (empty($username)) {
 // check password
 if (empty($password)) {
   $err_arr[] = 'password empty';
+} elseif ($password != $confirm_password) {
+  $err_arr[] = 'password not equal';
 }
 
 // check gender
@@ -78,9 +84,9 @@ if (empty($err_arr)) {
   // if name was exist
   if (!$is_exist_company_name) {
     // create an object of Registration class
-    $reg_obj = !isset($reg_obj) ? new Registration() : $reg_obj;
+    $reg_obj =  new Registration();
     // add new company
-    $is_inserted_company = $reg_obj->add_new_company(array($company_name, $company_code, $manager_name, $manager_phone, $country, get_date_now()));
+    $is_inserted_company = $reg_obj->add_new_company(array($company_name, $company_code, $manager_name, $company_phone, $country, $agent, get_date_now()));
     // check if company was added
     if ($is_inserted_company) {
       // add a success message
@@ -162,7 +168,7 @@ if (empty($err_arr)) {
 // redirect to previous page
 redirect_home(null, isset($url) && !empty($url) ? $url : 'back', 0);
 
-function assign_message($arr, $icon, $class, $flag, $lang)
+function assign_message($arr, $icon, $class, $flag, $lang_file)
 {
   // loop on form error array
   foreach ($arr as $key => $error) {
@@ -170,6 +176,6 @@ function assign_message($arr, $icon, $class, $flag, $lang)
     $_SESSION['flash_message_icon'][$key] = $icon;
     $_SESSION['flash_message_class'][$key] = $class;
     $_SESSION['flash_message_status'][$key] = $flag;
-    $_SESSION['flash_message_lang_file'][$key] = $lang;
+    $_SESSION['flash_message_lang_file'][$key] = $lang_file;
   }
 }

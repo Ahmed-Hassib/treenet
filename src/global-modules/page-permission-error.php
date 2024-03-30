@@ -14,6 +14,6 @@ $_SESSION['flash_message_status'][1] = false;
 $_SESSION['flash_message_lang_file'][1] = 'global_';
 
 // check if posible back
-$is_back = isset($_SESSION['UserID']) ? 'back' : null;
+$is_back = isset($_SESSION['sys']['UserID']) ? 'back' : null;
 // redirect to the previous page
 redirect_home(null, $is_back, 0);

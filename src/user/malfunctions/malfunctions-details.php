@@ -56,11 +56,11 @@ switch ($accepted) {
 switch ($action) {
   case 'today':
     $title .= " TODAY";
-    $conditionPeriod = " `created_at` = '" . get_date_now() . "'";
+    $conditionPeriod = " Date(`created_at`) = '" . get_date_now() . "'";
     break;
   case 'month':
     $title .= " MONTH";
-    $conditionPeriod = " `created_at` BETWEEN '" . Date('Y-m-1') . "' AND '" . Date('Y-m-30') . "'";
+    $conditionPeriod = " Date(`created_at`) BETWEEN '" . Date('Y-m-1') . "' AND '" . Date('Y-m-30') . "'";
     break;
   case 'previous-month':
     $title .= " PREV MONTH";
@@ -72,7 +72,7 @@ switch ($action) {
     $startDate = Date("Y-m-d", strtotime($start . $period));
     $endDate = Date("Y-m-d", strtotime($end . $period));
     // period condition
-    $conditionPeriod = " `created_at` BETWEEN '$startDate' AND '$endDate'";
+    $conditionPeriod = " Date(`created_at`) BETWEEN '$startDate' AND '$endDate'";
     break;
   default:
     $title = $target_year != Date('Y') ? "{$title}" : "TOTAL {$title}";

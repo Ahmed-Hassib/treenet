@@ -18,7 +18,7 @@ if ($piece_id != 0 && $is_exist_id) {
 ?>
   <!-- start add new user page -->
   <div class="container" dir="<?php echo $page_dir ?>">
-    <!-- start form -->
+  <!-- start form -->
     <form class="custom-form need-validation" action="?do=update-piece-info" method="POST" id="update-piece-info" onchange="form_validation(this)">
       <div class="hstack gap-3">
         <?php if ($_SESSION['sys']['pcs_update'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) { ?>
@@ -29,7 +29,7 @@ if ($piece_id != 0 && $is_exist_id) {
           </button>
         <?php } ?>
 
-        <?php if ($_SESSION['sys']['mikrotik']['status'] && 0) { ?>
+        <?php if ($_SESSION['sys']['mikrotik']['status'] && 0 && !is_null($piece_data['ip'])) { ?>
           <a class="btn btn-outline-primary fs-12 w-auto py-1 px-2" href="?do=prepare-ip&address=<?php echo $piece_data['ip'] ?>&port=<?php echo !empty($piece_data['port']) ? $piece_data['port'] : '' ?>" target='_blank'>
             <?php echo lang('VISIT DEVICE', $lang_file) ?>
           </a>
@@ -273,7 +273,7 @@ if ($piece_id != 0 && $is_exist_id) {
                         <?php if ($sources_count) { ?>
                           <?php foreach ($sources_data as $alt_source) { ?>
                             <option value="<?php echo base64_encode($alt_source['id']) ?>" <?php echo $piece_data['alt_source_id'] == $alt_source['id'] || ($piece_data['alt_source_id'] == 0 && $piece_data['ip'] == $alt_source['ip']) ? 'selected' : ''; ?>>
-                              <?php echo $alt_source['full_name'] . " - " . $alt_source['ip'] ?>
+                              <?php echo $alt_source['full_name'] . (!is_null($alt_source['ip']) ? " - " . $alt_source['ip'] : null) ?>
                             </option>
                           <?php } ?>
                         <?php } ?>
@@ -498,15 +498,6 @@ if ($piece_id != 0 && $is_exist_id) {
                           <label for="port">Port</label>
                         </div>
                       </div>
-                      <div id="ipHelp" class="form-text text-warning">
-                        <span>
-                          <?php echo lang('IP NOTE', $lang_file) ?>
-                        </span>
-                        <span>&nbsp;-&nbsp;</span>
-                        <span>
-                          <?php echo lang('PORT NOTE', $lang_file) ?>
-                        </span>
-                      </div>
                     </div>
                   </div>
 
@@ -557,9 +548,6 @@ if ($piece_id != 0 && $is_exist_id) {
                       <label for="password-connection">
                         <?php echo lang('PASS CONN', $lang_file) ?>
                       </label>
-                      <div id="passHelp" class="form-text text-warning ">
-                        <?php echo lang('PASS NOTE') ?>
-                      </div>
                     </div>
                   </div>
                   <!-- ssid -->

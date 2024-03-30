@@ -1,4 +1,3 @@
-<pre dir="ltr">
 <?php
 // check method
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {

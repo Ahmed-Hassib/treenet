@@ -26,7 +26,7 @@ function get_page_dependencies($page_role, $file_type)
       'node' => [
         'css' => [
           '1' => 'bootstrap/dist/css/bootstrap.min.css',
-          '2' => 'bootstrap-icons/font/bootstrap-icons.css',
+          '2' => 'bootstrap-icons/font/bootstrap-icons.min.css',
         ],
         'js' => [
           '1' => 'jquery/dist/jquery.min.js',
@@ -120,7 +120,9 @@ function get_page_dependencies($page_role, $file_type)
       'css' => [
         '1' => 'landing.css'
       ],
-      'js' => []
+      'js' => [
+        '1' => 'landing.js'
+      ]
     ],
 
     // for blog login
@@ -181,6 +183,7 @@ function get_page_dependencies($page_role, $file_type)
     'treenet_dir' => [
       'css' => [
         '1' => 'hierarchical-chart.css',
+        '2' => 'directions.css'
       ],
       'js' => [
         '1' => 'directions.js',
@@ -206,7 +209,7 @@ function get_page_dependencies($page_role, $file_type)
         '1' => 'combination.js'
       ],
     ],
-
+    
     'treenet_reports' => [
       'css' => [
         '1' => 'reports.css'
@@ -233,12 +236,22 @@ function get_page_dependencies($page_role, $file_type)
         '1' => 'services.js'
       ],
     ],
-
+    
     'treenet_payment' => [
       'css' => [
         '1' => 'payments.css'
       ],
       'js' => [],
+    ],
+
+    'treenet_comp' => [
+      'css' => [
+        '1' => 'comp-sugg.css',
+        '2' => 'media-preview.css'
+      ],
+      'js' => [
+        '1' => 'comp-sugg.js'
+      ],
     ],
 
     'treenet_err' => [

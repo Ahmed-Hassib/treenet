@@ -140,14 +140,24 @@ function global_($phrase)
     'SUCCESS' => 'نجحت',
     'FAILED' => 'فشلت',
     'PENDING' => 'قيد الانتظار',
+    'PROCESSING' => 'جارى العمل',
     'PROGRESS' => 'التقدم',
     'AGENTS' => 'وكلائنا المعتمدين',
     'DIRECTIONS TREE' => 'شجرة الاتجاهات',
-    'DIRECTIONS MAP' => 'خرطة الاتجاهات',
+    'DIRECTIONS MAP' => 'خريطة الاتجاهات',
     'LAST UPDATE' => 'آخر تعديل',
     'DELETES' => 'المحذوفات',
-
-
+    'DATE & TIME' => 'الوقت / التاريخ',
+    'ADDED DATE & TIME' => 'تاريخ / وقت الإضافة',
+    'UPDATED DATE & TIME' => 'تاريخ / وقت التعديل',
+    'TYPE' => 'النوع',
+    'STATUS' => 'الحالة',
+    'SELECT STATUS' => 'اختر الحالة',
+    'YOU' => 'أنت',
+    'ADMIN' => 'المسئول',
+    'USER' => 'المستخدم',
+    'COMMENT' => 'تعليق',
+    'THE COMMENT' => 'التعليق',
 
     // pages title
     'DASHBOARD' => 'لوحة التحكم',
@@ -168,6 +178,7 @@ function global_($phrase)
     'IMPORTANT LINKS' => 'الروابط الهامة',
     'GALLERY' => 'معرض الصور',
     'CONTACT US' => 'تواصل معنا',
+    'CONTACT US ON WHATSAPP' => 'تواصل معنا عبر واتساب',
     'FEATURES' => 'المميزات',
 
 
@@ -203,6 +214,7 @@ function global_($phrase)
     'ADV OF EARLY DISCOUNT' => 'قم باستغلال الخصم المبكر للإشتراك الآن',
     'LIKE TO BE A PARTNER' => 'حابب تكون شريكنا؟؟',
     'SEARCH STMT EMPTY' => 'لا يمكن البحث عن فراغ برجاء العودة وكتابة ما تريد البحث عنه بشكل واضح',
+    'MUST TAKEN INTO ACCOUNT' => 'يجب مراعات الآتى',
 
     // global messages
     'NOT ASSIGNED' => 'لم يُحدد',
@@ -273,6 +285,8 @@ function global_($phrase)
     'CHANGE IMG' => 'تغيير الصورة',
     'DELETE MEDIA' => 'حذف الصور/الفيديوهات',
     'DOWNLOAD MEDIA' => 'تحميل الصور/الفيديوهات',
+    'DOWNLOAD FILE' => 'تحميل الملف',
+    'UPLOAD FILE' => 'إرفاق الملف',
     'SELECT LANG' => 'إختر اللغة',
     'SHOW TREE' => 'رؤية الشجرة',
 

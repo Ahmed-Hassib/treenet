@@ -1,0 +1,21 @@
+.direction-upload-instructions {
+  position: relative;
+  display: grid;
+  grid-template-columns: 70% 25%;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+@media (max-width: 992px) {
+  .direction-upload-instructions {
+    grid-template-columns: 1fr;
+  }
+}
+
+.direction-upload-instructions .downloaded-file {
+  width: 200px;
+}
+
+.direction-upload-instructions .downloaded-file .bi {
+  font-size: 32px !important;
+}

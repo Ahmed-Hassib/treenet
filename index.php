@@ -35,9 +35,6 @@ if ($query == 'main') {
   $file_name = "landing.php";
   // page subtitle
   $page_subtitle = "home desc";
-} elseif ($query == 'contact-us') {
-  // file name
-  $file_name = "contact-us.php";
 }
 
 // pre configration of system

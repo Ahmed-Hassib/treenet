@@ -69,18 +69,24 @@ class Direction extends Database
         `pieces_info`.`device_type`,
         `pieces_info`.`source_id`,
         `pieces_info`.`direction_id`,
-        `pieces_coordinates`.`coordinates`
+        `pieces_info`.`coordinates`
     FROM
         `pieces_info`
     LEFT JOIN `direction` ON `direction`.`direction_id` = `pieces_info`.`direction_id`
-    LEFT JOIN `pieces_coordinates` ON `pieces_coordinates`.`id` = `pieces_info`.`id`
     WHERE {$dir_condition}";
     $stmt = $this->con->prepare($dir_query); // select all users
     $stmt->execute($dir_id != null ? array($dir_id, $type, $company_id) : array($type, $company_id)); // execute data
     $rows = $stmt->fetchAll(); // assign all data to variable
     $count = $stmt->rowCount(); // assign all data to variable
-    // return result
-    return $count > 0 ? $rows : null;
+    // check count
+    if ($count > 0) {
+      $res = [];
+      foreach ($rows as $key => $row) {
+        $res[] = $this->prepare_coordinates_data($row);
+      }
+      return $res;
+    }
+    return null;
   }
   
   public function get_all_source_pcs_coordinates($dir_id, $src, $company_id)
@@ -93,19 +99,25 @@ class Direction extends Database
         `pieces_info`.`is_client`,
         `pieces_info`.`device_type`,
         `pieces_info`.`source_id`,
-        `pieces_coordinates`.`coordinates`
+        `pieces_info`.`coordinates`
     FROM
         `pieces_info`
     LEFT JOIN `direction` ON `direction`.`direction_id` = `pieces_info`.`direction_id`
-    LEFT JOIN `pieces_coordinates` ON `pieces_coordinates`.`id` = `pieces_info`.`id`
     WHERE
         `pieces_info`.`direction_id` = ? AND `pieces_info`.`source_id` = ? AND `pieces_info`.`company_id` = ?;";
     $stmt = $this->con->prepare($dir_query); // select all users
     $stmt->execute(array($dir_id, $src, $company_id)); // execute data
     $rows = $stmt->fetchAll(); // assign all data to variable
     $count = $stmt->rowCount(); // assign all data to variable
-    // return result
-    return $count > 0 ? $rows : null;
+    // check count
+    if ($count > 0) {
+      $res = [];
+      foreach ($rows as $key => $row) {
+        $res[] = $this->prepare_coordinates_data($row);
+      }
+      return $res;
+    }
+    return null;
   }
 
   // insert a new direction
@@ -171,5 +183,18 @@ class Direction extends Database
 
     // return
     return $count > 0 ?  $response : null;
+  }
+
+  public function prepare_coordinates_data($data) {
+    extract($data);
+    return [
+      'id' => $id,
+      'ip' => $ip,
+      'full_name' => $full_name,
+      'is_client' => $is_client,
+      'device_type' => $device_type,
+      'source_id' => $source_id,
+      'coordinates' => $coordinates,
+    ];
   }
 }

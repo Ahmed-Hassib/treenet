@@ -6,6 +6,6 @@ $_SESSION['flash_message_class'] = 'danger';
 $_SESSION['flash_message_status'] = false;
 $_SESSION['flash_message_lang_file'] = 'global_';
 // check if posible back
-$is_back = isset($_SESSION['UserID']) && isset($_GET['back']) ? 'back' : null;
+$is_back = isset($_SESSION['sys']['UserID']) && isset($_GET['back']) ? 'back' : null;
 // redirect to the previous page
 redirect_home(null, $is_back, 0);

@@ -15,7 +15,7 @@ if ($_SESSION['sys']['system_theme'] == 2) {
             <?php echo wordwrap(lang('DELETED EMPLOYEES', $lang_file), 15, "<br>") ?>
           </h5>
         </div>
-        <a href="?do=employees" class="stretched-link text-capitalize"></a>
+        <a href="<?php echo $nav_up_level ?>employees/index.php?do=deletes" class="stretched-link text-capitalize"></a>
       </div>
       <div class="dashboard-card card card-stat <?php echo isset($card_position) ? $card_position : ''; ?> bg-gradient">
         <!-- <img class="card-img <?php echo $page_dir == 'ltr' ? 'card-img-right' : 'card-img-left' ?>" src="<?php echo $treenet_assets . "user.svg" ?>" alt=""> -->
@@ -36,15 +36,16 @@ if ($_SESSION['sys']['system_theme'] == 2) {
         </div>
         <a href="<?php echo $nav_up_level ?>pieces/index.php?do=deletes" class="stretched-link text-capitalize"></a>
       </div>
-      <!-- <div class="dashboard-card card card-stat  <?php echo isset($card_position) ? $card_position : ''; ?> bg-gradient">
+      <div class="dashboard-card card card-stat  <?php echo isset($card_position) ? $card_position : ''; ?> bg-gradient">
         <img class="card-img <?php echo $page_dir == 'ltr' ? 'card-img-right' : 'card-img-left' ?>" src="<?php echo $treenet_assets . "braces-asterisk.svg" ?>" alt="">
         <div class="card-body">
           <h5 class="h5 text-capitalize">
             <?php echo wordwrap(lang('deleted combinations', $lang_file), 15, "<br>") ?>
           </h5>
         </div>
-        <a href="?do=combinations" class="stretched-link text-capitalize"></a>
+        <a href="<?php echo $nav_up_level ?>combinations/index.php?do=deletes" class="stretched-link text-capitalize"></a>
       </div>
+      <!-- 
       <div class="dashboard-card card card-stat  <?php echo isset($card_position) ? $card_position : ''; ?> bg-gradient">
         <img class="card-img <?php echo $page_dir == 'ltr' ? 'card-img-right' : 'card-img-left' ?>" src="<?php echo $treenet_assets . "flash.svg" ?>" alt="">
         <div class="card-body">

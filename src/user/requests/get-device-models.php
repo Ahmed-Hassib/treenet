@@ -24,9 +24,9 @@ if ($device_id == 0) {
   // convert data into json file
   $json_data = json_encode($data);
   // check server name
-  if ($_SERVER['SERVER_NAME'] == 'leadergroupegypt.com') {
+  if ($_SERVER['SERVER_NAME'] == 'tree-net.net') {
     // json location
-    $json_location = $document_root . "/app/data/json/";
+    $json_location = $document_root . "app/data/json/";
   } else {
     // json location
     $json_location = $document_root . "/data/json/";

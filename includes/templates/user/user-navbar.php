@@ -4,10 +4,10 @@
   <div class="sidebar-menu-brand" href="dashboard.php" <?php echo !isset($_SESSION['sys']['username']) ? "style='margin: auto'" : "" ?>>
     <div class="brand-container" style="align-self: center;">
       <?php $brand_img_name = "treenet.png"; ?>
-      <?php $brand_img_path = $treenet_assets . "{$brand_img_name}"; ?>
-      <?php $brand_resized_img_path = $treenet_assets . "resized/{$brand_img_name}"; ?>
+      <?php $brand_img_path = "{$treenet_assets}{$brand_img_name}"; ?>
+      <?php $brand_resized_img_path = "{$treenet_assets}resized/{$brand_img_name}"; ?>
       <?php if (file_exists($brand_img_path)) { ?>
-        <?php $is_resized = resize_img($treenet_assets, $brand_img_name); ?>
+        <?php $is_resized = resize_img("{$treenet_assets}", $brand_img_name); ?>
         <img class="brand-img" loading="lazy" src="<?php echo $is_resized ? $brand_resized_img_path : $brand_img_path ?>" alt="Tree Net App ">
       <?php } else { ?>
         <h3 class="fw-bold sidebar-menu-logo-name">
@@ -43,7 +43,7 @@
       <!-- start profile details nav link -->
     <?php } ?>
     <!-- start dashboard page link -->
-    <li class="<?php echo get_page_active_link('dashboard') ? 'active' : '' ?>">
+    <li class="<?php echo get_page_active_link('dashboard') ? 'active' : NULL ?>">
       <a href="<?php echo $nav_up_level ?>dashboard/index.php">
         <i class="bi bi-grid"></i>
         <span class="link-name">
@@ -98,8 +98,8 @@
               </a>
             </li>
           <?php } ?>
-          <hr class="m-1">
           <?php if ($_SESSION['sys']['pcs_show'] == 1) { ?>
+            <hr class="m-1">
             <li>
               <a href="<?php echo $nav_up_level ?>employees/index.php?do=deletes">
                 <span class="link-name">
@@ -148,10 +148,18 @@
             <?php } ?>
           <?php } ?>
           <?php if ($_SESSION['sys']['dir_add'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) { ?>
+            <hr class="m-1">
             <li>
               <a href="#" data-bs-toggle="modal" data-bs-target="#addNewDirectionModal">
                 <span class="link-name">
                   <?php echo lang('ADD NEW', "directions") ?>
+                </span>
+              </a>
+            </li>
+            <li>
+              <a href="<?php echo $nav_up_level ?>directions/index.php?do=upload">
+                <span class="link-name">
+                  <?php echo wordwrap(lang('upload data by file', "directions"), "45", "<br>", true) ?>
                 </span>
               </a>
             </li>
@@ -208,8 +216,8 @@
               </a>
             </li>
           <?php } ?>
-          <hr class="m-1">
           <?php if ($_SESSION['sys']['pcs_show'] == 1) { ?>
+            <hr class="m-1">
             <li>
               <a href="<?php echo $nav_up_level ?>pieces/index.php?do=deletes">
                 <span class="link-name">
@@ -270,6 +278,7 @@
             </li>
           <?php } ?>
           <?php if ($_SESSION['sys']['connection_delete'] == 1 && $conn_data_types > 0 && $_SESSION['sys']['isLicenseExpired'] == 0) { ?>
+            <hr class="m-1">
             <li>
               <a href="#" data-bs-toggle="modal" data-bs-target="#deletePieceConnTypeModal">
                 <span class="link-name">
@@ -323,8 +332,8 @@
               </a>
             </li>
           <?php } ?>
-          <hr class="m-1">
           <?php if ($_SESSION['sys']['clients_show'] == 1) { ?>
+            <hr class="m-1">
             <li>
               <a href="<?php echo $nav_up_level ?>clients/index.php?do=deletes">
                 <span class="link-name">
@@ -409,6 +418,16 @@
                 </a>
               </li>
             <?php } ?>
+            <?php if ($_SESSION['sys']['pcs_show'] == 1) { ?>
+              <hr class="m-1">
+              <li>
+                <a href="<?php echo $nav_up_level ?>combinations/index.php?do=deletes">
+                  <span class="link-name">
+                    <?php echo lang('deletes') ?>
+                  </span>
+                </a>
+              </li>
+            <?php } ?>
           </ul>
           <!-- end sub menu -->
         </li>
@@ -416,7 +435,7 @@
       <?php } ?>
       <?php if (base64_decode($_SESSION['sys']['job_title_id']) == 1) { ?>
         <!-- start services nav link -->
-        <li class="<?php echo get_page_active_link('services') ? 'active' : '' ?>">
+        <li class="<?php echo get_page_active_link('services') ? 'active' : NULL ?>">
           <div class="icon-link">
             <a href="<?php echo $nav_up_level ?>services/index.php">
               <i class="bi bi-tools"></i>
@@ -473,7 +492,7 @@
         <!-- end pricing nav link -->
       <?php } ?>
       <!-- start temporary deletes nav link -->
-      <li class="<?php echo get_page_active_link('deletes') ? 'active' : '' ?>">
+      <li class="<?php echo get_page_active_link('deletes') ? 'active' : NULL ?>">
         <a href="<?php echo $nav_up_level ?>deletes/index.php">
           <i class="bi bi-trash"></i>
           <span class="link-name">
@@ -516,7 +535,7 @@
         </li>
       <?php } ?>
       <!-- start setting nav link -->
-      <li class="<?php echo get_page_active_link('settings') ? 'active' : '' ?>">
+      <li class="<?php echo get_page_active_link('settings') ? 'active' : NULL ?>">
         <a href="<?php echo $nav_up_level ?>settings/index.php">
           <i class="bi bi-gear"></i>
           <span class="link-name">

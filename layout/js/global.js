@@ -116,26 +116,27 @@ var arrowUpBtn = document.querySelector(".arrow-up");
     }
   }
 
+  if (Boolean(localStorage.getItem('mikrotik_ping'))) {
+    // get all ips
+    let ips_elements = document.querySelectorAll(".pcs-ip");
+    let online = 0;
+    let offline = 0;
 
-  // get all ips
-  let ips_elements = document.querySelectorAll(".pcs-ip");
-  let online = 0;
-  let offline = 0;
-
-  if (ips_elements.length > 0) {
-    // loop on ips
-    ips_elements.forEach(ip_element => {
-      let ip = ip_element.dataset.pcsIp;
-      let device_status = ip_element.previousElementSibling;
-      let preloader_status = device_status != null ? device_status.previousElementSibling : null;
-      if (ip != '0.0.0.0' && preloader_status != null) {
-        // check ip connection
-        check_ip_connection(ip, preloader_status, device_status)
-        setInterval(() => {
+    if (ips_elements.length > 0) {
+      // loop on ips
+      ips_elements.forEach(ip_element => {
+        let ip = ip_element.dataset.pcsIp;
+        let device_status = ip_element.previousElementSibling;
+        let preloader_status = device_status != null ? device_status.previousElementSibling : null;
+        if (ip != '0.0.0.0' && preloader_status != null) {
+          // check ip connection
           check_ip_connection(ip, preloader_status, device_status)
-        }, 600000);
-      }
-    })
+          setInterval(() => {
+            check_ip_connection(ip, preloader_status, device_status)
+          }, 600000);
+        }
+      })
+    }
   }
 })();
 

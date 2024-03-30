@@ -139,12 +139,8 @@ if (!is_null($all_data)) {
               <!-- client address -->
               <td>
                 <?php
-                // get piece address
-                $addr = $pcs_obj->select_specific_column("`address`", "`pieces_addr`", "WHERE `id` = " . $client['id']);
-                // check result
-                if (count($addr) > 0) {
-                  $addr_ = $addr[0]['address'];
-                  echo wordwrap($addr_, 50, "<br>");
+                if (!is_null($client['address'])) {
+                  echo wordwrap($client['address'], 50, "<br>");
                 } else { ?>
                   <span class="text-danger fs-12 fw-bold">
                     <?php echo lang('NOT ASSIGNED') ?>
@@ -203,11 +199,8 @@ if (!is_null($all_data)) {
               <!-- internet source -->
               <td>
                 <?php
-                // get internet source
-                $coordinates = $pcs_obj->select_specific_column("`coordinates`", "`pieces_Coordinates`", "WHERE `id` = " . $client['id']);
-                // check result
-                if (!empty($coordinates)) {
-                  echo $coordinates[0]['coordinates'];
+                if (!is_null($client['coordinates'])) {
+                  echo $client['coordinates'];
                 } else { ?>
                   <span class="text-danger fs-12 fw-bold">
                     <?php echo lang('NOT ASSIGNED') ?>
@@ -276,7 +269,7 @@ if (!is_null($all_data)) {
                     <span class="pcs-ip" data-pcs-ip="<?php echo $source_ip ?>">
                       <?php echo $source_name ?>
                     </span><br>
-                    <a href="<?php echo $source_ip ?>" target="_blank">
+                    <a href="http://<?php echo $source_ip ?>" target="_blank">
                       <?php echo $source_ip ?>
                     </a>
                   </span><br>
@@ -292,7 +285,7 @@ if (!is_null($all_data)) {
               <td class="text-capitalize" data-ip="<?php echo convert_ip($source_ip) ?>">
                 <?php
                 // get source info
-                $alt_source_info = $db_obj->select_specific_column("`full_name`, `ip`, `port`", "`pieces_info`", "WHERE `id` = " . $client['source_id']);
+                $alt_source_info = $client['alt_source_id'] > 0 ? $db_obj->select_specific_column("`full_name`, `ip`, `port`", "`pieces_info`", "WHERE `id` = " . $client['alt_source_id']) : null;
                 // default info is null
                 $alt_source_name = null;
                 $alt_source_ip = null;
@@ -302,7 +295,7 @@ if (!is_null($all_data)) {
                   $alt_source_name = trim($alt_source_info[0]['full_name'], ' \t\n\v');
                   $source_ip = trim($alt_source_info[0]['ip'], ' \t\n\v');
                   $alt_source_port = trim($alt_source_info[0]['port'], ' \t\n\v');
-                } elseif ($client['source_id'] == 0) {
+                } elseif ($client['alt_source_id'] == 0) {
                   $alt_source_name = trim($client['fullname'], ' \t\n\v');
                   $alt_source_ip = trim($client['ip'], ' \t\n\v');
                   $alt_source_port = trim($client['port'], ' \t\n\v');
@@ -321,7 +314,7 @@ if (!is_null($all_data)) {
                     <span class="pcs-ip" data-pcs-ip="<?php echo $alt_source_ip ?>">
                       <?php echo $alt_source_name ?>
                     </span><br>
-                    <a href="<?php echo $alt_source_ip ?>" target="_blank">
+                    <a href="http://<?php echo $alt_source_ip ?>" target="_blank">
                       <?php echo $alt_source_ip ?>
                     </a>
                   </span><br>
@@ -392,7 +385,7 @@ if (!is_null($all_data)) {
                     </span>
                     <span class="ping-status"></span>
                     <span class="pcs-ip" data-pcs-ip="<?php echo trim($client['ip'], ' \t\n\v') ?>">
-                      <a href="<?php echo trim($client['ip'], ' \t\n\v') ?>" target="_blank">
+                      <a href="http://<?php echo trim($client['ip'], ' \t\n\v') ?>" target="_blank">
                         <?php echo trim($client['ip'], ' \t\n\v') ?>
                       </a>
                     </span>
@@ -408,7 +401,7 @@ if (!is_null($all_data)) {
               <!-- client port -->
               <td>
                 <?php
-                if ($client['port'] <= 0) {
+                if (is_null($client['port'])) {
                   $port_name = lang('NOT ASSIGNED');
                   $port_class = 'text-danger fs-12 fw-bold';
                 } else {
@@ -422,15 +415,11 @@ if (!is_null($all_data)) {
               </td>
               <!-- mac address -->
               <td>
-                <?php
-                // get mac address
-                $mac_addr_info = $db_obj->select_specific_column("`mac_add`", "`pieces_mac_addr`", "WHERE `id` = " . $client['id']);
-                // check result
-                if (count($mac_addr_info) <= 0 || $mac_addr_info == null) {
+                <?php if (is_null($client['mac_add'])) {
                   $mac_addr = lang('NOT ASSIGNED');
                   $mac_class = 'text-danger fs-12 fw-bold';
                 } else {
-                  $mac_addr = $mac_addr_info[0]['mac_add'];
+                  $mac_addr = $client['mac_add'];
                   $mac_class = '';
                 }
                 ?>
@@ -455,15 +444,11 @@ if (!is_null($all_data)) {
               </td>
               <!-- ssid -->
               <td>
-                <?php
-                // get ssid
-                $ssid_info = $db_obj->select_specific_column("`ssid`", "`pieces_ssid`", "WHERE `id` = " . $client['id']);
-                // check result
-                if (count($ssid_info) <= 0 || $ssid_info == null) {
+                <?php if (is_null($client['ssid'])) {
                   $ssid = lang('NOT ASSIGNED');
                   $ssid_class = 'text-danger fs-12 fw-bold';
                 } else {
-                  $ssid = $ssid_info[0]['ssid'];
+                  $ssid = $client['ssid'];
                   $ssid_class = '';
                 }
                 ?>
@@ -473,15 +458,11 @@ if (!is_null($all_data)) {
               </td>
               <!-- frequency -->
               <td>
-                <?php
-                // get frequency
-                $frequency_info = $db_obj->select_specific_column("`frequency`", "`pieces_frequency`", "WHERE `id` = " . $client['id']);
-                // check result
-                if (count($frequency_info) <= 0 || $frequency_info == null) {
+                <?php if (is_null($client['frequency'])) {
                   $frequency = lang('NOT ASSIGNED');
                   $frequency_class = 'text-danger fs-12 fw-bold';
                 } else {
-                  $frequency = $frequency_info[0]['frequency'];
+                  $frequency = $client['frequency'];
                   $frequency_class = '';
                 }
                 ?>
@@ -491,15 +472,11 @@ if (!is_null($all_data)) {
               </td>
               <!-- wave -->
               <td>
-                <?php
-                // get wave
-                $wave_info = $db_obj->select_specific_column("`wave`", "`pieces_wave`", "WHERE `id` = " . $client['id']);
-                // check result
-                if (count($wave_info) <= 0 || $wave_info == null) {
+                <?php if (is_null($client['wave'])) {
                   $wave = lang('NOT ASSIGNED');
                   $wave_class = 'text-danger fs-12 fw-bold';
                 } else {
-                  $wave = $wave_info[0]['wave'];
+                  $wave = $client['wave'];
                   $wave_class = '';
                 }
                 ?>
@@ -511,7 +488,7 @@ if (!is_null($all_data)) {
               <td>
                 <?php
                 // check result
-                if ($client['created_at'] == '0000-00-00') {
+                if (is_null($client['created_at'])) {
                   $date = lang('NOT ASSIGNED');
                   $date_class = 'text-danger fs-12 fw-bold';
                 } else {

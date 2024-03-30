@@ -130,7 +130,7 @@
                         <i class="bi bi-exclamation-triangle-fill text-danger fw-bold" title="<?php echo lang("NOT ASSIGNED") ?>"></i>
                       <?php } ?>
                       <?php if ($client['created_at'] == date('Y-m-d')) { ?>
-                        <span class="badge bg-danger p-1 <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'me-1' : 'ms-1' ?>">
+                        <span class="badge bg-danger p-1 <?php echo $_SESSION['sys']['lang'] == 'ar' ? 'me-1' : 'ms-1' ?>">
                           <?php echo lang('NEW') ?>
                         </span>
                       <?php } ?>
@@ -143,11 +143,8 @@
                     <!-- client address -->
                     <td>
                       <?php
-                      // get client address
-                      $addr = $pcs_obj->select_specific_column("`address`", "`pieces_addr`", "WHERE `id` = " . $client['id']);
-                      // check result
-                      if (count($addr) > 0) {
-                        echo trim($addr[0]['address']);
+                      if (!is_null($client['address'])) {
+                        echo trim($client['address']);
                       } else { ?>
                         <span class="text-danger fs-12 fw-bold">
                           <?php echo lang('NOT ASSIGNED') ?>

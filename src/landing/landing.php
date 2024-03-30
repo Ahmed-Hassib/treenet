@@ -1,6 +1,6 @@
-<div class="mt-5" dir="<?php echo $page_dir ?>">
+<main class="mt-5" dir="<?php echo $page_dir ?>">
   <!-- landing section -->
-  <div class="landing-section">
+  <div class="landing-section animate-section" data-nav-link="0">
     <div class="container landing-container">
       <div class="landing-content">
         <div class="landing-content__content">
@@ -14,9 +14,12 @@
             <?php echo lang('TREENET ADV DESC', 'description') ?>
           </p>
           <div class="my-3 hstack gap-3">
-            <a href="?do=contact-us"><?php echo lang('contact us') ?></a>
+            <a href="https://wa.me/+201016100346" target="_blank">
+              <i class="bi bi-whatsapp"></i>
+              <?php echo lang('contact us on whatsapp') ?>
+            </a>
             <?php if (!isset($_SESSION['sys']['username'])) { ?>
-              <a class="py-2 nav-link btn btn-outline-success" href="./signup.php">
+              <a class="py-2 nav-link not-nav-link btn btn-outline-success" href="./signup.php">
                 <?php echo lang('start now', 'login') ?>
                 <i class="bi bi-chevron-<?php echo $page_dir == 'ltr' ? 'right' : 'left' ?>"></i>
               </a>
@@ -34,10 +37,10 @@
     </div>
   </div>
 
-  <!-- agents section -->
-  <div class="agents-section">
+  <!-- features section -->
+  <div class="features-section animate-section" data-nav-link="1" id="features">
     <div class="container">
-      <header class="section-header">
+      <header class="section-header" data-increased="10">
         <p class="lead">
         <div class="avatars-row">
           <span class="avatar">
@@ -64,38 +67,36 @@
         // display the result
         echo number_format($total_counter) . "+ " . lang('users and companies uses system', $lang_file) . " " . lang('tree net') ?>
         </p>
-        <h2 class="mt-3 h2 text-capitalize">
-          <?php echo wordwrap(lang('treenet production ready', $lang_file), 50, "<br>") ?>
+        <h2 class="mt-3 h2">
+          <?php echo wordwrap(ucfirst(lang('treenet production ready', $lang_file)), 50, "<br>") ?>
         </h2>
+        <h3 class="h3"><?php echo ucfirst(lang('know features', $lang_file)) ?></h3>
       </header>
-      <!-- system screens -->
-      <div class="mt-5 screens-container">
-        <?php
-        $screens = [
-          ['name' => 'login', 'type' => 'img', 'ext' => 'png'],
-          ['name' => 'dashboard', 'type' => 'img', 'ext' => 'png'],
-          ['name' => 'directions tree', 'type' => 'img', 'ext' => 'png'],
-          ['name' => 'directions map', 'type' => 'video', 'ext' => 'mp4'],
-        ];
-        ?>
-        <?php for ($i = 1; $i < 5; $i++) { ?>
-          <?php
-          $name = $screens[$i - 1]['name'];
-          $type = $screens[$i - 1]['type'];
-          $ext = $screens[$i - 1]['ext'];
-          $source = "{$treenet_assets}landing/screen_{$i}.{$ext}";
-          ?>
-          <div class="screens-container__content">
-            <div class="screens-img-container">
-              <?php if ($type == 'img') { ?>
-                <img src="<?php echo $source ?>" class="agents-img">
-              <?php } else { ?>
-                <video class="agents-img" autoplay loop muted>
-                  <source src="<?php echo $source ?>" type="video/mp4">
-                </video>
-              <?php } ?>
+      <div class="mt-5 features-container">
+        <?php $features = include_once "{$src}landing/features.php"; ?>
+        <?php foreach ($features as $key => $feature) { ?>
+          <div class="features-row" data-increased="<?php echo $feature['increased'] ?>">
+            <div class="feature-content">
+              <header class="feature-header">
+                <h3 class="h3">
+                  <?php echo ucfirst(lang($feature['title'], $lang_file)) ?>
+                  <?php if ($feature['is_developing']) { ?>
+                    <span class="badge bg-primary"><?php echo ucfirst(lang('under developing')) ?></span>
+                  <?php } ?>
+                </h3>
+              </header>
+              <div class="feature-body">
+                <p class="lead"><?php echo ucfirst(lang($feature['content'], $lang_file)) ?></p>
+              </div>
             </div>
-            <label class="image-label"><?php echo lang($name) ?></label>
+            <?php if (!is_null($feature['media'])) { ?>
+              <div class="feature-media">
+                <?php if ($feature['media_type'] == 'img') { ?>
+                  <img src="<?php echo $treenet_assets ?>landing/<?php echo $feature['media'] ?>">
+                <?php } else { ?>
+                <?php } ?>
+              </div>
+            <?php } ?>
           </div>
         <?php } ?>
       </div>
@@ -103,9 +104,9 @@
   </div>
 
   <!-- agents section -->
-  <div class="agents-section" id="agents">
+  <div class="agents-section animate-section" data-nav-link="2" id="agents">
     <div class="container">
-      <header class="section-header">
+      <header class="section-header" data-increased="2500">
         <p class="lead">
         <div class="avatars-row">
           <span class="avatar">
@@ -124,10 +125,10 @@
         // display the result
         echo number_format($agents_count) . "+ " . lang('agents recommend system', $lang_file) . " " . lang('tree net') ?>
         </p>
-        <h2 class="mt-3 h2 text-capitalize">
-          <span><?php echo wordwrap(lang('become agent', $lang_file), 50, "<br>") ?></span><br>
+        <h2 class="mt-3 h2">
+          <span><?php echo wordwrap(ucfirst(lang('become agent', $lang_file)), 50, "<br>") ?></span><br>
         </h2>
-        <h3 class="h3 text-capitalize"><?php echo lang('know agents', $lang_file) ?></h3>
+        <h3 class="h3"><?php echo ucfirst(lang('know agents', $lang_file)) ?></h3>
       </header>
       <!-- agents info -->
       <div class="mt-5 agents-container">
@@ -160,4 +161,9 @@
       </div>
     </div>
   </div>
+</main>
+
+
+<div class="scroll-top-btn">
+  <i class="bi bi-chevron-up"></i>
 </div>

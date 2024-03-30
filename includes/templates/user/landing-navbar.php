@@ -15,6 +15,12 @@
             <?php echo lang('home') ?>
           </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="<?php echo $conf['app_url'] ?>#features">
+            <i class="bi bi-stars"></i>
+            <?php echo lang('features', 'landing') ?>
+          </a>
+        </li>
         <?php
         // create an object of Agents class
         $ag_obj = new Agents();
@@ -31,19 +37,19 @@
         <?php } ?>
         <?php if (!isset($_SESSION['sys']['username'])) { ?>
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="./login.php">
+            <a class="nav-link not-nav-link" aria-current="page" href="./login.php">
               <?php echo lang('login', 'login') ?>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link btn btn-outline-success" href="./signup.php">
+            <a class="nav-link not-nav-link btn btn-outline-success" href="./signup.php">
               <?php echo lang('start now', 'login') ?>
               <i class="bi bi-chevron-<?php echo $page_dir == 'ltr' ? 'right' : 'left' ?>"></i>
             </a>
           </li>
         <?php } else { ?>
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="./login.php">
+            <a class="nav-link not-nav-link" aria-current="page" href="./login.php">
               <i class="bi bi-grid"></i>
               <?php echo lang('dashboard') ?>
             </a>

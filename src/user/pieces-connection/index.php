@@ -84,7 +84,7 @@ if ($is_developing == false) {
     $no_footer = 'all';
   }
 
-  if ($_SESSION['sys']['isLicenseExpired'] == 0) {
+  if (isset($_SESSION['sys']) && $_SESSION['sys']['isLicenseExpired'] == 0) {
     // include ping modal
     include_once $globmod . 'ping-modal.php';
     // include confirmation delete modal

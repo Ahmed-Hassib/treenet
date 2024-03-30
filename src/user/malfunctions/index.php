@@ -70,6 +70,7 @@ if ($is_developing == false) {
       // include malfunction details page
       $file_name = 'update-malfunction.php';
       $page_subtitle = "edit";
+      $preloader = false;
     } elseif ($query == 'temp-delete' && $_SESSION['sys']['mal_delete'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) {
       // include malfunction details page
       $file_name = 'temp-delete.php';

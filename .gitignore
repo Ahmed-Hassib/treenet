@@ -33,4 +33,13 @@ pay.php
 includes/libraries/
 
 # ignore sql updates
-*.sql
+*sql*
+
+# ignore any test file
+*test*
+
+# ignoring vendor directory
+vendor/
+
+# ignoring uploads file
+*upload*

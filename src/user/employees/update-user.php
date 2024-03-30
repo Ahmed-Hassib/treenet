@@ -1,4 +1,3 @@
-
 <?php
 // check the request post
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_SESSION['sys']['isLicenseExpired'] == 0) {
@@ -29,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_SESSION['sys']['isLicenseExpired']
   $facebook = isset($_POST['facebook'])  && !empty($_POST['facebook']) ? $_POST['facebook'] : null;
 
   // password trick
-  $pass = empty($passwd) ? $_POST['old-password'] : sha1($passwd);
+  $pass = empty($pass) ? $_POST['old-password'] : sha1($pass);
 
   // validate the form
   $formErorr = array(); // error array 
@@ -46,8 +45,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_SESSION['sys']['isLicenseExpired']
   if (empty($fullname)) {
     $formErorr[] = 'fullname empty';
   }
-
-  $msg = "";
 
   // check if empty form error
   if (empty($formErorr)) {

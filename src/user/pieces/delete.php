@@ -5,16 +5,16 @@ $pcs_obj = new Pieces();
 $piece_id = isset($_GET['piece-id']) && !empty($_GET['piece-id']) ? intval(base64_decode($_GET['piece-id'])) : 0;
 // get back flag if return back is possible
 $is_back = isset($_GET['back']) && !empty($_GET['back']) ? 'back' : null;
-// get piece name
-$piece_name = $pcs_obj->select_specific_column("`full_name`", "`pieces_info`", "WHERE `id` = $piece_id")[0]['full_name'];
 // get user info from database
 $is_exist = $pcs_obj->is_exist("`id`", "`pieces_info`", $piece_id);
 // check if exist
 if ($is_exist == true) {
+  // get piece name
+  $piece_name = $pcs_obj->select_specific_column("`full_name`", "`pieces_info`", "WHERE `id` = {$piece_id}")[0]['full_name'];
   // check license
   if ($_SESSION['sys']['isLicenseExpired'] == 0) {
     // check if the piece have a children or not
-    $count_child = $pcs_obj->count_records("`id`", "`pieces_info`", "WHERE `source_id` = $piece_id AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']));
+    $count_child = $pcs_obj->count_records("`id`", "`pieces_info`", "WHERE `source_id` = {$piece_id} AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']));
 
     if ($count_child == 0) {
       // call delete function

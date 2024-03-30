@@ -3,17 +3,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   // check license
   if ($_SESSION['sys']['isLicenseExpired'] == 0) {
     // create an object of Pieces class
-    $pcs_obj = !isset($pcs_obj) ? new Pieces() : $pcs_obj;
+    $pcs_obj = new Pieces();
     // get latest id in pieces table
     $latest_id = intval($pcs_obj->get_latest_records("`id`", "`pieces_info`", "", "`id`", 1)[0]['id']);
     // get next id
     $id = $latest_id + 1;
     // get piece info from the form
     $full_name = isset($_POST['full-name']) && !empty($_POST['full-name']) ? trim($_POST['full-name'], ' ') : '';
-    $ip = isset($_POST['ip']) && !empty($_POST['ip']) ? trim($_POST['ip'], ' ') : '';
-    $port = isset($_POST['port']) && !empty($_POST['port']) ? trim($_POST['port'], ' ') : '';
-    $username = isset($_POST['user-name']) && !empty($_POST['user-name']) ? trim($_POST['user-name'], ' ') : '';
-    $password = isset($_POST['password']) && !empty($_POST['password']) ? trim($_POST['password'], ' ') : '';
+    $ip = isset($_POST['ip']) && !empty($_POST['ip']) ? trim($_POST['ip'], ' ') : null;
+    $port = isset($_POST['port']) && !empty($_POST['port']) ? trim($_POST['port'], ' ') : null;
+    $username = isset($_POST['user-name']) && !empty($_POST['user-name']) ? trim($_POST['user-name'], ' ') : null;
+    $password = isset($_POST['password']) && !empty($_POST['password']) ? trim($_POST['password'], ' ') : null;
     $dir_id = isset($_POST['direction']) && !empty($_POST['direction']) ? base64_decode(trim($_POST['direction'], ' ')) : '';
 
     // check if client or not
@@ -49,20 +49,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // get source id
     $source_id = isset($_POST['source-id']) ? trim($_POST['source-id'], ' ') : -1;
     $alt_source_id = isset($_POST['alt-source-id']) ? trim($_POST['alt-source-id'], ' ') : -1;
-    $device_id = isset($_POST['device-id']) ? base64_decode(trim($_POST['device-id'], ' ')) : -1;
-    $model_id = isset($_POST['device-model']) ? trim($_POST['device-model'], ' ') : -1;
+    $device_id = isset($_POST['device-id']) ? base64_decode(trim($_POST['device-id'], ' ')) : null;
+    $model_id = isset($_POST['device-model']) ? trim($_POST['device-model'], ' ') : null;
 
-    $phone = trim($_POST['phone-number'], ' ');
-    $address = trim($_POST['address'], ' ');
-    $conn_type = isset($_POST['conn-type']) && !empty($_POST['conn-type']) ? trim($_POST['conn-type'], ' ') : '';
+    $phone = !empty(trim($_POST['phone-number'], ' ')) ?  trim($_POST['phone-number'], ' ') : null;
+    $address = !empty(trim($_POST['address'], ' ')) ?  trim($_POST['address'], ' ') : null;
+    $conn_type = isset($_POST['conn-type']) && !empty($_POST['conn-type']) ? base64_decode(trim($_POST['conn-type'], ' ')) : null;
     $notes = empty(trim($_POST['notes'], ' ')) ? 'لا توجد ملاحظات' : trim($_POST['notes'], ' ');
     $visit_time = isset($_POST['visit-time']) ? $_POST['visit-time'] : 1;
-    $ssid = trim($_POST['ssid'], ' ');
-    $pass_conn = trim($_POST['password-connection'], ' ');
-    $frequency = trim($_POST['frequency'], ' ');
-    $wave = trim($_POST['wave'], ' ');
-    $mac_add = trim($_POST['mac-add'], ' ');
-    $coordinates = trim($_POST['coordinates'], ' ');
+    $ssid = !empty(trim($_POST['ssid'], ' ')) ? trim($_POST['ssid'], ' ') : null;
+    $pass_conn = !empty(trim($_POST['password-connection'], ' ')) ? trim($_POST['password-connection'], ' ') : null;
+    $frequency = isset($_POST['frequency']) && !empty($_POST['frequency']) ? trim($_POST['frequency'], ' ') : null;
+    $wave = isset($_POST['wave']) && !empty($_POST['wave']) ? trim($_POST['wave'], ' ') : null;
+    $mac_add = !empty(trim($_POST['mac-add'], ' ')) ? trim($_POST['mac-add'], ' ') : null;
+    $coordinates = !empty(trim($_POST['coordinates'], ' ')) ? trim($_POST['coordinates'], ' ') : null;
 
     // validate the form
     $err_arr= array(); // error array
@@ -76,9 +76,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // check if user is exist in database or not
-    $is_exist_name = $pcs_obj->count_records("`id`", "`pieces_info`", "WHERE `full_name` = $full_name AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']));
-    $is_exist_mac = !empty($macAdd) ? $pcs_obj->count_records("`pieces_mac_addr`.`id`", "`pieces_mac_addr`", "LEFT JOIN `pieces_info` ON `pieces_info`.`id` = `pieces_mac_addr`.`id` WHERE `pieces_mac_addr`.`mac_add` = $mac_add AND `pieces_info`.`company_id` = " . base64_decode($_SESSION['sys']['company_id'])) : 0;
-    $is_exist_ip = $ip == '0.0.0.0' ? 0 : $pcs_obj->count_records("`id`", "`pieces_info`", "WHERE `ip` = '$ip' AND `direction_id` = $dir_id AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']));
+    $is_exist_name = $pcs_obj->count_records("`id`", "`pieces_info`", "WHERE `full_name` = '{$full_name}' AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']));
+    $is_exist_mac = !empty($macAdd) && filter_var($macAdd, FILTER_VALIDATE_MAC) !== false ? $pcs_obj->count_records("`id`", "`pieces_info`", "`mac_add` = '{$mac_add}' AND `company_id` = " . base64_decode($_SESSION['sys']['company_id'])) : 0;
 
     // check piece name
     if ($is_exist_name > 0) {
@@ -91,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // check piece mac
-    if ($is_exist_ip > 0) {
+    if (!is_null($ip) && $pcs_obj->count_records("`id`", "`pieces_info`", "WHERE `ip` = '{$ip}' AND `direction_id` = {$dir_id} AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']))) {
       $err_arr[] = 'ip exist';
     }
 
@@ -100,54 +99,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       // get current date
       $date_now = get_date_now();
       // call insert function
-      $is_inserted = $pcs_obj->insert_new_piece(array($full_name, $ip, $port, $username, $password, $conn_type, $dir_id, $source_id, $alt_source_id, $is_client, $device_type, $device_id, $model_id, base64_decode($_SESSION['sys']['UserID']), base64_decode($_SESSION['sys']['company_id']), $notes, $visit_time));
-
-      // check address
-      if (!empty($address)) {
-        // insert address
-        $pcs_obj->insert_address($id, $address);
-      }
-
-      // check frequency
-      if (!empty($frequency)) {
-        // insert frequency
-        $pcs_obj->insert_frequency($id, $frequency);
-      }
-
-      // check mac_add
-      if (!empty($mac_add)) {
-        // insert mac_add
-        $pcs_obj->insert_mac_add($id, $mac_add);
-      }
-
-      // check pass_connection
-      if (!empty($pass_conn)) {
-        // insert pass_conn
-        $pcs_obj->insert_pass_connection($id, $pass_conn);
-      }
+      $is_inserted = $pcs_obj->insert_new_piece(array($full_name, $ip, $port, $username, $password, $conn_type, $dir_id, $source_id, $alt_source_id, $is_client, $device_type, $device_id, $model_id, $address, $coordinates, $frequency, $mac_add, $pass_conn, $ssid, $wave, base64_decode($_SESSION['sys']['UserID']), base64_decode($_SESSION['sys']['company_id']), $notes, $visit_time));
 
       // check phones
       if (!empty($phone)) {
         // insert phones
         $pcs_obj->insert_phones($id, $phone);
-      }
-
-      // check ssid
-      if (!empty($ssid)) {
-        // insert ssid
-        $pcs_obj->insert_ssid($id, $ssid);
-      }
-
-      // check wave
-      if (!empty($wave)) {
-        // insert wave
-        $pcs_obj->insert_wave($id, $wave);
-      }
-
-      // check internet source
-      if (!empty($coordinates)) {
-        // insert internet source
-        $pcs_obj->insert_coordinates($id, $coordinates);
       }
 
       if ($is_inserted) {

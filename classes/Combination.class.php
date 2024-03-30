@@ -27,18 +27,20 @@ class Combination extends Database
     $comb_info = $stmt->fetchAll();
     $comb_count = $stmt->rowCount(); // count effected rows
 
-    // check count
-    if ($type == 1) {
-      return $this->prepare_data($comb_info[0]);
-    } elseif ($type > 1) {
-      // empty array for final result
-      $res = [];
-      // loop on combinations data
-      foreach ($comb_info as $key => $comb) {
-        $res[] = $this->prepare_data($comb);
+    if ($comb_count > 0) {
+      // check count
+      if ($type == 1) {
+        return $this->prepare_data($comb_info[0]);
+      } elseif ($type > 1) {
+        // empty array for final result
+        $res = [];
+        // loop on combinations data
+        foreach ($comb_info as $key => $comb) {
+          $res[] = $this->prepare_data($comb);
+        }
+        // return final result
+        return $res;
       }
-      // return final result
-      return $res;
     }
     // return null result
     return null;
@@ -96,8 +98,13 @@ class Combination extends Database
   // function to update combination by technical man
   public function update_combination_tech($comb_info)
   {
-    // review query
-    $review_query = "UPDATE `combinations` SET `coordinates` = ?, `isFinished` = ?, `isAccepted` = ?, `finished_at` = now(), `cost` = ?, `cost_receipt` = ?, `tech_comment` = ? WHERE `comb_id` = ?";
+    // check combination status
+    if ($comb_info[1] == true) {
+      // review query
+      $review_query = "UPDATE `combinations` SET `coordinates` = ?, `isFinished` = ?, `isAccepted` = ?, `finished_at` = now(), `cost` = ?, `cost_receipt` = ?, `tech_comment` = ? WHERE `comb_id` = ?";
+    } else {
+      $review_query = "UPDATE `combinations` SET `coordinates` = ?, `isFinished` = ?, `isAccepted` = ?, `cost` = ?, `cost_receipt` = ?, `tech_comment` = ? WHERE `comb_id` = ?";
+    }
     // prepare the query
     $stmt = $this->con->prepare($review_query);
     $stmt->execute($comb_info);
@@ -120,13 +127,13 @@ class Combination extends Database
   }
 
   // function to reset combination info
-  public function reset_combination_info($tech_id, $comb_id)
+  public function reset_combination_info($info)
   {
     // reset query
-    $reset_query = "UPDATE `combinations` SET `UserID` = ?, `created_at` = now, `isFinished` = 0, `cost` = 0, `finished_at` = NULL, `isShowed` = 0, `showed_at` = NULL, `isAccepted` = -1,  `isReviewed` = 0, `reviewed_at` = NULL, `money_review` = 0, `qty_service` = 0, `qty_emp` = 0, `qty_comment` = ''  WHERE `comb_id` = ?";
+    $reset_query = "UPDATE `combinations` SET `client_name` = ?, `phone` = ?, `address` = ?, `coordinates` = ?, `comment` = ?, `UserID` = ?, `created_at` = now(), `isFinished` = 0, `cost` = 0, `finished_at` = NULL, `isShowed` = 0, `showed_at` = NULL, `isAccepted` = -1,  `isReviewed` = 0, `reviewed_at` = NULL, `money_review` = 0, `qty_service` = 0, `qty_emp` = 0, `qty_comment` = NULL  WHERE `comb_id` = ?";
     // prepare the query
     $stmt = $this->con->prepare($reset_query);
-    $stmt->execute(array($tech_id, $comb_id));
+    $stmt->execute($info);
     $comb_count = $stmt->rowCount(); // count effected rows
     // return result
     return $comb_count > 0 ? true : false;
@@ -144,7 +151,7 @@ class Combination extends Database
     // return result
     return $comb_count > 0 ? true : false;
   }
-  
+
   // function to soft restore combination 
   public function restore_comb($comb_id)
   {

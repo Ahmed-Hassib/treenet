@@ -23,12 +23,9 @@ $level = 3;
 $nav_level = 1;
 
 $possible_back = false;
+
 // app status and global includes
 include_once str_repeat("../", $level) . "etc/app-status.php";
-// pre configration of system
-include_once str_repeat('../', $level) . 'etc/pre-conf.php';
-// initial configration of system
-include_once str_repeat('../', $level) . 'etc/init.php';
 
 // check if Get request do is set or not
 $query = isset($_GET['do']) ? $_GET['do'] : '';
@@ -52,6 +49,7 @@ switch ($query) {
 
   case 'update-session':
     $file_name = 'update-session.php';
+    $preloader = true;
     break;
 
   case 'upgrade-version':
@@ -118,5 +116,10 @@ switch ($query) {
     $file_name = 'get-encoded-id.php';
     break;
 }
+
+// pre configration of system
+include_once str_repeat('../', $level) . 'etc/pre-conf.php';
+// initial configration of system
+include_once str_repeat('../', $level) . 'etc/init.php';
 
 include_once $file_name;

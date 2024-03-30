@@ -12,12 +12,12 @@ if (isset($_SESSION['sys']['isLicenseExpired']) && $_SESSION['sys']['isLicenseEx
 ?>
 
 <?php if (isset($_SESSION['sys']['isLicenseExpired']) && $_SESSION['sys']['isLicenseExpired'] == 1 && !isset($no_navbar)) {?>
-<div class="container">
+<!-- <div class="container">
   <div class="alert alert-info">
     <h4 class="h4 text-capitalize">
       <i class="bi bi-exclamation-triangle-fill"></i>
       برجاء العلم أننا نقوم ببعض الأعمال لتحسين مستوى الخدمة فقد لا تعمل بعض العمليات كالحذف!
     </h4>
   </div>
-</div>
+</div> -->
 <?php } ?>

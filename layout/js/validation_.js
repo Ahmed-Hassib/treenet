@@ -87,7 +87,7 @@ function ip_validation(input, id = null) {
         url_content = `../requests/index.php?do=check-piece-ip&ip=${value}`;
       }
 
-      if (value != '0.0.0.0') {
+      if (value != '0.0.0.0' && value.length > 0) {
         // get request to check if full name is exist or not
         $.get(url_content, (res) => {
           // converted data

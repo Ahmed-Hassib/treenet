@@ -28,7 +28,7 @@ $nav_level = 1;
 include_once str_repeat("../", $level) . "etc/app-status.php";
 
 $possible_back = false;
-$preloader = false;
+$preloader = true;
 
 // check system if under developing or not
 if ($is_developing == false) {
@@ -41,7 +41,6 @@ if ($is_developing == false) {
       $file_name = 'dashboard.php';
       $page_subtitle = "list";
       $possible_back = true;
-      $preloader = true;
     } elseif ($query == 'insert-new-direction' && $_SESSION['sys']['dir_add'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) {
       $file_name = 'insert-direction.php';
       $page_subtitle = "add new";
@@ -49,12 +48,10 @@ if ($is_developing == false) {
       $file_name = 'show-direction.php';
       $page_subtitle = "show tree";
       $no_footer = true;
-      $preloader = true;
       $possible_back = true;
     } elseif ($query == 'direction-map' && $_SESSION['sys']['dir_show'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) {
       $file_name = 'direction-map.php';
       $page_subtitle = "directions map";
-      $preloader = true;
       $possible_back = true;
       $is_contain_map = true;
     } elseif ($query == 'update-direction-info' && $_SESSION['sys']['dir_update'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) {
@@ -66,6 +63,9 @@ if ($is_developing == false) {
     } elseif ($query == 'update-coordinates') {
       $file_name = "update-coordinates.php";
       $page_subtitle = "update coordinates";
+    } elseif ($query == 'upload') {
+      $file_name = "upload.php";
+      $page_subtitle = "upload data";
     } else {
       $file_name = $globmod . 'page-permission-error.php';
       $no_navbar = 'all';

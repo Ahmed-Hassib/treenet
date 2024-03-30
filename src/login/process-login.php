@@ -34,7 +34,7 @@ if (empty($err_arr)) {
   // if count > 0 this mean that user exist
   if ($user_info != null) {
     // create an object of Session class to set session
-    $session_obj = !isset($session_obj) ? new Session() : $session_obj;
+    $session_obj = new Session();
     // set session
     $session_obj->set_user_session($user_info);
     // check license expiration

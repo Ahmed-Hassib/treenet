@@ -48,8 +48,6 @@ function redirect_home($msg = null, $url = null, $seconds = 3)
   if (!empty($msg) && $msg != null) {
     echo $msg;
   }
-  // show redirect messgae
-  echo "<div dir='" . (@$_SESSION['sys']['lang'] == 'ar' ? 'rtl' : 'ltr') . "' >" . lang('REDIRECT AUTO') . " $seconds " . lang('SECOND') . "</div>";
   // exit
   exit();
 }
@@ -180,8 +178,8 @@ function create_logs($username, $msg, $type = 1)
   // check file location
   if (file_exists($DOCUMENT_ROOT . "/app/data/log/") && is_dir($DOCUMENT_ROOT . "/app/data/log/")) {
     $fileLocation = $DOCUMENT_ROOT . "/app/data/log/";
-  } elseif (file_exists($DOCUMENT_ROOT . "data/log/") && is_dir($DOCUMENT_ROOT . "data/log/")) {
-    $fileLocation = $DOCUMENT_ROOT . "data/log/";
+  } elseif (file_exists($DOCUMENT_ROOT . "/data/log/") && is_dir($DOCUMENT_ROOT . "/data/log/")) {
+    $fileLocation = $DOCUMENT_ROOT . "/data/log/";
   }
 
   // check the fileLocation
@@ -593,14 +591,17 @@ function str_replace_whitespace($string)
 }
 
 /**
- * get 
+ * get page active link
  */
-function get_page_active_link($target)
+function get_page_active_link($target, $landing = false)
 {
-  // get url
-  $url = explode("/", $_SERVER['PHP_SELF']);
-
-  return $url[3] == $target;
-  // // return true or false
-  // return preg_match("/{$target}/i", $url);
+  if (!$landing) {
+    // get url
+    $url = explode("/", $_SERVER['PHP_SELF'])[3];
+    // return flag
+    return $url == $target;
+  } else {
+    $url = isset($_SERVER['QUERY_STRING']) && !empty($_SERVER['QUERY_STRING']) ? explode("=", $_SERVER['QUERY_STRING'])[1] : 'dashboard';
+    return $url == $target;
+  }
 }

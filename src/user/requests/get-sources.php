@@ -21,12 +21,12 @@ if (empty($dir_id) || empty($company_id)) {
   // convert data into json file
   $json_data = json_encode($data);
   // check server name
-  if ($_SERVER['SERVER_NAME'] == 'leadergroupegypt.com') {
+  if ($_SERVER['SERVER_NAME'] == 'tree-net.net') {
     // json location
-    $json_location = $document_root . "/app/data/json/dirs/";
+    $json_location = $document_root . "app/data/json/dirs/";
   } else {
     // json location
-    $json_location = $document_root . "data/json/dirs/";
+    $json_location = $document_root . "/data/json/dirs/";
   }
   // check if the directory is exist or not
   if (!file_exists($json_location)) {
