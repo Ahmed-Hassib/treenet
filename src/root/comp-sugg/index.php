@@ -39,13 +39,6 @@ if ($is_developing == false) {
     if ($query == "manage") {       // manage page
       // include comp & sugg dashboard page
       $file_name = 'dashboard.php';
-    } elseif ($query == 'add') {
-      // include add comp & sugg page
-      $file_name = 'add.php';
-    } elseif ($query == "insert") {
-      // include insert comp & sugg page
-      $file_name = 'insert.php';
-      $possible_back = false;
     } elseif ($query == 'list') {
       // include list comp & sugg page
       $file_name = 'list.php';
@@ -53,9 +46,6 @@ if ($is_developing == false) {
     } elseif ($query == 'edit') {
       // include edit comp & sugg page
       $file_name = 'edit.php';
-    } elseif ($query == 'update') {
-      // include update comp & sugg page
-      $file_name = 'update.php';
     } elseif ($query == 'update-status') {
       // include update-status comp & sugg page
       $file_name = 'update-status.php';

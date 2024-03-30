@@ -1,0 +1,90 @@
+.media-preview {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 40px;
+  align-items: center;
+}
+
+.comp-sugg-container {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.comp-sugg-info-container {
+  position: relative;
+  display: grid;
+  grid-template-rows: 1fr;
+  gap: 20px;
+}
+
+.comp-sugg-info {
+  position: relative;
+  display: grid;
+  grid-template-columns: 35% 50%;
+  gap: 20px;
+}
+
+.comments-container {
+  position: relative;
+  padding: 0 24px;
+  height: clamp(100px, 450px, 500px);
+  /* max-height: 450px; */
+  overflow-y: scroll;
+}
+
+.comments-container .comment-content {
+  position: relative;
+  padding: 1rem;
+  width: fit-content;
+  border-radius: 16px;
+  margin-bottom: 1rem;
+  text-wrap: balance;
+  word-wrap: break-word;
+}
+
+.comments-container .comment-content.comment-odd {
+  background-color: #c8f8e7;
+}
+
+.comments-container .comment-content.comment-even {
+  background-color: #5fcca4;
+  color: #fff;
+}
+
+.container[dir=rtl] .comments-container .comment-content.comment-even {
+  margin-right: auto;
+}
+
+.container[dir=ltr] .comments-container .comment-content.comment-even {
+  margin-left: auto;
+}
+
+.add-comment-input {
+  position: relative;
+  display: grid;
+  grid-template-columns: 85% 10%;
+  gap: 20px;
+}
+
+@media (max-width: 425px) {
+  .add-comment-input {
+    grid-template-columns: 70% 25%;
+  }
+}
+
+@media (min-width: 425px) and (max-width: 576px) {
+  .add-comment-input {
+    grid-template-columns: 75% 20%;
+  }
+}
+
+.comp-sugg-media {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
