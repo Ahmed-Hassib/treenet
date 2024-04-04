@@ -109,7 +109,9 @@ if ($is_developing == false) {
       $file_name = 'mikrotik.php';
       $page_subtitle = 'mikrotik service';
       $possible_back = false;
-      $preloader = true;
+    } elseif ($query == 'upload' && $_SESSION['sys']['pcs_add'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) {
+      $file_name = "upload.php";
+      $page_subtitle = "upload data";
     } else {
       $file_name = $globmod . 'page-error.php';
       $possible_back = false;

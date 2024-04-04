@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // create an object of Pieces class
         $pcs_obj = new Pieces();
         // get client info
-        $client_info = $pcs_obj->get_pieces("WHERE `pieces_info`.`id` = {$client_id}");
+        $client_info = $pcs_obj->get_pieces("WHERE `pieces_info`.`id` = {$client_id}", 1);
         // send a notification to technical man
         $res = $mal_obj->send_notification($admin_info, $tech_info, $client_info, $descreption, $lang_file);
         // add an new detail record

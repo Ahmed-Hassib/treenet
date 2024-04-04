@@ -45,7 +45,7 @@ class Session extends Database
     $user_info = $stmt->fetch();
     $count = $stmt->rowCount();
     // check the count
-    return $count > 0 ? [true, $user_info] : [false, null];
+    return $count > 0 ? $user_info : null;
   }
 
   // function to set basic info to session variable
@@ -59,6 +59,7 @@ class Session extends Database
     $_SESSION['sys']['company_name'] = $info['company_name'];                    // assign company name to session
     $_SESSION['sys']['company_code'] = $info['company_code'];                    // assign company code to session
     $_SESSION['sys']['username'] = $info['username'];                        // assign username to session
+    $_SESSION['sys']['email'] = $info['email'];                        // assign email to session
     $_SESSION['sys']['job_title_id'] = base64_encode($info['job_title_id']);     // assign job title to session
     $_SESSION['sys']['is_tech'] = $info['is_tech'];                          // is technical man or not (0 -> not || 1 -> technical)
     $_SESSION['sys']['is_root'] = $info['is_root'];                          // is root (0 -> all || 1 -> ahmed hassib only)
@@ -181,13 +182,9 @@ class Session extends Database
   public function update_session($user_id)
   {
     // get user data
-    $user_data = $this->get_user_info($user_id);
-    // get count
-    $user_count = $user_data[0];
-    // check count
-    if ($user_count > 0) {
-      // get user info
-      $user_info = $user_data[1];
+    $user_info = $this->get_user_info($user_id);
+    // check data
+    if (!is_null($user_info)) {
       // update user info
       $this->set_user_session($user_info);
     } else {

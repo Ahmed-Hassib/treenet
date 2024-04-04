@@ -28,9 +28,7 @@
                 (<span class="num" data-goal="<?php echo $clients; ?>">0</span>)
               </span>
             </h5>
-            <?php
-            // get clients counter
-            $new_clients_counter = $db_obj->count_records("`id`", "`pieces_info`", "WHERE `deleted_at` IS NULL AND `is_client` = 1 AND Date(`created_at`) = 'CURRENT_DATE()' AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']));
+            <?php $new_clients_counter = $db_obj->count_records("`id`", "`pieces_info`", "WHERE `deleted_at` IS NULL AND `is_client` = 1 AND Date(`created_at`) = CURRENT_DATE() AND `company_id` = " . base64_decode($_SESSION['sys']['company_id'])); 
             // check the counter
             if ($new_clients_counter > 0) {
               echo "<h5>(" . ($new_clients_counter) . " " . lang('NEW') . ")</h5>";
@@ -38,6 +36,16 @@
             ?>
           </div>
           <a href="?do=show-all-clients" class="num stretched-link"></a>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="dashboard-card card card-white bg-gradient">
+          <img class="card-img <?php echo $page_dir == 'ltr' ? 'card-img-right' : 'card-img-left' ?>" src="<?php echo $treenet_assets . "file-cloud.svg" ?>" loading="lazy" alt="">
+          <div class="card-body">
+            <h5 class="h5 text-capitalize"><?php echo wordwrap(ucfirst(lang('upload data by file', $lang_file)), "45", "<br>") ?>
+            </h5>
+          </div>
+          <a href="?do=upload" class="stretched-link"></a>
         </div>
       </div>
       <div class="col-12">
@@ -82,15 +90,13 @@
             <?php
             if (count($latest_added_clients) > 0) {
               // get data
-              $all_data = prepare_pcs_datatables($latest_added_clients, $lang_file);
-              // json data
-              $all_data_json = json_encode($all_data);
+              $all_data = $latest_added_clients;
             } else {
               $all_data = [];
             }
             ?>
             <!-- strst clients table -->
-            <table class="table table-bordered table-striped display compact nowrap" data-scroll-x="true" <?php echo $latest_added_clients < 10 ? 'data-scroll-y="auto"' : null ?> data-last-td="[-1]" style="width:100%">
+            <table class="table table-bordered table-striped display compact nowrap" data-scroll-x="true" <?php echo count($latest_added_clients) <= 10 ? 'data-scroll-y="auto"' : null ?> data-last-td="[-1]" style="width:100%">
               <thead class="primary text-capitalize">
                 <tr>
                   <th>#</th>
@@ -126,7 +132,7 @@
                           <?php echo trim($client['full_name'], ' ') ?>
                         </span>
                       <?php } ?>
-                      <?php if ($client['direction_id'] == 0) { ?>
+                      <?php if (is_null($client['direction_id']) || $client['direction_id'] == 0) { ?>
                         <i class="bi bi-exclamation-triangle-fill text-danger fw-bold" title="<?php echo lang("NOT ASSIGNED") ?>"></i>
                       <?php } ?>
                       <?php if ($client['created_at'] == date('Y-m-d')) { ?>

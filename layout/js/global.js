@@ -603,3 +603,35 @@ function getLatLong(coordinateString) {
   // return null if not valid coordinates
   return null;
 }
+
+function display_uploaded_file_name(input_value, res_id = null) {
+  // get result element
+  let res_el = document.querySelector(`#${res_id}`) ?? null;
+  // check input value 
+  let file_name = input_value.split('\\')[input_value.split('\\').length - 1] ?? null;
+
+  // check result element && file name
+  if (res_el != null && file_name != null) {
+    // create an icon element 
+    let icon = document.createElement('i');
+    icon.classList.add('bi', 'bi-file-earmark-spreadsheet');
+    // get previous span element
+    let prev_span_el = document.querySelector('#uploaded-file-name') ?? null;
+    // check span element
+    if (prev_span_el != null) {
+      prev_span_el.textContent = file_name;
+      // append icon to span element
+      prev_span_el.appendChild(icon);
+      return;
+    }
+    // create a span element
+    let span_el = document.createElement('span');
+    span_el.classList.add('text-secondary', 'fw-bold', 'd-block');
+    span_el.id = 'uploaded-file-name';
+    span_el.textContent = file_name;
+    // append icon to span element
+    span_el.appendChild(icon);
+    // append span element to result element
+    res_el.appendChild(span_el);
+  }
+}

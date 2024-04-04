@@ -274,7 +274,7 @@ if ($company_id != null) {
       $employees = $emp_obj->get_all_users($company_id);
 
       // check employees
-      if ($employees != null) {
+      if (!is_null($employees)) {
       ?>
 
         <!-- additional info -->
@@ -336,12 +336,12 @@ if ($company_id != null) {
       $dir_obj = new Direction();
       // get all directions of this company
       $directions = $dir_obj->get_all_directions($company_id);
-      // directions counter
-      $dirs_count = $directions[0];
-      // directions data
-      $dirs_data = $directions[1];
       // check directions
-      if ($dirs_count > 0) {
+      if (!is_null($directions)) {
+        // directions counter
+        $dirs_count = count($directions);
+        // directions data
+        $dirs_data = $directions;
       ?>
 
         <!-- additional info -->

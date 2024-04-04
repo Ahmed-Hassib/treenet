@@ -158,6 +158,7 @@ function global_($phrase)
     'USER' => 'المستخدم',
     'COMMENT' => 'تعليق',
     'THE COMMENT' => 'التعليق',
+    'FILES CAN BE USED' => 'الملفات التي يمكن استخدامها',
 
     // pages title
     'DASHBOARD' => 'لوحة التحكم',
@@ -195,6 +196,8 @@ function global_($phrase)
     'SETTINGS' => 'الإعدادات',
     'TRASH' => 'سلة المهملات',
     'TRANSACTIONS' => 'عمليات الدفع',
+    'VIA FOLLOWING LINK' => 'عن طريق الرابط التالى',
+    'CLICK HERE' => 'إضغط هنا',
 
     // large global words
     'EMPTY FIELDS' => 'توجد حقول فارغة',
@@ -215,6 +218,9 @@ function global_($phrase)
     'LIKE TO BE A PARTNER' => 'حابب تكون شريكنا؟؟',
     'SEARCH STMT EMPTY' => 'لا يمكن البحث عن فراغ برجاء العودة وكتابة ما تريد البحث عنه بشكل واضح',
     'MUST TAKEN INTO ACCOUNT' => 'يجب مراعات الآتى',
+    'INSTRUCTION FACING PROBLEM' => 'في حالة مواجهة أي مشكلة برجاء ارسال شكوى',
+    'INVALID IP' => 'عنوان IP غير صالح',
+    'INVALID MAC' => 'عنوان MAC غير صالح',
 
     // global messages
     'NOT ASSIGNED' => 'لم يُحدد',
@@ -262,6 +268,9 @@ function global_($phrase)
     'YOU ARE SHOWING DATA FOR THE YEAR' => 'انت الآن تستعرض بيانات سنة',
     'YOU CANNOT UNDO' => 'لا يمكنك التراجع عن هذا الإجراء',
     'SENDING MESSAGE' => 'جارى إرسال رسالتكم برجاء الانتظار',
+    'FILE ERR' => 'لم يتم إرفاق أي ملف لإضافة بيانات جديدة',
+    'FILE EMPTY' => 'الملف الذي تم إرفاقة فارغاً',
+    'FILE EMPTY OR DATA ERR' => 'الملف الذي تم إرفاقة فارغاً او البيانات التي بداخلة غير صالحة (متكررة) وبالتالي لم يتم إضافة اي بيانات جديدة',
 
     // tables words
     'NOTE' => 'الملاحظات',

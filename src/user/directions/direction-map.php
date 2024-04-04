@@ -15,11 +15,6 @@ if ($dir_id !== null && $dir_obj->is_exist("`direction_id`", "`direction`", $dir
 }
 // get all directions
 $all_dirs = $dir_obj->get_all_directions($company_id);
-
-// check dirs counter
-if ($all_dirs[0] > 0) {
-  $all_dirs = $all_dirs[1];
-}
 ?>
 
 <div class="container" dir="<?php echo $page_dir ?>">

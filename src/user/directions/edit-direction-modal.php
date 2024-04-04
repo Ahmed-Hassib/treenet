@@ -16,13 +16,11 @@
           <div
             class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
             <?php
-            if (!isset($dir_obj)) {
-              // create an object of Direction class
-              $dir_obj = new Direction();
-            }
+            // create an object of Direction class
+            $dir_obj = new Direction();
             // get all directions 
             $directions = $dir_obj->get_all_directions(base64_decode($_SESSION['sys']['company_id']));
-            $directions_info = $directions[1];
+            $directions_info = $directions;
             ?>
             <select class="form-select" id="updated-dir-name" name="updated-dir-name" required>
               <option value="default" disabled selected>

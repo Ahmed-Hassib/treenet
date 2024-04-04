@@ -73,13 +73,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
       // create an object of Session class
       $session_obj = new Session();
-      // get user info
-      $user_info = $session_obj->get_user_info(base64_decode($_SESSION['sys']['UserID']));
-      // check if done
-      if ($user_info[0] == true) {
-        // set user session
-        $session_obj->set_user_session($user_info[1]);
-      }
+      // set user session
+      $session_obj->update_session(base64_decode($_SESSION['sys']['UserID']));
 
       // craeet an object of Database class
       $db_obj = new Database("localhost", "jsl_db");
@@ -117,14 +112,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
       $company_obj->set_ip_list($company_id, $ip_list);
 
-      // get user info
-      $user_info = $session_obj->get_user_info(base64_decode($_SESSION['sys']['UserID']));
-
-      // check if done
-      if ($user_info[0] == true) {
-        // set user session
-        $session_obj->set_user_session($user_info[1]);
-      }
+      // set user session
+      $session_obj->update_session(base64_decode($_SESSION['sys']['UserID']));
       
       // create a secret role in ppp
       $mikrotik_api_obj->comm("/ppp/secret/add", [

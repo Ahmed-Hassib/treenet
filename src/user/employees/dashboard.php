@@ -25,7 +25,7 @@ if ($_SESSION['sys']['system_theme'] == 2) {
     $users_data = $user_obj->get_all_users(base64_decode($_SESSION['sys']['company_id']));
 
     // check if empty data
-    if (empty($users_data) || count($users_data) == 0) { ?>
+    if (is_null($users_data) || count($users_data) == 0) { ?>
       <h5 class='h5 text-center text-danger '>
         <?php echo lang('NO EMPLOYEES', $lang_file) ?>
       </h5>

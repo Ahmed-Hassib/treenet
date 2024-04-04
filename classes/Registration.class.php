@@ -63,7 +63,7 @@ class Registration extends Database
   public function add_company_admin($info)
   {
     // insert admin info
-    $admin_info_query = "INSERT INTO `users` (`company_id`, `username`, `password`, `fullname`, `is_tech`, `job_title_id`, `gender`, `trust_status`, `added_by`,  `joined_at`, `system_lang`) VALUES (?, ?, ?, ?, 0, 1, ?, 1, 1, ?, 0)";
+    $admin_info_query = "INSERT INTO `users` (`company_id`, `username`, `password`, `email`, `fullname`, `is_tech`, `job_title_id`, `phone`, `gender`, `trust_status`, `added_by`,  `joined_at`, `system_lang`) VALUES (?, ?, ?, ?, ?, 0, 1, ?, ?, 1, 1, now(), 0)";
     $admin_info_stmt = $this->con->prepare($admin_info_query);
     $admin_info_stmt->execute($info);
     $count = $admin_info_stmt->rowCount();
@@ -90,7 +90,6 @@ class Registration extends Database
     $admin_permissions_stmt->execute(array($user_id));
     $count = $admin_permissions_stmt->rowCount();
     // return
-    // return $count > 0 ? true : false;
-    return $admin_permissions_query;
+    return $count > 0 ? true : false;
   }
 }

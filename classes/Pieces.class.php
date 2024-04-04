@@ -33,24 +33,11 @@ class Pieces extends Database
     // prepare the query
     $stmt = $this->con->prepare($query);
     $stmt->execute(); // execute query
-    $pieces_data = $stmt->fetchAll(); // fetch data
+    $pieces_data = $type == 1 ? $stmt->fetch() : $stmt->fetchAll(); // fetch data
     $pieces_counter = $stmt->rowCount();       // count effected rows
 
-    // check counter
-    if ($type > 1) {
-      // empty array for final result
-      $res = [];
-      // loop on data to prepare it
-      foreach ($pieces_data as $key => $piece) {
-        $res[] = $this->prepare_data($piece);
-      }
-      // return final result
-      return $res;
-    } elseif ($type == 1) {
-      return $this->prepare_data($pieces_data[0]);
-    }
     // return null result
-    return null;
+    return $pieces_counter > 0 ? $pieces_data : null;
   }
 
   // insert a new Piece
@@ -185,16 +172,8 @@ class Pieces extends Database
     $stmt->execute(array($company_id, $type));
     $count = $stmt->rowCount(); // get number of effected rows
     $serach_res = $stmt->fetchAll(); // all count of data
-
-    // empty response
-    $response = [];
-    // loop on data
-    foreach ($serach_res as $key => $search) {
-      $res[] = $this->prepare_data($search);
-    }
-
     // return
-    return $count > 0 ?  $response : null;
+    return $count > 0 ?  $serach_res : null;
   }
 
   // soft delete piece
@@ -234,42 +213,5 @@ class Pieces extends Database
     $pcs_count = $stmt->rowCount();       // count effected rows
     // return result
     return $pcs_count > 0 ? true : false;
-  }
-
-  public function prepare_data($data)
-  {
-    // extract
-    extract($data);
-    // prepare response
-    return [
-      'id' => $id,
-      'fullname' => $full_name,
-      'ip' => $ip,
-      'port' => $port,
-      'username' => $username,
-      'password' => $password,
-      'connection_type' => $connection_type,
-      'direction_id' => $direction_id,
-      'source_id' => $source_id,
-      'alt_source_id' => $alt_source_id,
-      'is_client' => $is_client,
-      'device_type' => $device_type,
-      'device_id' => $device_id,
-      'device_model' => $device_model,
-      'added_by' => $added_by,
-      'created_at' => $created_at,
-      'notes' => $notes,
-      'visit_time' => $visit_time,
-      'updated_at' => $updated_at,
-      'deleted_at' => $deleted_at,
-      'ssid' => $ssid,
-      'wave' => $wave,
-      'phone' => $phone,
-      'address' => $address,
-      'mac_add' => $mac_add,
-      'frequency' => $frequency,
-      'password_connection' => $password_connection,
-      'coordinates' => $coordinates,
-    ];
   }
 }

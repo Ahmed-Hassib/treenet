@@ -21,7 +21,6 @@
               $pcs_conn_obj = !isset($pcs_conn_obj) ? new PiecesConn() : $pcs_conn_obj;
               // get all connections data
               $edit_connections = $pcs_conn_obj->get_all_conn_types(base64_decode($_SESSION['sys']['company_id']));
-              $edit_types_rows = $edit_connections[1];
               ?>
               <select class="form-select" id="old-conn-type-name" name="old-conn-type-name"
                 onchange="document.getElementById('updated-conn-type-id').value = this.value; document.getElementById('new-conn-type-note').value = this[this.selectedIndex].dataset.note;"
@@ -30,7 +29,7 @@
                   <?php echo lang('SELECT CONN TYPE', 'pcs_conn') ?>
                 </option>
                 <!-- loop on pieces types -->
-                <?php foreach ($edit_types_rows as $type) { ?>
+                <?php foreach ($edit_connections as $type) { ?>
                   <option value="<?php echo base64_encode($type['id']) ?>" data-note="<?php echo $type['notes'] ?>">
                     <?php echo $type['connection_name'] ?>
                   </option>

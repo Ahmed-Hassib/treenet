@@ -101,7 +101,7 @@ $user_obj = new User();
             <hr>
           </header>
           <!-- strst clients table -->
-          <table class="table table-bordered table-striped display compact nowrap" data-scroll-x="true" <?php echo !isset($deleted_employees) || count($deleted_employees) <= 10 ? 'data-scroll-y="auto"' : null ?> data-last-td="[-1]" style="width:100%">
+          <table class="table table-bordered table-striped display compact nowrap" data-scroll-x="true" <?php echo !isset($deleted_employees) || is_null($deleted_employees) || count($deleted_employees) <= 10 ? 'data-scroll-y="auto"' : null ?> data-last-td="[-1]" style="width:100%">
             <thead class="primary text-capitalize">
               <th>#</th>
               <th><?php echo lang('fullname', 'employees') ?></th>
@@ -112,7 +112,7 @@ $user_obj = new User();
               <th><?php echo lang('control') ?></th>
             </thead>
             <tbody>
-              <?php if (isset($deleted_employees)) { ?>
+              <?php if (isset($deleted_employees) && !is_null($deleted_employees)) { ?>
                 <?php foreach ($deleted_employees as $key => $employee) { ?>
                   <tr>
                     <td><?php echo $key + 1 ?></td>

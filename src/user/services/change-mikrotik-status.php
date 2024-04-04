@@ -42,13 +42,8 @@ if (isset($_POST) && isset($_POST['mikrotik_status'])) {
 
   // create an object of Session class
   $session_obj = new Session();
-  // get user info
-  $user_info = $session_obj->get_user_info(base64_decode($_SESSION['sys']['UserID']));
-  // check if done
-  if ($user_info[0] == true) {
-    // set user session
-    $session_obj->set_user_session($user_info[1]);
-  }
+  // set user session
+  $session_obj->update_session(base64_decode($_SESSION['sys']['UserID']));
   // create a log
   create_logs($_SESSION['sys']['username'], $log_msg);
 } else {

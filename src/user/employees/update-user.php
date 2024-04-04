@@ -157,9 +157,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_SESSION['sys']['isLicenseExpired']
         $user_info = $session_obj->get_user_info($userid);
 
         // check if done
-        if ($user_info[0] == true) {
+        if (!is_null($user_info)) {
           // set user session
-          $session_obj->set_user_session($user_info[1]);
+          $session_obj->set_user_session($user_info);
         }
       }
       // log message

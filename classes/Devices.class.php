@@ -13,7 +13,6 @@ class Devices extends Database
   {
     // create an object of Database class
     $db_obj = new Database("localhost", "jsl_db", "root", "@hmedH@ssib");
-
     $this->con = $db_obj->con;
   }
 
@@ -27,7 +26,7 @@ class Devices extends Database
     $dev_count = $stmt->rowCount();
     $dev_row =  $stmt->fetch();
     // return result
-    return $dev_count > 0 ? [$dev_count, $dev_row] : [0, null];
+    return $dev_count > 0 ? $dev_row : null;
   }
 
   // get all devices info
@@ -46,7 +45,7 @@ class Devices extends Database
     $dev_count = $stmt->rowCount();
     $dev_rows =  $stmt->fetchAll();
     // return result
-    return $dev_count > 0 ? [$dev_count, $dev_rows] : [0, null];
+    return $dev_count > 0 ? $dev_rows : null;
   }
 
   // get all models
@@ -59,7 +58,7 @@ class Devices extends Database
     $model_count = $stmt->rowCount();
     $models_row =  $stmt->fetchAll();
     // return result
-    return $model_count > 0 ? [$model_count, $models_row] : [0, null];
+    return $model_count > 0 ? $models_row : null;
   }
 
   // get all devices info
@@ -72,7 +71,7 @@ class Devices extends Database
     $dev_count = $stmt->rowCount();
     $dev_rows =  $stmt->fetchAll();
     // return result
-    return $dev_count > 0 ? [$dev_count, $dev_rows] : [0, null];
+    return $dev_count > 0 ? $dev_rows : null;
   }
 
   // insert a new device

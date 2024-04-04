@@ -27,23 +27,8 @@ class Combination extends Database
     $comb_info = $stmt->fetchAll();
     $comb_count = $stmt->rowCount(); // count effected rows
 
-    if ($comb_count > 0) {
-      // check count
-      if ($type == 1) {
-        return $this->prepare_data($comb_info[0]);
-      } elseif ($type > 1) {
-        // empty array for final result
-        $res = [];
-        // loop on combinations data
-        foreach ($comb_info as $key => $comb) {
-          $res[] = $this->prepare_data($comb);
-        }
-        // return final result
-        return $res;
-      }
-    }
     // return null result
-    return null;
+    return $comb_count > 0 ? $comb_info : null;
   }
 
   // function to get all combinations of specific company
@@ -62,10 +47,10 @@ class Combination extends Database
     // prepare the query
     $stmt = $this->con->prepare($select_query);
     $stmt->execute(array($comb_id));
-    $mal_media = $stmt->fetchAll();
+    $comb_media = $stmt->fetchAll();
     $media_count = $stmt->rowCount(); // count effected rows
     // return result
-    return $media_count > 0 ? $mal_media : null;
+    return $media_count > 0 ? $comb_media : null;
   }
 
   // function to insert a new combination
@@ -76,8 +61,7 @@ class Combination extends Database
     // insert user info in database
     $stmt = $this->con->prepare($insert_query);
     $stmt->execute($comb_info);
-    // get count
-    $count = $stmt->rowCount(); // all count of data
+    $count = $stmt->rowCount(); // count effected rows
     // return
     return $count > 0 ? true : false;
   }
@@ -232,41 +216,7 @@ class Combination extends Database
     return $insert_count > 0 ? true : false;
   }
 
-  public function prepare_data($data)
-  {
-    extract($data);
-
-    return [
-      'comb_id' => $comb_id,
-      'client_name' => $client_name,
-      'phone' => $phone,
-      'address' => $address,
-      'coordinates' => $coordinates,
-      'created_at' => $created_at,
-      'isFinished' => $isFinished,
-      'comment' => $comment,
-      'UserID' => $UserID,
-      'addedBy' => $addedBy,
-      'isShowed' => $isShowed,
-      'showed_at' => $showed_at,
-      'isAccepted' => $isAccepted,
-      'finished_at' => $finished_at,
-      'cost' => $cost,
-      'cost_receipt' => $cost_receipt,
-      'tech_comment' => $tech_comment,
-      'isReviewed' => $isReviewed,
-      'reviewed_at' => $reviewed_at,
-      'money_review' => $money_review,
-      'qty_service' => $qty_service,
-      'qty_emp' => $qty_emp,
-      'qty_comment' => $qty_comment,
-      'company_id' => $company_id,
-      'deleted_at' => $deleted_at,
-    ];
-  }
-
-
-  /**
+    /**
    * send_notification function
    * used to send a combination notification to technical man
    */

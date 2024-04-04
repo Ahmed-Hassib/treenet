@@ -1,14 +1,12 @@
 <?php
-if (!isset($dir_obj)) {
-  // create an object of Direction class
-  $dir_obj = new Direction();
-}
+// create an object of Direction class
+$dir_obj = new Direction();
 // get all directions
 $directions = $dir_obj->get_all_directions(base64_decode($_SESSION['sys']['company_id']));
 // data count
-$directions_counter = $directions[0];
+$directions_counter = !is_null($directions) ? count($directions) : 0;
 // data rows
-$directions_info = $directions[1];
+$directions_info = $directions;
 ?>
 <!-- start add new user page -->
 <div class="container" dir="<?php echo $page_dir ?>">
@@ -21,7 +19,7 @@ $directions_info = $directions[1];
       </button>
     <?php } ?>
 
-    <?php if (!empty($directions_info) || $directions_counter != 0) { ?>
+    <?php if (!is_null($directions_info) || $directions_counter != 0) { ?>
       <?php if ($_SESSION['sys']['dir_update'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) { ?>
         <!-- edit direction -->
         <button type="button" class="btn btn-outline-primary py-1 fs-12" data-bs-toggle="modal" data-bs-target="#editDirectionModal">
@@ -42,7 +40,7 @@ $directions_info = $directions[1];
 
   <!-- second row -->
   <div class="mb-3">
-    <?php if (empty($directions_info) || $directions_counter == 0) { ?>
+    <?php if (is_null($directions_info) || $directions_counter == 0) { ?>
       <div class="page-error text-center">
         <img loading="lazy" src="<?php echo $assets ?>images/no-data-founded.svg" class="img-fluid" alt="<?php echo lang('NO DATA') ?>">
       </div>
@@ -68,6 +66,9 @@ $directions_info = $directions[1];
                       </span>
                     <?php } ?>
                   </h5>
+                  <h6 class="my-0 card-subtitle">
+                    <?php echo lang('dir code', $lang_file) . ": " . $row['direction_id'] . $_SESSION['sys']['company_code'] ?>
+                  </h6>
                   <!-- horizontal rule -->
                   <hr>
                 </div>
@@ -125,7 +126,7 @@ $directions_info = $directions[1];
                     <?php if ($_SESSION['sys']['dir_update'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) { ?>
                       <div class="col-6">
                         <!-- edit direction -->
-                        <button type="button" data-bs-toggle="modal" data-bs-target="#editDirectionModal" class='py-1 w-100 btn btn-primary text-capitalize fs-12 fs-10-sm' onclick="put_dir_info(this, 'update')" data-direction-id="<?php echo base64_encode($row['direction_id']) ?>" data-direction-name="<?php echo $row['direction_name'] ?>" data-direction-ip="<?php echo $row['direction_ip'] ?>">
+                        <button type="button" data-bs-toggle="modal" data-bs-target="#editDirectionModal" class='py-1 w-100 btn btn-primary text-capitalize fs-12 fs-10-sm' onclick="put_dir_info(this, 'update')" data-direction-id="<?php echo base64_encode($row['direction_id']) ?>" data-direction-name="<?php echo $row['direction_name'] ?>">
                           <i class="bi bi-pencil-square p-1"></i>
                           <?php echo lang('EDIT') ?>
                         </button>

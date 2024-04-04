@@ -1,6 +1,6 @@
 <?php
 // create an object of Pieces class
-$pcs_obj = !isset($pcs_obj) ? new Pieces() : $pcs_obj;
+$pcs_obj = new Pieces();
 // get type
 $type = isset($_GET['type']) && !empty($_GET['type']) ? intval($_GET['type']) : 0;
 // get connection id
@@ -113,11 +113,11 @@ if (!is_null($all_data)) {
               <td>
                 <?php if ($_SESSION['sys']['pcs_show'] == 1) { ?>
                   <a href="<?php echo $nav_up_level ?>pieces/index.php?do=edit-piece&piece-id=<?php echo base64_encode($piece['id']); ?>" target="">
-                    <?php echo wordwrap(trim($piece['fullname'], ' \t\n\v'), 50, "<br>") ?>
+                    <?php echo wordwrap(trim($piece['full_name'], ' \t\n\v'), 50, "<br>") ?>
                   </a>
                 <?php } else { ?>
                   <span>
-                    <?php echo wordwrap(trim($piece['fullname'], ' \t\n\v'), 50, "<br>") ?>
+                    <?php echo wordwrap(trim($piece['full_name'], ' \t\n\v'), 50, "<br>") ?>
                   </span>
                 <?php } ?>
                 <?php if ($piece['direction_id'] == 0) { ?>
@@ -268,7 +268,7 @@ if (!is_null($all_data)) {
                     </a>
                   <?php } ?>
                   <?php if ($_SESSION['sys']['pcs_delete'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) { ?>
-                    <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12" data-bs-toggle="modal" data-bs-target="#deletePieceModal" id="delete-piece" data-piece-id="<?php echo base64_encode($piece['id']) ?>" data-piece-name="<?php echo $piece['fullname'] ?>" onclick="confirm_delete_piece(this, true)" style="width: 80px">
+                    <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12" data-bs-toggle="modal" data-bs-target="#deletePieceModal" id="delete-piece" data-piece-id="<?php echo base64_encode($piece['id']) ?>" data-piece-name="<?php echo $piece['full_name'] ?>" onclick="confirm_delete_piece(this, true)" style="width: 80px">
                       <i class="bi bi-trash"></i>
                       <?php echo lang('DELETE') ?>
                     </button>

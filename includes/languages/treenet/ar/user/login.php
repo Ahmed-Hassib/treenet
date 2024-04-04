@@ -79,6 +79,9 @@ function login($phrase)
     'PHONE NOT EXIST' => 'رقم التليفون هذا غير مُسجل لدينا',
     'PASSWORD NOT EQUAL' => 'كلمة المرور غير متطابقة',
     'PASSWORD UPDATED' => 'تم إعادة تعيين كلمة المرور الخاصة بك',
+    'EMAIL EMPTY' => 'البريد الإلكتروني مطلوب ولا يمكن ان يكون فارغاً',
+    'INVALID EMAIL' => 'البريد الإلكتروني غير صالح',
+    'EMAIL DUPLICATED' => 'البريد الإلكتروني مكرر',
   );
   // return the phrase
   return array_key_exists($phrase, $lang) ? $lang[$phrase] : null;

@@ -37,7 +37,6 @@ if ($is_developing == false) {
     $preloader = true;
 
     // start manage page
-
     if ($query == 'manage' && $_SESSION['sys']['clients_show'] == 1) {
       $file_name = 'dashboard.php';
       $page_subtitle = "dashboard";
@@ -74,7 +73,7 @@ if ($is_developing == false) {
       $page_subtitle = "restore clts";
       $possible_back = false;
     } elseif ($query == 'deletes' && $_SESSION['sys']['clients_delete'] == 1) {
-      $file_name = 'deleted.php';
+      $file_name = 'deletes.php';
       $page_subtitle = "deletes";
       $is_contain_table = true;
       $possible_back = false;
@@ -85,6 +84,9 @@ if ($is_developing == false) {
     } elseif ($query == 'prepare-ip' && $_SESSION['sys']['clients_show'] == 1) {
       $file_name = 'prepare-ip.php';
       $page_subtitle = "";
+    } elseif ($query == 'upload' && $_SESSION['sys']['clients_add'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) {
+      $file_name = "upload.php";
+      $page_subtitle = "upload data";
     } else {
       $file_name = $globmod . 'page-permission-error.php';
       $possible_back = false;

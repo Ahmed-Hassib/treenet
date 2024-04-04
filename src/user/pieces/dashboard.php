@@ -46,6 +46,16 @@
         </div>
       </div>
       <div class="col-12">
+        <div class="dashboard-card card card-white bg-gradient">
+          <img class="card-img <?php echo $page_dir == 'ltr' ? 'card-img-right' : 'card-img-left' ?>" src="<?php echo $treenet_assets . "file-cloud.svg" ?>" loading="lazy" alt="">
+          <div class="card-body">
+            <h5 class="h5 text-capitalize"><?php echo wordwrap(ucfirst(lang('upload data by file', $lang_file)), "45", "<br>") ?>
+            </h5>
+          </div>
+          <a href="?do=upload" class="stretched-link"></a>
+        </div>
+      </div>
+      <div class="col-12">
         <?php $pieces = $pcs_obj->count_records("`id`", "`pieces_info`", "WHERE `is_client` = 0 AND `deleted_at` IS NOT NULL AND `company_id` = " . base64_decode($_SESSION['sys']['company_id'])); ?>
         <div class="dashboard-card card card-white bg-gradient">
           <img class="card-img <?php echo $page_dir == 'ltr' ? 'card-img-right' : 'card-img-left' ?>" src="<?php echo $treenet_assets . "trash.svg" ?>" loading="lazy" alt="">
@@ -83,15 +93,13 @@
             <?php
             if (count($latest_added_pcs) > 0) {
               // get data
-              $all_data = prepare_pcs_datatables($latest_added_pcs, $lang_file);
-              // json data
-              $all_data_json = json_encode($all_data);
+              $all_data = $latest_added_pcs;
             } else {
               $all_data = [];
             }
             ?>
             <!-- strst pieces table -->
-            <table class="table table-bordered table-striped display compact nowrap" data-scroll-x="false" style="width:100%">
+            <table class="table table-bordered table-striped display compact nowrap" data-scroll-x="false" <?php echo count($latest_added_pcs) <= 10 ? 'data-scroll-y="auto"' : null ?> style="width:100%">
               <thead class="primary text-capitalize">
                 <tr>
                   <th>#</th>
@@ -129,7 +137,7 @@
                         </span>
                       <?php } ?>
                       <?php if ($piece['direction_id'] == 0) { ?>
-                        <i class="bi bi-exclamation-triangle-fill text-danger fw-bold" title="<?php echo lang("NOT ASSIGNED") ?>"></i>
+                        <i class="bi bi-exclamation-triangle-fill text-danger fw-bold" title="<?php echo lang("direction not assigned", $lang_file) ?>"></i>
                       <?php } ?>
                       <?php if (date_format(date_create($piece['created_at']), 'Y-m-d') == date('Y-m-d')) { ?>
                         <span class="badge bg-danger p-1 <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'me-1' : 'ms-1' ?>">

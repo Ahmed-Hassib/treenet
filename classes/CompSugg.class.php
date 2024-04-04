@@ -49,13 +49,13 @@ class CompSugg extends Database
   public function get_specific_data($id, $company_id)
   {
     // data
-    $query = "SELECT *FROM `comp_sugg` WHERE `id` = ? AND `company_id` = ?;";
+    $query = "SELECT *FROM `comp_sugg` WHERE `id` = ? AND `company_id` = ? LIMIT 1;";
     $stmt = $this->con->prepare($query);
     $stmt->execute(array($id, $company_id));
     $data = $stmt->fetch();
     $count = $stmt->rowCount();    // all count of data
     // return
-    return $count > 0 ? $this->prepare_data($data) : null;
+    return $count > 0 ? $data : null;
   }
 
   // function to get specific data inspecific period
@@ -111,7 +111,7 @@ class CompSugg extends Database
     $data = $stmt->fetch();
     $count = $stmt->rowCount();    // all count of data
     // return
-    return $count > 0 ? $this->prepare_media_data($data) : null;
+    return $count > 0 ? $data : null;
   }
 
   // function for update complaint or suggestion
@@ -136,32 +136,5 @@ class CompSugg extends Database
     $count = $stmt->rowCount();    // count afected rows
     // return
     return $count > 0 ? true : false;
-  }
-
-  public function prepare_data($info)
-  {
-    extract($info);
-    return [
-      'id' => $id,
-      'company_id' => $company_id,
-      'added_by' => $added_by,
-      'text' => $text,
-      'type' => $type,
-      'status' => $status,
-      'created_at' => $created_at,
-      'updated_at' => $updated_at,
-      'deleted_at' => $deleted_at,
-    ];
-  }
-  
-  public function prepare_media_data($info)
-  {
-    extract($info);
-    return [
-      'id' => $id,
-      'comp_sugg_id' => $comp_sugg_id,
-      'media' => $media,
-      'type' => $type,
-    ];
   }
 }

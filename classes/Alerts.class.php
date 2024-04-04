@@ -26,38 +26,7 @@ class Alerts extends Database
     // get records
     $alerts = $stmt->fetchAll();
     $count = $stmt->rowCount();
-
-    // check cout
-    if ($count > 0) {
-      // result
-      $res = [];
-      // loop on aalerts
-      foreach ($alerts as $key => $alert) {
-        $res[] = $this->prepare_alert_data($alert);
-      }
-
-      // return final result
-      return $res;
-    }
     // return null
-    return null;
-  }
-
-  public function prepare_alert_data($alert_data) {
-    extract($alert_data);
-    return [
-      'id' => $id,
-      'alert_title_ar' => $alert_title_ar,
-      'alert_title_en' => $alert_title_en,
-      'alert_content_ar' => $alert_content_ar,
-      'alert_content_en' => $alert_content_en,
-      'alert_type' => $alert_type,
-      'company_id' => $company_id,
-      'created_at' => $created_at,
-      'updated_at' => $updated_at,
-      'deleted_at' => $deleted_at,
-      'expire_at' => $expire_at,
-    ];
-
+    return $count > 0 ? $alerts : null;
   }
 }

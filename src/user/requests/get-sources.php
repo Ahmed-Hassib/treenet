@@ -23,7 +23,7 @@ if (empty($dir_id) || empty($company_id)) {
   // check server name
   if ($_SERVER['SERVER_NAME'] == 'tree-net.net') {
     // json location
-    $json_location = $document_root . "app/data/json/dirs/";
+    $json_location = $document_root . "data/json/dirs/";
   } else {
     // json location
     $json_location = $document_root . "/data/json/dirs/";

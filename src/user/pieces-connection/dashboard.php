@@ -33,17 +33,13 @@
 
     <?php
     // create an object of PiecesConn class
-    $conn_obj = !isset($conn_obj) ? new PiecesConn() : $conn_obj;
+    $conn_obj = new PiecesConn();
     // company id
     $company_id = base64_decode($_SESSION['sys']['company_id']);
     // get all connections 
-    $conn_data = $conn_obj->get_all_conn_types($company_id);
-    // data counter
-    $types_count = $conn_data[0];
-    // data rows
-    $types_data = $conn_data[1];
+    $types_data = $conn_obj->get_all_conn_types($company_id);
     // check types count
-    if ($types_count > 0) {
+    if (!is_null($types_data)) {
     ?>
       <div class="row row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
         <?php
@@ -132,10 +128,10 @@
             </div>
           </div>
         </div>
-      <?php } else {
+      </div>
+    <?php } else {
       // include no data founded file
       include_once $globmod . 'no-data-founded-no-redirect.php';
     } ?>
-      </div>
   </div>
 </div>

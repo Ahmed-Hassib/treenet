@@ -6,32 +6,32 @@ $company_id = $db_obj->get_next_id('jsl_db', 'companies');
 $license_id = $db_obj->get_next_id('jsl_db', 'license');
 $user_id = $db_obj->get_next_id('jsl_db', 'users');
 // get company info
-$company_name = trim($_POST['company-name']);
-$company_code = trim($_POST['company-code']);
-$manager_name = trim($_POST['fullname']);
-$company_phone = trim($_POST['company-phone']);
-$country = $_POST['country'];
+$company_name = isset($_POST['company-name']) && !empty(trim($_POST['company-name'])) ? trim($_POST['company-name']) : null;
+$company_code = isset($_POST['company-code']) && !empty(trim($_POST['company-code'])) ? trim($_POST['company-code']) : null;
+$manager_name = isset($_POST['fullname']) && !empty(trim($_POST['fullname'])) ? trim($_POST['fullname']) : null;
+$company_phone = isset($_POST['company-phone']) && !empty(trim($_POST['company-phone'])) ? trim($_POST['company-phone']) : null;
+$country = isset($_POST['country']) && !empty($_POST['country']) ? $_POST['country'] : null;
 $agent = $_POST['agent'];
 // admin of this company info
 $fullname = $manager_name;
-$username = $_POST['username'];
-$password = trim($_POST['password']);
-$confirm_password = trim($_POST['confirm_pass']);
-$admin_phone = trim($_POST['admin-phone']);
-$admin_email = filter_var($_POST['admin-email'], FILTER_VALIDATE_EMAIL);
+$username = isset($_POST['username']) && !empty(trim($_POST['username'])) ? trim($_POST['username']) : null;
+$password = isset($_POST['password']) && !empty(trim($_POST['password'])) ? trim($_POST['password']) : null;
+$confirm_password = isset($_POST['confirm_pass']) && !empty(trim($_POST['confirm_pass'])) ? $_POST['confirm_pass'] : null;
+$admin_phone = isset($_POST['admin-phone']) && !empty(trim($_POST['admin-phone'])) ? trim($_POST['admin-phone']) : null;
+$admin_email = isset($_POST['admin-email']) && !empty($_POST['admin-email']) ? $_POST['admin-email'] : null;
 $enc_password = sha1($password);
-$gender = $_POST['gender'];
+$gender = isset($_POST['gender']) ? $_POST['gender'] : null;
 
 // array of error
 $err_arr = [];
 
 // check company name
-if (empty($company_name)) {
+if (is_null($company_name)) {
   $err_arr[] = 'company empty';
 }
 
 // check manager name
-if (empty($manager_name)) {
+if (is_null($manager_name)) {
   $err_arr[] = 'manager empty';
 }
 
@@ -40,17 +40,17 @@ if (!is_triple_parts_name($manager_name)) {
 }
 
 // check manager phone
-if (empty($company_phone)) {
+if (is_null($company_phone)) {
   $err_arr[] = 'phone empty';
 }
 
 // check country
-if (empty($country)) {
+if (is_null($country)) {
   $err_arr[] = 'country empty';
 }
 
 // check fullname
-if (empty($fullname)) {
+if (is_null($fullname)) {
   $err_arr[] = 'fullname empty';
 }
 
@@ -60,19 +60,28 @@ if (empty($fullname)) {
 // }
 
 // check username
-if (empty($username)) {
+if (is_null($username)) {
   $err_arr[] = 'username empty';
 }
 
 // check password
-if (empty($password)) {
+if (is_null($password)) {
   $err_arr[] = 'password empty';
 } elseif ($password != $confirm_password) {
   $err_arr[] = 'password not equal';
 }
 
+// check email
+if (is_null($admin_email)) {
+  $err_arr[] = 'email empty';
+} elseif (filter_var($_POST['admin-email'], FILTER_VALIDATE_EMAIL) === false) {
+  $err_arr[] = 'invalid email';
+} elseif($db_obj->is_exist("`email`", "`users`", $admin_email)) {
+  $err_arr[] = 'email duplicated';
+}
+
 // check gender
-if (empty($gender) && $gender != 0) {
+if (is_null($gender) && $gender != 0) {
   $err_arr[] = 'gender empty';
 }
 
@@ -105,7 +114,7 @@ if (empty($err_arr)) {
         // add a success message
         $succ_arr[] = 'license inserted';
         // insert admin info
-        $is_inserted_admin_info = $reg_obj->add_company_admin(array($company_id, $username, $enc_password, $fullname, $gender, get_date_now()));
+        $is_inserted_admin_info = $reg_obj->add_company_admin(array($company_id, $username, $enc_password, $admin_email, $fullname, $admin_phone, $gender));
         // check if admin info is inserted
         if ($is_inserted_admin_info) {
           // assign a success message 

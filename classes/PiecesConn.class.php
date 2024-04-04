@@ -1,21 +1,24 @@
 <?php
+
 /**
  * PiecesConn class
  */
-class PiecesConn extends Database {
+class PiecesConn extends Database
+{
   // properties
   public $con;
 
   // constructor
-  public function __construct() {
+  public function __construct()
+  {
     // create an object of Database class
-        $db_obj = new Database("localhost", "jsl_db", "root", "@hmedH@ssib");
-
+    $db_obj = new Database("localhost", "jsl_db", "root", "@hmedH@ssib");
     $this->con = $db_obj->con;
   }
-  
+
   // get all types_conn
-  public function get_all_conn_types($company_id) {
+  public function get_all_conn_types($company_id)
+  {
     // get all pieces types_conn
     $typesQuery = "SELECT *FROM `connection_types` WHERE `company_id` = ?";
     $stmt = $this->con->prepare($typesQuery);
@@ -23,11 +26,12 @@ class PiecesConn extends Database {
     $typesRows = $stmt->fetchAll();
     $typesCount =  $stmt->rowCount();
     // return result
-    return $typesCount > 0 ? [true, $typesRows] : [false, null];
+    return $typesCount > 0 ? $typesRows : null;
   }
-  
+
   // insert a new piece type
-  public function insert_new_conn_type($name, $note, $company_id) {
+  public function insert_new_conn_type($name, $note, $company_id)
+  {
     // insert query
     $insertQuery = "INSERT INTO `connection_types` (`connection_name`, `notes`, `company_id`) VALUES (?, ?, ?);";
     $stmt = $this->con->prepare($insertQuery);
@@ -38,7 +42,8 @@ class PiecesConn extends Database {
   }
 
   // update type
-  public function update_conn_type($name, $note, $id) {
+  public function update_conn_type($name, $note, $id)
+  {
     // insert query
     $updateQuery = "UPDATE `connection_types` SET `connection_name` = ?, `notes` = ? WHERE `id` = ?";
     $stmt = $this->con->prepare($updateQuery);
@@ -49,7 +54,8 @@ class PiecesConn extends Database {
   }
 
   // delete type
-  public function delete_conn_type($id) {
+  public function delete_conn_type($id)
+  {
     // // delete query
     // $deleteQuery = "DELETE FROM `connection_types` WHERE `id` = ?";
     // $stmt = $this->con->prepare($deleteQuery);

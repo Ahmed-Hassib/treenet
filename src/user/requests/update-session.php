@@ -2,13 +2,13 @@
 // get user id 
 $user_id = isset($_GET['user-id']) && !empty($_GET['user-id']) ? base64_decode($_GET['user-id']) : 0;
 // create an object of Session class
-$session_obj = !isset($session_obj) ? new Session() : $session_obj;
+$session_obj = new Session();
 // get user info
 $user_info = $session_obj->get_user_info($user_id);
 // check if done
-if ($user_info[0] == true) {
+if (!is_null($user_info)) {
   // set user session
-  $session_obj->set_user_session($user_info[1]);
+  $session_obj->set_user_session($user_info);
 
   // prepare flash session variables
   $_SESSION['flash_message'] = 'SESSION UPDATED';

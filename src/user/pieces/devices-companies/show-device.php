@@ -19,13 +19,9 @@
   // check the value
   if (!empty($device_id) && $is_exist) {
     // get all info about given device id
-    $device_info = $dev_obj->get_device_info($device_id);
-    // device_info counter
-    $device_counter = $device_info[0];
-    // device_info data
-    $device_data = $device_info[1];
+    $device_data = $dev_obj->get_device_info($device_id);
     // check the counter
-    if ($device_counter > 0) { ?>
+    if (!is_null($device_counter)) { ?>
       <!-- start form -->
       <form class="mb-3 custom-form need-validation" action="?do=devices-companies&action=update-device" method="POST" id="editDeviceInfo">
         <!-- horzontal stack -->
@@ -121,12 +117,7 @@
 
       <?php
       // get all devices companies data
-      $device_models = $dev_obj->get_all_device_models($device_data['device_id']);
-      // get counter
-      $device_models_counter = $device_models[0];
-      // get companies data
-      $device_models_data = $device_models[1];
-
+      $device_models_data = $dev_obj->get_all_device_models($device_data['device_id']);
       ?>
       <!-- start piece info -->
       <div class="mb-3 row row-cols-sm-1 g-3 align-items-stretch justify-content-start">
@@ -139,9 +130,9 @@
               </h5>
               <hr>
             </div>
-            <?php if ($device_models_counter > 0) { ?>
+            <?php if (!is_null($device_models_data)) { ?>
               <!-- strst users table -->
-              <table class="table table-bordered table-striped display compact nowrap" data-scroll-x="true" <?php echo $device_models_counter <= 10 ? 'data-scroll-y="auto"' : null ?> data-last-td="null"  style="width:100%">
+              <table class="table table-bordered table-striped display compact nowrap" data-scroll-x="true" <?php echo $device_models_counter <= 10 ? 'data-scroll-y="auto"' : null ?> data-last-td="null" style="width:100%">
                 <thead class="primary text-capitalize">
                   <tr>
                     <th>#</th>

@@ -20,9 +20,9 @@ $main_statement = lang('YOUR NETWORK CONTAINS', $lang_file) . " " . $all_dirs_co
 
 <?php
 // check direction counter
-if ($all_dirs_counter > 0) {
+if ($all_dirs_counter > 0 && !is_null($all_dirs)) {
   // assign all directions data
-  $all_dirs_data = $all_dirs[1];
+  $all_dirs_data = $all_dirs;
 
   $all_data = [];
   $all_data_labels = [];
@@ -69,13 +69,6 @@ if ($all_dirs_counter > 0) {
     <?php } ?>
   </ol>
 <?php } ?>
-
-
-
-
-
-
-
 
 <script>
   // get all charts canvas

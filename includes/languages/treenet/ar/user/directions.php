@@ -17,13 +17,15 @@ function directions($phrase)
     'SHOW DIR PCS' => 'عرض أجهزة إتجاه',
     'SHOW DIR UNK' => 'عرض غير معروف في إتجاه',
     'CURRENT DIRECTION' => 'الإتجاه الحالى',
+    'DIR CODE' => 'كود الإتجاه',
+    'DIRS CODES' => 'أكواد الإتجاهات',
     'DIRECTIONS TREE' => 'شجرة الاتجاهات',
     'DIRECTIONS MAP' => 'خريطة الاتجاهات',
     'SHOW TREE' => 'رؤية شجرة الاتجاه',
     'UPDATE COORDINATES' => 'تحديث الاحداثيات',
     'UPLOAD DATA' => 'إرفاق بيانات الإتجاهات',
     'UPLOAD DATA BY FILE' => 'إرفاق بيانات الإتجاهات عن طريق ملف اكسيل',
-
+    
     // large words
     'CANNOT DELETE' => 'لا يمكن حذف هذا الإتجاه لوجود أكتر من جهاز أو عميل عليه',
     'SELECT DIR MAP NOTE' => 'برجاء اختيار الإتجاه المطلوب لعرض جميع النقاط والعملاء الخاصة به علي خريطة جوجل',
@@ -46,6 +48,7 @@ function directions($phrase)
     'ADD NEW' => 'إضافة إتجاه جديد',
     'EDIT DIR' => 'تعديل إتجاه',
     'DELETE DIR' => 'حذف إتجاه',
+    'DOWNLOAD DIRS FILE' => 'تحميل ملف الإتجاهات',
 
   );
   // return the phrase

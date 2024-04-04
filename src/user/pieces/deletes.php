@@ -86,11 +86,11 @@ $pcs_obj = new Pieces();
               if ($date != null) {
                 $title = lang('YOU ARE SHOWING DATA FOR A DAY') . " {$date}";
                 // get all deleted pieces of specific date
-                $deleted_pieces = $pcs_obj->get_pieces("where `company_id` = " . base64_decode($_SESSION['sys']['company_id']) . " AND `is_client` = 0 AND Date(`deleted_at`) = '" . $date . "'", 2);
+                $deleted_pieces = $pcs_obj->get_pieces("where `company_id` = " . base64_decode($_SESSION['sys']['company_id']) . " AND `is_client` = 0 AND Date(`deleted_at`) = '{$date}'");
               } elseif ($period_start != null && $period_end != null) {
                 $title = lang('YOU ARE SHOWING DATA FOR A PERIOD') . "  " . lang('FROM') . " {$period_start} " . lang('TO') . " {$period_end}";
                 // get all deleted pieces of specific date
-                $deleted_pieces = $pcs_obj->get_pieces("where `company_id` = " . base64_decode($_SESSION['sys']['company_id']) . " AND `is_client` = 0 AND Date(`deleted_at`) BETWEEN '$period_start' AND '$period_end'", 2);
+                $deleted_pieces = $pcs_obj->get_pieces("where `company_id` = " . base64_decode($_SESSION['sys']['company_id']) . " AND `is_client` = 0 AND Date(`deleted_at`) BETWEEN '{$period_start}' AND '{$period_end}'");
               } else {
                 $title = lang('NOT ASSIGNED');
               }
@@ -138,7 +138,7 @@ $pcs_obj = new Pieces();
                     </td>
                     <!-- piece name -->
                     <td>
-                      <?php echo wordwrap(trim($piece['fullname'], ' '), 50, "<br>") ?>
+                      <?php echo wordwrap(trim($piece['full_name'], ' '), 50, "<br>") ?>
                     </td>
                     <!-- piece address -->
                     <td>

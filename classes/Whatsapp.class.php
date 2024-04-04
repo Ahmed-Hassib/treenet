@@ -1,5 +1,5 @@
 <?php
 
-class Whatsapp extends Database {
-  
+class Whatsapp extends Database
+{
 }

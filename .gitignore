@@ -1,6 +1,3 @@
-#igone api folder
-api/
-
 # ignoring all text files
 *.txt
 
@@ -42,4 +39,4 @@ includes/libraries/
 vendor/
 
 # ignoring uploads file
-*upload*
+upload.php

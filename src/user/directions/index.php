@@ -63,7 +63,7 @@ if ($is_developing == false) {
     } elseif ($query == 'update-coordinates') {
       $file_name = "update-coordinates.php";
       $page_subtitle = "update coordinates";
-    } elseif ($query == 'upload') {
+    } elseif ($query == 'upload'&& $_SESSION['sys']['dir_add'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) {
       $file_name = "upload.php";
       $page_subtitle = "upload data";
     } else {

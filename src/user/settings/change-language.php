@@ -12,14 +12,9 @@ if ($check == true) {
   // call change_user_langugae
   $is_changed = $user_obj->change_user_language($lang, $user_id);
   // create an object of Session class
-  $session_obj = !isset($session_obj) ? new Session() : $session_obj;
-  // get user info
-  $user_details = $session_obj->get_user_info($user_id);
-  // check if exist
-  if ($user_details[0] == true) {
-    // reset session
-    $session_obj->set_user_session($user_details[1]);
-  }
+  $session_obj = new Session();
+  // set user session
+  $session_obj->update_session(base64_decode($_SESSION['sys']['UserID']));
   // prepare flash session variables
   $_SESSION['flash_message'] = 'SETTINGS UPDATED';
   $_SESSION['flash_message_icon'] = 'bi-check-circle-fill';

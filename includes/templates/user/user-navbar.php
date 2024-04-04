@@ -148,7 +148,6 @@
             <?php } ?>
           <?php } ?>
           <?php if ($_SESSION['sys']['dir_add'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) { ?>
-            <hr class="m-1">
             <li>
               <a href="#" data-bs-toggle="modal" data-bs-target="#addNewDirectionModal">
                 <span class="link-name">
@@ -156,6 +155,7 @@
                 </span>
               </a>
             </li>
+            <hr class="m-1">
             <li>
               <a href="<?php echo $nav_up_level ?>directions/index.php?do=upload">
                 <span class="link-name">
@@ -212,6 +212,14 @@
               <a href="<?php echo $nav_up_level ?>pieces/index.php?do=add-new-piece">
                 <span class="link-name">
                   <?php echo lang('ADD NEW', 'pieces') ?>
+                </span>
+              </a>
+            </li>
+            <hr class="m-1">
+            <li>
+              <a href="<?php echo $nav_up_level ?>pieces/index.php?do=upload">
+                <span class="link-name">
+                  <?php echo wordwrap(lang('upload data by file', 'pieces'), 45, "<br>", true) ?>
                 </span>
               </a>
             </li>
@@ -328,6 +336,14 @@
               <a href="<?php echo $nav_up_level ?>clients/index.php?do=add-new-client">
                 <span class="link-name">
                   <?php echo lang('ADD NEW', 'clients') ?>
+                </span>
+              </a>
+            </li>
+            <hr class="m-1">
+            <li>
+              <a href="<?php echo $nav_up_level ?>clients/index.php?do=upload">
+                <span class="link-name">
+                  <?php echo wordwrap(lang('upload data by file', 'clients'), 45, "<br>", true) ?>
                 </span>
               </a>
             </li>

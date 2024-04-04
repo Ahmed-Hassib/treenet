@@ -26,25 +26,8 @@ class Countries extends Database
     $stmt->execute(); // execute data
     $countries_data = $stmt->fetchAll(); // assign all data to variable
     $countries_count = $stmt->rowCount(); // assign all data to variable
-
-    // an empty result
-    $res = [];
-    // check count
-    if ($countries_count > 0) {
-      foreach ($countries_data as $key => $country) {
-        extract($country);
-        $res[] = [
-          'country_id' => $country_id,
-          'country_name_ar' => $country_name_ar,
-          'country_name_en' => $country_name_en,
-          'flag' => $flag,
-        ];
-      }
-      // return result
-      return $res;
-    }
     // return null
-    return null;
+    return $countries_count > 0 ? $countries_data : null;
   }
 
   // get country data
@@ -56,18 +39,7 @@ class Countries extends Database
     $stmt->execute(array($id)); // execute data
     $country_data = $stmt->fetch(); // assign all data to variable
     $country_count = $stmt->rowCount(); // assign all data to variable
-
-    // check count
-    if ($country_count > 0) {
-      extract($country_data);
-      return [
-        'country_id' => $country_id,
-        'country_name_ar' => $country_name_ar,
-        'country_name_en' => $country_name_en,
-        'flag' => $flag,
-      ];
-    }
     // return null
-    return null;
+    return $country_count > 0 ? $country_data : null;
   }
 }

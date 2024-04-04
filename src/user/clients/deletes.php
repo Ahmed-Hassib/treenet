@@ -86,11 +86,11 @@ $pcs_obj = new Pieces();
               if ($date != null) {
                 $title = lang('YOU ARE SHOWING DATA FOR A DAY') . " {$date}";
                 // get all deleted clients of specific date
-                $deleted_clients = $pcs_obj->get_pieces("where `company_id` = " . base64_decode($_SESSION['sys']['company_id']) . " AND `is_client` = 1 AND Date(`deleted_at`) = '" . $date . "'", 2);
+                $deleted_clients = $pcs_obj->get_pieces("where `company_id` = " . base64_decode($_SESSION['sys']['company_id']) . " AND `is_client` = 1 AND Date(`deleted_at`) = '{$date}'");
               } elseif ($period_start != null && $period_end != null) {
                 $title = lang('YOU ARE SHOWING DATA FOR A PERIOD') . "  " . lang('FROM') . " {$period_start} " . lang('TO') . " {$period_end}";
                 // get all deleted clients of specific date
-                $deleted_clients = $pcs_obj->get_pieces("where `company_id` = " . base64_decode($_SESSION['sys']['company_id']) . " AND `is_client` = 1 AND Date(`deleted_at`) BETWEEN '$period_start' AND '$period_end'", 2);
+                $deleted_clients = $pcs_obj->get_pieces("where `company_id` = " . base64_decode($_SESSION['sys']['company_id']) . " AND `is_client` = 1 AND Date(`deleted_at`) BETWEEN '{$period_start}' AND '{$period_end}'");
               } else {
                 $title = lang('NOT ASSIGNED');
               }
@@ -129,7 +129,7 @@ $pcs_obj = new Pieces();
               </tr>
             </thead>
             <tbody id="clientsTbl">
-              <?php if ($deleted_clients != null) { ?>
+              <?php if (!is_null($deleted_clients)) { ?>
                 <?php foreach ($deleted_clients as $index => $client) { ?>
                   <tr>
                     <!-- index -->
@@ -138,7 +138,7 @@ $pcs_obj = new Pieces();
                     </td>
                     <!-- client name -->
                     <td>
-                      <?php echo wordwrap(trim($client['fullname'], ' '), 50, "<br>") ?>
+                      <?php echo wordwrap(trim($client['full_name'], ' '), 50, "<br>") ?>
                     </td>
                     <!-- client address -->
                     <td>
@@ -167,13 +167,13 @@ $pcs_obj = new Pieces();
                     <!-- client direction -->
                     <td class="text-capitalize">
                       <?php
-                      if (!empty($db_obj->select_specific_column("`direction_name`", "`direction`", "WHERE `direction_id` = " . $client['direction_id']))) {
+                      if (!is_null($client['direction_id']) && !empty($db_obj->select_specific_column("`direction_name`", "`direction`", "WHERE `direction_id` = " . $client['direction_id']))) {
                         $dir_name = $db_obj->select_specific_column("`direction_name`", "`direction`", "WHERE `direction_id` = " . $client['direction_id'])[0]['direction_name'];
                       } else {
                         $dir_name = null;
                       }
                       ?>
-                      <?php if ($client['direction_id'] != 0 && $_SESSION['sys']['dir_update'] == 1 && $dir_name != null) { ?>
+                      <?php if (!is_null($client['direction_id']) && $client['direction_id'] != 0 && $_SESSION['sys']['dir_update'] == 1 && $dir_name != null) { ?>
                         <a target="_blank" href="<?php echo $nav_up_level ?>directions/index.php?do=show-direction-tree&dir-id=<?php echo base64_encode($client['direction_id']); ?>">
                           <?php echo $dir_name ?>
                         </a>
@@ -219,7 +219,7 @@ $pcs_obj = new Pieces();
                           </a>
                         <?php } ?>
                         <?php if ($_SESSION['sys']['pcs_delete'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) { ?>
-                          <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12" data-bs-toggle="modal" data-bs-target="#deleteClientModal" id="temp-delete-<?php echo ($index + 1) ?>" data-client-id="<?php echo base64_encode($client['id']) ?>" data-client-name="<?php echo $client['fullname'] ?>" onclick="confirm_delete_client(this, true, true)" style="width: 80px"><i class="bi bi-trash"></i>
+                          <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12" data-bs-toggle="modal" data-bs-target="#deleteClientModal" id="temp-delete-<?php echo ($index + 1) ?>" data-client-id="<?php echo base64_encode($client['id']) ?>" data-client-name="<?php echo $client['full_name'] ?>" onclick="confirm_delete_client(this, true, true)" style="width: 80px"><i class="bi bi-trash"></i>
                             <?php echo lang('PERMANENT DELETE') ?>
                           </button>
                         <?php } ?>

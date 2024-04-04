@@ -208,7 +208,7 @@ function add_zeros($ipSlice)
 
 function convert_ip($ip)
 {
-  return join("", array_map('add_zeros', explode(".", $ip)));
+  return is_null($ip) ? null : join("", array_map('add_zeros', explode(".", $ip)));
 }
 
 
@@ -360,7 +360,7 @@ function get_dir_name($dir_id)
 {
   global $db_obj;
   // get result
-  $res = $db_obj->select_specific_column("`direction_name`", "`direction`", "WHERE `direction_id` = $dir_id");
+  $res = $db_obj->select_specific_column("`direction_name`", "`direction`", "WHERE `direction_id` = {$dir_id}");
   // get direction name
   return count($res) > 0 ? $res[0]['direction_name'] : null;
 }

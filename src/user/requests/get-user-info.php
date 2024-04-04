@@ -8,25 +8,23 @@ $user_id = isset($_GET['user-id']) ? $_GET['user-id'] : $_SESSION['sys']['UserID
 if (empty($user_id)) {
   echo json_encode(false);
 } else {
-  if (!isset($session_obj)) {
-    // create an object of Session class
-    $session_obj = new Session();
-  }
+  // create an object of Session class
+  $session_obj = new Session();
   // get user info
   $user_info = $session_obj->get_user_info(base64_decode($user_id));
 
   // check if done
-  if ($user_info[0] == true) {
+  if (!is_null($user_info)) {
     // company name
     $company_name = $session_obj->select_specific_column("`company_name`", "`companies`", "WHERE `company_id` = " . $user_info['company_id'])[0]['company_name'];
     // // set user session
     // $session_obj->set_user_session($user_info[1]);
     // convert data into json file
-    $json_data = json_encode($user_info[1]);
+    $json_data = json_encode($user_info);
     // check server name
     if ($_SERVER['SERVER_NAME'] == 'tree-net.net') {
       // json location
-      $json_location = $document_root . "app/data/json/";
+      $json_location = $document_root . "data/json/";
     } else {
       // json location
       $json_location = $document_root . "/data/json/";

@@ -14,14 +14,10 @@
       // create an object of Devices clas
       $dev_obj = !isset($dev_obj) ? new Devices() : $dev_obj;
       // get all devices of this company
-      $company_devices_info = $dev_obj->get_all_company_devices($company_id);
-      // counter
-      $devices_counter = $company_devices_info[0];
-      // counter
-      $devices_data = $company_devices_info[1];
+      $devices_data = $dev_obj->get_all_company_devices($company_id);
 
       // check if it not empty
-      if (!empty($devices_data)) {
+      if (!is_null($devices_data)) {
         // create an object of Model class
         $model_obj = new Models();
         // loop on it to delete all devices` models

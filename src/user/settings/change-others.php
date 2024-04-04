@@ -23,14 +23,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $_SESSION['flash_message_lang_file'] = $lang_file;
 
       // create an object of Session class
-      $session_obj = !isset($session_obj)?new Session():$session_obj;
-      // get user info
-      $user_info = $session_obj->get_user_info(base64_decode($_SESSION['sys']['UserID']));
-      // check if done
-      if ($user_info[0] == true) {
-        // set user session
-        $session_obj->set_user_session($user_info[1]);
-      }
+      $session_obj = new Session();
+      // set user session
+      $session_obj->update_session(base64_decode($_SESSION['sys']['UserID']));
     } else {
       // prepare flash session variables
       $_SESSION['flash_message'] = 'QUERY PROBLEM';

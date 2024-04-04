@@ -2,7 +2,7 @@
 // get client id from $_GET variable
 $client_id = isset($_GET['client-id']) && !empty($_GET['client-id']) ? base64_decode($_GET['client-id']) : 0;
 // create an object of Piece Class
-$pcs_obj = !isset($pcs_obj) ? new Pieces() : $pcs_obj;
+$pcs_obj = new Pieces();
 // check client id 
 $is_exist_id = $pcs_obj->is_exist("`id`", "`pieces_info`", $client_id);
 // condition
@@ -36,7 +36,7 @@ if ($client_id != 0 && $is_exist_id) {
 
         <?php if ($_SESSION['sys']['clients_delete'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) { ?>
           <!-- delete button -->
-          <button type="button" class="btn btn-outline-danger py-1 fs-12" data-bs-toggle="modal" data-bs-target="#deleteClientModal" data-client-id="<?php echo base64_encode($client_data['id']) ?>" data-client-name="<?php echo $client_data['fullname'] ?>" onclick="confirm_delete_client(this)">
+          <button type="button" class="btn btn-outline-danger py-1 fs-12" data-bs-toggle="modal" data-bs-target="#deleteClientModal" data-client-id="<?php echo base64_encode($client_data['id']) ?>" data-client-name="<?php echo $client_data['full_name'] ?>" onclick="confirm_delete_client(this)">
             <i class="bi bi-trash"></i>
             <?php echo lang('DELETE'); ?>
           </button>
@@ -65,7 +65,7 @@ if ($client_id != 0 && $is_exist_id) {
             <input type="hidden" name="client-id" id="client-id" value="<?php echo base64_encode($client_data['id']) ?>">
             <!-- full name -->
             <div class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
-              <input type="text" class="form-control" id="full-name" name="full-name" placeholder="<?php echo lang('CLT NAME', $lang_file) ?>" onblur="fullname_validation(this, <?php echo base64_encode($client_data['id']) ?>)" onblur="fullname_validation(this, <?php echo base64_encode($client_data['id']) ?>)" value="<?php echo $client_data['fullname'] ?>" autocomplete="off" required />
+              <input type="text" class="form-control" id="full-name" name="full-name" placeholder="<?php echo lang('CLT NAME', $lang_file) ?>" onblur="fullname_validation(this, <?php echo base64_encode($client_data['id']) ?>)" onblur="fullname_validation(this, <?php echo base64_encode($client_data['id']) ?>)" value="<?php echo $client_data['full_name'] ?>" autocomplete="off" required />
               <label for="full-name">
                 <?php echo lang('CLT NAME', $lang_file) ?>
               </label>
@@ -224,13 +224,9 @@ if ($client_id != 0 && $is_exist_id) {
                         </option>
                         <?php
                         $condition = "LEFT JOIN `direction` ON `direction`.`direction_id` = `pieces_info`.`direction_id` WHERE `pieces_info`.`direction_id` = " . $client_data['direction_id'] . " AND `pieces_info`.`is_client` = 0 AND `pieces_info`.`company_id` = " . base64_decode($_SESSION['sys']['company_id']);
-                        $sources = $pcs_obj->select_specific_column("`pieces_info`.`id`, `pieces_info`.`full_name`, `pieces_info`.`ip`", "`pieces_info`", $condition);
-                        // counter
-                        $sources_count = count($sources);
-                        // directions data
-                        $sources_data = $sources;
+                        $sources_data = is_null($client_data['direction_id']) ? null : $pcs_obj->select_specific_column("`pieces_info`.`id`, `pieces_info`.`full_name`, `pieces_info`.`ip`", "`pieces_info`", $condition);
                         // check the row sources_count
-                        if ($sources_count) { ?>
+                        if (!is_null($sources_data)) { ?>
                           <?php foreach ($sources_data as $source) { ?>
                             <option value="<?php echo base64_encode($source['id']) ?>" <?php echo $client_data['source_id'] == $source['id'] || ($client_data['source_id'] == 0 && $client_data['ip'] == $source['ip']) ? 'selected' : '' ?>>
                               <?php echo $source['full_name'] . " - " . $source['ip'] ?>
@@ -251,7 +247,7 @@ if ($client_id != 0 && $is_exist_id) {
                         <option value="default" selected disabled>
                           <?php echo lang('SELECT ALT SRC', 'pieces') ?>
                         </option>
-                        <?php if ($sources_count) { ?>
+                        <?php if (!is_null($sources_data)) { ?>
                           <?php foreach ($sources_data as $alt_source) { ?>
                             <option value="<?php echo base64_encode($alt_source['id']) ?>" <?php echo $client_data['alt_source_id'] == $alt_source['id'] || ($client_data['alt_source_id'] == 0 && $client_data['ip'] == $alt_source['ip']) ? 'selected' : ''; ?>>
                               <?php echo $alt_source['full_name'] . " - " . $alt_source['ip'] ?>
@@ -482,15 +478,6 @@ if ($client_id != 0 && $is_exist_id) {
                           <label for="port">Port</label>
                         </div>
                       </div>
-                      <div id="ipHelp" class="form-text text-warning">
-                        <span>
-                          <?php echo lang('IP NOTE', 'pieces') ?>
-                        </span>
-                        <span>&nbsp;-&nbsp;</span>
-                        <span>
-                          <?php echo lang('PORT NOTE', 'pieces') ?>
-                        </span>
-                      </div>
                     </div>
                   </div>
 
@@ -597,7 +584,7 @@ if ($client_id != 0 && $is_exist_id) {
 
         <?php if ($_SESSION['sys']['clients_delete'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) { ?>
           <!--  delete button -->
-          <button type="button" class="btn btn-outline-danger py-1 fs-12" data-bs-toggle="modal" data-bs-target="#deleteClientModal" data-client-id="<?php echo base64_encode($client_data['id']) ?>" data-client-name="<?php echo $client_data['fullname'] ?>" onclick="confirm_delete_client(this)">
+          <button type="button" class="btn btn-outline-danger py-1 fs-12" data-bs-toggle="modal" data-bs-target="#deleteClientModal" data-client-id="<?php echo base64_encode($client_data['id']) ?>" data-client-name="<?php echo $client_data['full_name'] ?>" onclick="confirm_delete_client(this)">
             <i class="bi bi-trash"></i>
             <?php echo lang('DELETE'); ?>
           </button>

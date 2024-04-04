@@ -28,20 +28,8 @@ class Pricing extends Database
     $stmt->execute(); // execute data
     $plans = $stmt->fetchAll(); // assign all data to variable
     $count = $stmt->rowCount(); // all count of data
-    // check result counter
-    if ($count > 0) {
-      // empty array of final result
-      $res = [];
-      // loop on data to preprae it before return it
-      foreach ($plans as $key => $plan) {
-        // prepare data to return it
-        $res[] = $this->prepare_result($plan);
-      }
-      // return final result
-      return $res;
-    }
-    // return
-    return null;
+    // return result
+    return $count > 0 ? $plans : null;
   }
 
   // get all pricing
@@ -54,27 +42,7 @@ class Pricing extends Database
     $stmt->execute(array($plan_id)); // execute data
     $plan = $stmt->fetch(); // assign all data to variable
     $count = $stmt->rowCount(); // all count of data
-    // check result counter
-    if ($count > 0) {
-      // prepare data to return it
-      return $this->prepare_result($plan);
-    }
-    // return
-    return null;
-  }
-
-  public function prepare_result($info)
-  {
-    extract($info);
-    return [
-      'id' => $id,
-      'name_ar' => $name_ar,
-      'name_en' => $name_en,
-      'price_eg' => $price_eg,
-      'price_en' => $price_en,
-      'clients' => $clients,
-      'space' => $space,
-      'status' => $status,
-    ];
+    // return result
+    return $count > 0 ? $plan : null;
   }
 }

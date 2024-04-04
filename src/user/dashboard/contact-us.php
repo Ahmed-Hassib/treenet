@@ -15,11 +15,11 @@
               <label for="username"><?php echo lang('USERNAME') ?></label>
             </div>
             <div class="mb-3 form-floating">
-              <input type="text" class="form-control" placeholder="<?php echo lang('PHONE', 'employees') ?>" name="phone" id="phone" value="<?php echo $_SESSION['sys']['phone'] ?>" required>
+              <input type="text" class="form-control" placeholder="<?php echo lang('PHONE', 'employees') ?>" name="phone" id="phone" value="<?php echo isset($_SESSION['request_data']['phone']) && !empty($_SESSION['request_data']['phone']) ? $_SESSION['request_data']['phone'] : $_SESSION['sys']['phone'] ?>" required>
               <label for="phone"><?php echo lang('PHONE', 'employees') ?></label>
             </div>
             <div class="mb-3 form-floating">
-              <input type="email" class="form-control" placeholder="<?php echo lang('email', 'employees') ?>" valuey="<?php echo isset($_SESSION['request_data']['email']) && !empty($_SESSION['request_data']['email']) ? $_SESSION['request_data']['email'] : null ?>" name="email" id="email" required>
+              <input type="email" class="form-control" placeholder="<?php echo lang('email', 'employees') ?>" value="<?php echo isset($_SESSION['request_data']['email']) && !empty($_SESSION['request_data']['email']) ? $_SESSION['request_data']['email'] : $_SESSION['sys']['email'] ?>" name="email" id="email" required>
               <label for="email"><?php echo lang('email', 'employees') ?></label>
             </div>
             <div class="mb-3 form-floating">

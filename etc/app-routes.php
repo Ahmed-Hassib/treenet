@@ -55,3 +55,4 @@ $dev_models = $json . "devices-models/"; // Devices` Models Directory
 $treenet_assets = $uploads . "assets/";
 $malfunction_media = $uploads . "malfunctions/";
 $combination_media = $uploads . "combinations/";
+$treenet_xlsx = $uploads . "xlsx/";

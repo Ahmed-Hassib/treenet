@@ -6,7 +6,7 @@ $dir_obj = new Direction();
 // get direction name
 $dir_name = $dir_obj->select_specific_column("`direction_name`", "`direction`", "WHERE `direction_id` = $dir_id")[0]['direction_name'];
 // query select
-$q = "SELECT `pieces_info`.`id`, `pieces_info`.`ip`, `pieces_info`.`full_name`, `pieces_info`.`source_id`, `pieces_coordinates`.`coordinates`, `direction`.`direction_name`, `direction`.`direction_id` FROM `pieces_info` LEFT JOIN `direction` ON `direction`.`direction_id` = `pieces_info`.`direction_id` LEFT JOIN `pieces_coordinates` ON `pieces_coordinates`.`id` = `pieces_info`.`id` WHERE `pieces_info`.`direction_id` = ? AND `pieces_info`.`is_client` != 1 AND `pieces_info`.`company_id` = ?";
+$q = "SELECT `pieces_info`.`id`, `pieces_info`.`ip`, `pieces_info`.`full_name`, `pieces_info`.`source_id`, `pieces_info`.`coordinates`, `direction`.`direction_name`, `direction`.`direction_id` FROM `pieces_info` LEFT JOIN `direction` ON `direction`.`direction_id` = `pieces_info`.`direction_id` WHERE `pieces_info`.`direction_id` = ? AND `pieces_info`.`is_client` != 1 AND `pieces_info`.`company_id` = ?";
 
 $stmt = $con->prepare($q);          // select all users
 $stmt->execute(array($dir_id, base64_decode($_SESSION['sys']['company_id'])));      // execute data

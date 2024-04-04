@@ -16,16 +16,14 @@
           <div
             class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
             <?php
-            if (!isset($dir_obj)) {
-              // create an object of Direction class
-              $dir_obj = new Direction();
-            }
+            // create an object of Direction class
+            $dir_obj = new Direction();
             // get all directions
             $dirs = $dir_obj->get_all_directions(base64_decode($_SESSION['sys']['company_id']));
             // data counter
-            $dirs_counter = $dirs[0];
+            $dirs_counter = count($dirs);
             // data rows
-            $dires_data = $dirs[1];
+            $dires_data = $dirs;
             ?>
             <select class="form-select" id="deleted-dir-name" name="deleted-dir-name"
               onchange="document.getElementById('deleted-dir-id').value = this.value;" required>

@@ -1,6 +1,6 @@
 <?php
 // create an object of Pieces class
-$pcs_obj = !isset($pcs_obj) ? new Pieces() : $pcs_obj;
+$pcs_obj = new Pieces();
 // get type
 $dir_id = isset($_GET['dir-id']) && !empty($_GET['dir-id']) ? base64_decode($_GET['dir-id']) : -1;
 // clients condition
@@ -30,8 +30,6 @@ $main_title = "DIR CLTS";
 <?php
 // check counter
 if (!is_null($all_data)) {
-  // json data
-  $all_data_json = json_encode($all_data);
 ?>
   <div class="container" dir="<?php echo $page_dir ?>">
     <div class="section-block">
@@ -46,7 +44,7 @@ if (!is_null($all_data)) {
         <hr>
       </header>
       <!-- strst clients table -->
-      <table class="table table-bordered table-striped display compact nowrap" data-scroll-x="true" data-scroll-y="<?php echo count($all_data) <= 10 ? 'auto' : 400 ?>" data-last-td=" null" style="width:100%">
+      <table class="table table-bordered table-striped display compact nowrap" data-scroll-x="true" <?php echo count($all_data) <= 10 ? 'data-scroll-y="auto"' : null ?> data-last-td="null" style="width:100%">
         <thead class="primary text-capitalize">
           <tr>
             <!-- <th></th> -->
@@ -128,9 +126,9 @@ if (!is_null($all_data)) {
               </td>
               <!-- client name -->
               <td>
-                <?php $client_name = wordwrap(trim($client['fullname'], ' '), 50, "<br>") ?>
+                <?php $client_name = wordwrap(trim($client['full_name'], ' '), 50, "<br>") ?>
                 <?php if ($_SESSION['sys']['clients_show'] == 1) { ?>
-                  <a href="?do=edit-client&client-id=<?php echo base64_encode($client['id']); ?>" target="">
+                  <a href="?do=edit-client&client-id=<?php echo base64_encode($client['id']); ?>" target="_blank">
                     <?php echo $client_name ?>
                   </a>
                 <?php } else { ?>
@@ -141,7 +139,7 @@ if (!is_null($all_data)) {
                 <?php if ($client['direction_id'] == 0) { ?>
                   <i class="bi bi-exclamation-triangle-fill text-danger fw-bold" title="<?php echo lang("NOT ASSIGNED") ?>"></i>
                 <?php } ?>
-                <?php if ($client['created_at'] == date('Y-m-d')) { ?>
+                <?php if (date_format(date_create($client['created_at']), 'Y-m-d') == date('Y-m-d')) { ?>
                   <span class="badge bg-danger p-1 <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'me-1' : 'ms-1' ?>">
                     <?php echo lang('NEW') ?>
                   </span>
@@ -236,15 +234,17 @@ if (!is_null($all_data)) {
               </td>
               <!-- client direction -->
               <td class="text-capitalize">
-                <?php $dir_name = $db_obj->select_specific_column("`direction_name`", "`direction`", "WHERE `direction_id` = " . $client['direction_id'])[0]['direction_name']; ?>
-                <?php if ($client['direction_id'] != 0 && $_SESSION['sys']['dir_update'] == 1) { ?>
-                  <a href="<?php echo $nav_up_level ?>directions/index.php?do=show-direction-tree&dir-id=<?php echo base64_encode($client['direction_id']); ?>">
-                    <?php echo $dir_name ?>
-                  </a>
-                <?php } elseif ($_SESSION['sys']['dir_update'] == 0) { ?>
-                  <span>
-                    <?php echo $dir_name ?>
-                  </span>
+                <?php $dir_name = is_null($client['direction_id']) ? null : $pcs_obj->select_specific_column("`direction_name`", "`direction`", "WHERE `direction_id` = " . $client['direction_id'])[0]['direction_name']; ?>
+                <?php if (!is_null($dir_name)) { ?>
+                  <?php if ($_SESSION['sys']['dir_update'] == 1) { ?>
+                    <a href="<?php echo $nav_up_level ?>directions/index.php?do=show-direction-tree&dir-id=<?php echo base64_encode($client['direction_id']); ?>">
+                      <?php echo $dir_name ?>
+                    </a>
+                  <?php } else { ?>
+                    <span>
+                      <?php echo $dir_name ?>
+                    </span>
+                  <?php } ?>
                 <?php } else { ?>
                   <span class="text-danger fs-12 fw-bold">
                     <?php echo lang("NOT ASSIGNED") ?>
@@ -254,49 +254,59 @@ if (!is_null($all_data)) {
               <!-- client source -->
               <td class="text-capitalize">
                 <?php
+                $source_id = is_null($client['source_id']) && $client['source_id'] != 0 ? null : $client['source_id'];
                 // get source info
-                $source_info = $db_obj->select_specific_column("`full_name`, `ip`, `port`", "`pieces_info`", "WHERE `id` = " . $client['source_id']);
+                $source_info = is_null($source_id) ? null : $pcs_obj->select_specific_column("`full_name`, `ip`, `port`", "`pieces_info`", "WHERE `id` = {$source_id}");
                 // check info
                 if (!empty($source_info)) {
                   $source_name = trim($source_info[0]['full_name'], ' \t\n\v');
                   $source_ip = trim($source_info[0]['ip'], ' \t\n\v');
                   $source_port = trim($source_info[0]['port'], ' \t\n\v');
                 } elseif ($client['source_id'] == 0) {
-                  $source_name = trim($client['fullname'], ' \t\n\v');
+                  $source_name = trim($client['full_name'], ' \t\n\v');
                   $source_ip = trim($client['ip'], ' \t\n\v');
                   $source_port = trim($client['port'], ' \t\n\v');
+                } else {
+                  $source_name = null;
                 }
                 ?>
-                <?php if ($source_ip == '0.0.0.0') { ?>
-                  <span class="text-danger fs-12 fw-bold">
-                    <?php echo lang("NOT ASSIGNED") ?>
-                  </span>
-                <?php } else { ?>
-                  <span class="device-status">
-                    <span class="ping-preloader ping-preloader-table position-relative">
-                      <span class="ping-spinner ping-spinner-table spinner-grow spinner-border"></span>
-                    </span>
-                    <span class="ping-status"></span>
-                    <span class="pcs-ip" data-pcs-ip="<?php echo $source_ip ?>">
-                      <?php echo $source_name ?>
+                <?php if (!is_null($source_name)) { ?>
+                  <?php if (isset($source_ip) && $source_ip != '0.0.0.0' && filter_var($source_ip, FILTER_VALIDATE_IP) !== false) { ?>
+                    <span class="device-status">
+                      <span class="ping-preloader ping-preloader-table position-relative">
+                        <span class="ping-spinner ping-spinner-table spinner-grow spinner-border"></span>
+                      </span>
+                      <span class="ping-status"></span>
+                      <span class="pcs-ip" data-pcs-ip="<?php echo $source_ip ?>">
+                        <?php echo $source_name ?>
+                      </span><br>
+                      <a href="http://<?php echo $source_ip ?>" target="_blank">
+                        <?php echo $source_ip ?>
+                      </a>
                     </span><br>
-                    <a href="http://<?php echo $source_ip ?>" target="_blank">
-                      <?php echo $source_ip ?>
-                    </a>
-                  </span><br>
-                  <?php if ($_SESSION['sys']['mikrotik']['status'] && isset($source_ip) && $source_ip != '0.0.0.0' && 0) { ?>
-                    <a class="mx-1 btn btn-outline-primary fs-12 px-3 py-0" href="<?php echo $nav_up_level ?>pieces/index.php?do=mikrotik&ip=<?php echo $source_ip ?>&port=<?php echo $source_port == '80' ? '80' : '443' ?>" target='_blank'>
-                      <?php echo lang('VISIT DEVICE', $lang_file) ?>
-                    </a>
+                    <?php if ($_SESSION['sys']['mikrotik']['status'] && isset($source_ip) && $source_ip != '0.0.0.0' && 0) { ?>
+                      <a class="mx-1 btn btn-outline-primary fs-12 px-3 py-0" href="<?php echo $nav_up_level ?>pieces/index.php?do=mikrotik&ip=<?php echo $source_ip ?>&port=<?php echo $source_port == '80' ? '80' : '443' ?>" target='_blank'>
+                        <?php echo lang('VISIT DEVICE', $lang_file) ?>
+                      </a>
+                    <?php } ?>
+                    <button class="btn btn-outline-primary fs-12 px-3 py-0" data-bs-toggle="modal" data-bs-target="#pingModal" onclick="ping('<?php echo $source_ip ?>', <?php echo $_SESSION['sys']['ping_counter'] ?>)">ping</button>
+                  <?php } else { ?>
+                    <span class="text-danger fs-12 fw-bold">
+                      <?php echo lang("NOT ASSIGNED") ?>
+                    </span>
                   <?php } ?>
-                  <button class="btn btn-outline-primary fs-12 px-3 py-0" data-bs-toggle="modal" data-bs-target="#pingModal" onclick="ping('<?php echo $source_ip ?>', <?php echo $_SESSION['sys']['ping_counter'] ?>)">ping</button>
+                <?php } else { ?>
+                  <span class="text-danger fw-bold">
+                    <i class="bi bi-excelamation-triangle"></i>
+                    <?php echo lang('not assigned') ?>
+                  </span>
                 <?php } ?>
               </td>
               <!-- client alt source -->
               <td class="text-capitalize" data-ip="<?php echo convert_ip($source_ip) ?>">
                 <?php
                 // get source info
-                $alt_source_info = $client['alt_source_id'] > 0 ? $db_obj->select_specific_column("`full_name`, `ip`, `port`", "`pieces_info`", "WHERE `id` = " . $client['alt_source_id']) : null;
+                $alt_source_info = $client['alt_source_id'] > 0 ? $pcs_obj->select_specific_column("`full_name`, `ip`, `port`", "`pieces_info`", "WHERE `id` = " . $client['alt_source_id']) : null;
                 // default info is null
                 $alt_source_name = null;
                 $alt_source_ip = null;
@@ -307,12 +317,12 @@ if (!is_null($all_data)) {
                   $source_ip = trim($alt_source_info[0]['ip'], ' \t\n\v');
                   $alt_source_port = trim($alt_source_info[0]['port'], ' \t\n\v');
                 } elseif ($client['alt_source_id'] == 0) {
-                  $alt_source_name = trim($client['fullname'], ' \t\n\v');
+                  $alt_source_name = trim($client['full_name'], ' \t\n\v');
                   $alt_source_ip = trim($client['ip'], ' \t\n\v');
                   $alt_source_port = trim($client['port'], ' \t\n\v');
                 }
                 ?>
-                <?php if ($alt_source_ip == null) { ?>
+                <?php if (is_null($alt_source_ip)) { ?>
                   <span class="text-danger fs-12 fw-bold">
                     <?php echo lang("NOT ASSIGNED") ?>
                   </span>
@@ -340,11 +350,11 @@ if (!is_null($all_data)) {
               <!-- device type -->
               <td class="text-capitalize">
                 <?php
-                if ($client['device_id'] <= 0) {
+                if (is_null($client['device_id']) || $client['device_id'] <= 0) {
                   $device_type = lang('NOT ASSIGNED');
                   $device_class = 'text-danger fs-12 fw-bold';
                 } else {
-                  $device_type = $db_obj->select_specific_column("`device_name`", "`devices_info`", "WHERE `device_id` = " . $client['device_id'])[0]['device_name'];
+                  $device_type = $pcs_obj->select_specific_column("`device_name`", "`devices_info`", "WHERE `device_id` = " . $client['device_id'])[0]['device_name'];
                   $device_class = '';
                 }
                 ?>
@@ -355,11 +365,11 @@ if (!is_null($all_data)) {
               <!-- device model -->
               <td>
                 <?php
-                if ($client['device_model'] <= 0) {
+                if (is_null($client['device_model']) || $client['device_model'] <= 0) {
                   $model_name = lang('NOT ASSIGNED');
                   $model_class = 'text-danger fs-12 fw-bold';
                 } else {
-                  $model_name = $db_obj->select_specific_column("`model_name`", "`devices_model`", "WHERE `model_id` = " . $client['device_model'])[0]['model_name'];
+                  $model_name = $pcs_obj->select_specific_column("`model_name`", "`devices_model`", "WHERE `model_id` = " . $client['device_model'])[0]['model_name'];
                   $model_class = '';
                 }
                 ?>
@@ -370,11 +380,11 @@ if (!is_null($all_data)) {
               <!-- connection type -->
               <td class="text-uppercase" data-value="<?php echo $client['connection_type'] ?>">
                 <?php
-                if ($client['connection_type'] <= 0) {
+                if (is_null($client['connection_type']) || $client['connection_type'] <= 0) {
                   $conn_name = lang('NOT ASSIGNED');
                   $conn_class = 'text-danger fs-12 fw-bold';
                 } else {
-                  $conn_name = $db_obj->select_specific_column("`connection_name`", "`connection_types`", "WHERE `id` = " . $client['connection_type'])[0]['connection_name'];
+                  $conn_name = $pcs_obj->select_specific_column("`connection_name`", "`connection_types`", "WHERE `id` = " . $client['connection_type'])[0]['connection_name'];
                   $conn_class = '';
                 }
                 ?>
@@ -388,6 +398,10 @@ if (!is_null($all_data)) {
                 if (trim($client['ip'], ' \t\n\v') == null || empty(trim($client['ip'], ' \t\n\v')) || trim($client['ip'], ' \t\n\v') == '0.0.0.0') { ?>
                   <span class="text-danger fs-12 fw-bold">
                     <?php echo lang('NOT ASSIGNED') ?>
+                  </span>
+                <?php } elseif (filter_var($client['ip'], FILTER_VALIDATE_IP) !== false) { ?>
+                  <span class="text-danger fs-12 fw-bold">
+                    <?php echo lang('invalid ip') ?>
                   </span>
                 <?php } else { ?>
                   <span class="device-status">
@@ -412,7 +426,7 @@ if (!is_null($all_data)) {
               <!-- client port -->
               <td>
                 <?php
-                if (is_null($client['port'])) {
+                if (is_null($client['port']) || $client['port'] <= 0) {
                   $port_name = lang('NOT ASSIGNED');
                   $port_class = 'text-danger fs-12 fw-bold';
                 } else {
@@ -429,6 +443,9 @@ if (!is_null($all_data)) {
                 <?php if (is_null($client['mac_add'])) {
                   $mac_addr = lang('NOT ASSIGNED');
                   $mac_class = 'text-danger fs-12 fw-bold';
+                } elseif (filter_var($client['mac_add'], FILTER_VALIDATE_MAC) !== false) {
+                  $mac_addr = lang('invalid mac');
+                  $mac_class = 'text-danger fs-12 fw-bold';
                 } else {
                   $mac_addr = $client['mac_add'];
                   $mac_class = '';
@@ -441,7 +458,7 @@ if (!is_null($all_data)) {
               <!-- client username -->
               <td>
                 <?php
-                if ($client['username'] == null || strlen($client['username']) <= 0) {
+                if (is_null($client['username']) || strlen($client['username']) <= 0) {
                   $username_name = lang('NOT ASSIGNED');
                   $username_class = 'text-danger fs-12 fw-bold';
                 } else {
@@ -526,7 +543,7 @@ if (!is_null($all_data)) {
                     </a>
                   <?php } ?>
                   <?php if ($_SESSION['sys']['clients_delete'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) { ?>
-                    <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12" data-bs-toggle="modal" data-bs-target="#deleteClientModal" id="temp-delete-<?php echo ($index + 1) ?>" data-client-id="<?php echo base64_encode($client['id']) ?>" data-client-name="<?php echo $client['fullname'] ?>" onclick="confirm_delete_client(this, true)"><i class="bi bi-trash"></i>
+                    <button type="button" class="btn btn-outline-danger text-capitalize form-control bg-gradient fs-12" data-bs-toggle="modal" data-bs-target="#deleteClientModal" id="temp-delete-<?php echo ($index + 1) ?>" data-client-id="<?php echo base64_encode($client['id']) ?>" data-client-name="<?php echo $client['full_name'] ?>" onclick="confirm_delete_client(this, true)"><i class="bi bi-trash"></i>
                       <?php echo lang('DELETE') ?>
                     </button>
                   <?php } ?>

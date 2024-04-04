@@ -45,8 +45,6 @@ $treenet_classes = [
 	'Transaction',
 	'Mikrotik',
 	'Whatsapp',
-	// 'ClientsDeletes',
-	// 'PiecesDeletes',
 	'SystemSettings',
 	'Alerts'
 ];

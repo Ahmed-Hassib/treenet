@@ -304,11 +304,11 @@ $total_results = $emp_count + $dir_count + $pcs_count + $clients_count;
                     <td>
                       <?php if ($_SESSION['sys']['pcs_show'] == 1) { ?>
                         <a href="?do=edit-piece&piece-id=<?php echo base64_encode($client['id']); ?>" target="">
-                          <?php echo trim($client['fullname'], ' ') ?>
+                          <?php echo trim($client['full_name'], ' ') ?>
                         </a>
                       <?php } else { ?>
                         <span>
-                          <?php echo trim($client['fullname'], ' ') ?>
+                          <?php echo trim($client['full_name'], ' ') ?>
                         </span>
                       <?php } ?>
                       <?php if ($client['direction_id'] == 0) { ?>

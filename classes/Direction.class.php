@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Direction class
  */
@@ -23,10 +24,10 @@ class Direction extends Database
     $dirQuery = "SELECT *From `direction` WHERE `company_id` = ? ORDER BY `direction_name` ASC";
     $stmt = $this->con->prepare($dirQuery); // select all users
     $stmt->execute(array($company)); // execute data
-    $rows = $stmt->fetchAll(); // assign all data to variable
+    $dirs_info = $stmt->fetchAll(); // assign all data to variable
     $count = $stmt->rowCount(); // assign all data to variable
     // return result
-    return [$count, $rows];
+    return $count > 0 ? $dirs_info : null;
   }
 
   // get all directions
@@ -47,7 +48,7 @@ class Direction extends Database
     $rows = $stmt->fetchAll(); // assign all data to variable
     $count = $stmt->rowCount(); // assign all data to variable
     // return result
-    return $count > 0 ? [$count, $rows] : [0, null];
+    return $count > 0 ? $rows : null;
   }
 
   public function get_all_dir_coordinates($dir_id, $type, $company_id)
@@ -58,10 +59,8 @@ class Direction extends Database
     } else {
       $dir_condition = "`pieces_info`.`direction_id` = ? AND `pieces_info`.`is_client` = ? AND `pieces_info`.`company_id` = ?";
     }
-    // direction condition
-    $dir_condition =
-      // prepare query
-      $dir_query = "SELECT
+    // prepare query
+    $dir_query = "SELECT
         `pieces_info`.`id`,
         `pieces_info`.`ip`,
         `pieces_info`.`full_name`,
@@ -78,17 +77,10 @@ class Direction extends Database
     $stmt->execute($dir_id != null ? array($dir_id, $type, $company_id) : array($type, $company_id)); // execute data
     $rows = $stmt->fetchAll(); // assign all data to variable
     $count = $stmt->rowCount(); // assign all data to variable
-    // check count
-    if ($count > 0) {
-      $res = [];
-      foreach ($rows as $key => $row) {
-        $res[] = $this->prepare_coordinates_data($row);
-      }
-      return $res;
-    }
-    return null;
+    // check counter
+    return $count > 0 ? $rows : null;
   }
-  
+
   public function get_all_source_pcs_coordinates($dir_id, $src, $company_id)
   {
     // prepare query
@@ -110,14 +102,7 @@ class Direction extends Database
     $rows = $stmt->fetchAll(); // assign all data to variable
     $count = $stmt->rowCount(); // assign all data to variable
     // check count
-    if ($count > 0) {
-      $res = [];
-      foreach ($rows as $key => $row) {
-        $res[] = $this->prepare_coordinates_data($row);
-      }
-      return $res;
-    }
-    return null;
+    return $count > 0 ? $rows : null;
   }
 
   // insert a new direction
@@ -147,14 +132,25 @@ class Direction extends Database
   // delete direction info
   public function delete_direction($id)
   {
-    // // insert query
-    // $deleteQuery = "DELETE FROM `direction` WHERE `direction_id` = ?";
-    // $stmt = $this->con->prepare($deleteQuery);
-    // $stmt->execute(array($id));
-    // $count = $stmt->rowCount(); // assign all data to variable
-    // // return result
-    // return $count > 0 ? true : false;
-    return false;  
+    // insert query
+    $updateDirQuery = "UPDATE `direction` SET `deleted_at` = now() WHERE `direction_id` = ?;";
+    $stmt = $this->con->prepare($updateDirQuery);
+    $stmt->execute(array($id));
+    $count = $stmt->rowCount(); // assign all data to variable
+    // return result
+    return $count > 0 ? true : false;
+  }
+
+  // delete direction info
+  public function delete($id)
+  {
+    // insert query
+    $deleteQuery = "DELETE FROM `direction` WHERE `direction_id` = ?";
+    $stmt = $this->con->prepare($deleteQuery);
+    $stmt->execute(array($id));
+    $count = $stmt->rowCount(); // assign all data to variable
+    // return result
+    return $count > 0 ? true : false;
   }
 
   // search for employee
@@ -167,34 +163,7 @@ class Direction extends Database
     $stmt->execute(array($company_id));
     $count = $stmt->rowCount(); // get number of effected rows
     $serach_res = $stmt->fetchAll(); // all count of data
-    // empty response
-    $response = [];
-    // loop on result
-    foreach ($serach_res as $key => $search) {
-      // extract
-      extract($search);
-      // prepare response
-      $response[] = [
-          'direction_id' => $direction_id,
-          'direction_name' => $direction_name,
-          'added_date' => $added_date,
-        ];
-    }
-
     // return
-    return $count > 0 ?  $response : null;
-  }
-
-  public function prepare_coordinates_data($data) {
-    extract($data);
-    return [
-      'id' => $id,
-      'ip' => $ip,
-      'full_name' => $full_name,
-      'is_client' => $is_client,
-      'device_type' => $device_type,
-      'source_id' => $source_id,
-      'coordinates' => $coordinates,
-    ];
+    return $count > 0 ?  $serach_res : null;
   }
 }

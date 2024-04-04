@@ -14,7 +14,6 @@ class Transaction extends Database
   {
     // create an object of Database class
     $db_obj = new Database("localhost", "jsl_db", "root", "@hmedH@ssib");
-
     $this->con = $db_obj->con;
   }
 
@@ -42,34 +41,8 @@ class Transaction extends Database
     $stmt->execute(array($company_id, $transaction_id, $order_id)); // execute data
     $rows = $stmt->fetch(); // assign all data to variable
     $count = $stmt->rowCount(); // all count of data
-
-    // check count
-    if ($count > 0) {
-      extract($rows);
-
-      return [
-        "id" => $id,
-        "company_id" => $company_id,
-        "transaction_id" => $transaction_id,
-        "is_success" => $is_success,
-        "is_pending" => $is_pending,
-        "is_refunded" => $is_refunded,
-        "price" => $price,
-        "order_id" => $order_id,
-        "currency" => $currency,
-        "is_error_occured" => $is_error_occured,
-        "source_data_type" => $source_data_type,
-        "source_data_pan" => $source_data_pan,
-        "txn_response_code" => $txn_response_code,
-        "hmac" => $hmac,
-        "data_message" => $data_message,
-        "created_at" => $created_at,
-        "updated_at" => $updated_at,
-      ];
-    }
-
     // return
-    return null;
+    return $count > 0 ? $rows : null;
   }
 
   public function insert_transaction($info)

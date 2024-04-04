@@ -18,7 +18,7 @@ if ($piece_id != 0 && $is_exist_id) {
 ?>
   <!-- start add new user page -->
   <div class="container" dir="<?php echo $page_dir ?>">
-  <!-- start form -->
+    <!-- start form -->
     <form class="custom-form need-validation" action="?do=update-piece-info" method="POST" id="update-piece-info" onchange="form_validation(this)">
       <div class="hstack gap-3">
         <?php if ($_SESSION['sys']['pcs_update'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) { ?>
@@ -37,7 +37,7 @@ if ($piece_id != 0 && $is_exist_id) {
 
         <?php if ($_SESSION['sys']['pcs_delete'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) { ?>
           <!-- delete button -->
-          <button type="button" class="btn btn-outline-danger py-1 fs-12" data-bs-toggle="modal" data-bs-target="#deletePieceModal" data-piece-id="<?php echo base64_encode($piece_data['id']) ?>" data-piece-name="<?php echo $piece_data['fullname'] ?>" data-page-title="<?php echo $page_title ?>" onclick="confirm_delete_piece(this)">
+          <button type="button" class="btn btn-outline-danger py-1 fs-12" data-bs-toggle="modal" data-bs-target="#deletePieceModal" data-piece-id="<?php echo base64_encode($piece_data['id']) ?>" data-piece-name="<?php echo $piece_data['full_name'] ?>" data-page-title="<?php echo $page_title ?>" onclick="confirm_delete_piece(this)">
             <i class="bi bi-trash"></i>
             <?php echo lang('DELETE'); ?>
           </button>
@@ -66,7 +66,7 @@ if ($piece_id != 0 && $is_exist_id) {
             <input type="hidden" name="piece-id" id="piece-id" value="<?php echo base64_encode($piece_data['id']) ?>">
             <!-- full name -->
             <div class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
-              <input type="text" class="form-control" id="full-name" name="full-name" placeholder="<?php echo lang('PCS NAME', $lang_file) ?>" onblur="fullname_validation(this, '<?php echo base64_encode($piece_data['id']) ?>')" onblur="fullname_validation(this, '<?php echo base64_encode($piece_data['id']) ?>')" value="<?php echo $piece_data['fullname'] ?>" autocomplete="off" required />
+              <input type="text" class="form-control" id="full-name" name="full-name" placeholder="<?php echo lang('PCS NAME', $lang_file) ?>" onblur="fullname_validation(this, '<?php echo base64_encode($piece_data['id']) ?>')" onblur="fullname_validation(this, '<?php echo base64_encode($piece_data['id']) ?>')" value="<?php echo $piece_data['full_name'] ?>" autocomplete="off" required />
               <label for="full-name">
                 <?php echo lang('PCS NAME', $lang_file) ?>
               </label>
@@ -242,14 +242,10 @@ if ($piece_id != 0 && $is_exist_id) {
                           <?php echo lang('SELECT SRC', $lang_file) ?>
                         </option>
                         <?php
-                        $condition = "LEFT JOIN `direction` ON `direction`.`direction_id` = `pieces_info`.`direction_id` WHERE `pieces_info`.`direction_id` = " . $piece_data['direction_id'] . " AND `pieces_info`.`is_client` = 0 AND `pieces_info`.`company_id` = " . base64_decode($_SESSION['sys']['company_id']);
-                        $sources = $pcs_obj->select_specific_column("`pieces_info`.`id`, `pieces_info`.`full_name`, `pieces_info`.`ip`", "`pieces_info`", $condition);
-                        // counter
-                        $sources_count = count($sources);
-                        // directions data
-                        $sources_data = $sources;
+                        $condition = is_null($piece_data['direction_id']) ? "WHERE `pieces_info`.`is_client` = 0 AND `pieces_info`.`company_id` = " . base64_decode($_SESSION['sys']['company_id']) : "LEFT JOIN `direction` ON `direction`.`direction_id` = `pieces_info`.`direction_id` WHERE `pieces_info`.`direction_id` = " . $piece_data['direction_id'] . " AND `pieces_info`.`is_client` = 0 AND `pieces_info`.`company_id` = " . base64_decode($_SESSION['sys']['company_id']);
+                        $sources_data = is_null($piece_data['direction_id']) ? null : $pcs_obj->select_specific_column("`pieces_info`.`id`, `pieces_info`.`full_name`, `pieces_info`.`ip`", "`pieces_info`", $condition);
                         // check the row sources_count
-                        if ($sources_count) { ?>
+                        if (!is_null($sources_data)) { ?>
                           <?php foreach ($sources_data as $source) { ?>
                             <option value="<?php echo base64_encode($source['id']) ?>" <?php echo $piece_data['source_id'] == $source['id'] || ($piece_data['source_id'] == 0 && $piece_data['ip'] == $source['ip']) ? 'selected' : '' ?>>
                               <?php echo $source['full_name'] . " - " . $source['ip'] ?>
@@ -270,7 +266,7 @@ if ($piece_id != 0 && $is_exist_id) {
                         <option value="default" selected disabled>
                           <?php echo lang('SELECT ALT SRC', $lang_file) ?>
                         </option>
-                        <?php if ($sources_count) { ?>
+                        <?php if (!is_null($sources_data)) { ?>
                           <?php foreach ($sources_data as $alt_source) { ?>
                             <option value="<?php echo base64_encode($alt_source['id']) ?>" <?php echo $piece_data['alt_source_id'] == $alt_source['id'] || ($piece_data['alt_source_id'] == 0 && $piece_data['ip'] == $alt_source['ip']) ? 'selected' : ''; ?>>
                               <?php echo $alt_source['full_name'] . (!is_null($alt_source['ip']) ? " - " . $alt_source['ip'] : null) ?>
@@ -601,7 +597,7 @@ if ($piece_id != 0 && $is_exist_id) {
 
         <?php if ($_SESSION['sys']['pcs_delete'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) { ?>
           <!-- delete button -->
-          <button type="button" class="btn btn-outline-danger py-1 fs-12" data-bs-toggle="modal" data-bs-target="#deletePieceModal" data-piece-id="<?php echo base64_encode($piece_data['id']) ?>" data-piece-name="<?php echo $piece_data['fullname'] ?>" data-page-title="<?php echo $page_title ?>" onclick="confirm_delete_piece(this)">
+          <button type="button" class="btn btn-outline-danger py-1 fs-12" data-bs-toggle="modal" data-bs-target="#deletePieceModal" data-piece-id="<?php echo base64_encode($piece_data['id']) ?>" data-piece-name="<?php echo $piece_data['full_name'] ?>" data-page-title="<?php echo $page_title ?>" onclick="confirm_delete_piece(this)">
             <i class="bi bi-trash"></i>
             <?php echo lang('DELETE'); ?>
           </button>

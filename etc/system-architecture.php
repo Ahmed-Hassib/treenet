@@ -183,7 +183,6 @@ function get_page_dependencies($page_role, $file_type)
     'treenet_dir' => [
       'css' => [
         '1' => 'hierarchical-chart.css',
-        '2' => 'directions.css'
       ],
       'js' => [
         '1' => 'directions.js',
@@ -209,7 +208,7 @@ function get_page_dependencies($page_role, $file_type)
         '1' => 'combination.js'
       ],
     ],
-    
+
     'treenet_reports' => [
       'css' => [
         '1' => 'reports.css'
@@ -236,7 +235,7 @@ function get_page_dependencies($page_role, $file_type)
         '1' => 'services.js'
       ],
     ],
-    
+
     'treenet_payment' => [
       'css' => [
         '1' => 'payments.css'

@@ -26,21 +26,8 @@ class Agents extends Database
     // get records
     $agents = $stmt->fetchAll();
     $count = $stmt->rowCount();
-    // check cout
-    if ($count > 0) {
-      // result
-      $res = [];
-      // loop on aagents$agents
-      foreach ($agents as $key => $agent) {
-        $res[] = $this->prepare_agent_data($agent);
-      }
-
-      // return final result
-      return $res;
-    }
-
     // return null
-    return null;
+    return $count > 0 ? $agents : null;
   }
   
   // get all agents counter
@@ -54,21 +41,5 @@ class Agents extends Database
     $agents_counter = $stmt->fetchColumn();
     // return counter
     return $agents_counter;
-  }
-
-  public function prepare_agent_data($agent_data) {
-    extract($agent_data);
-    return [
-      'id' => $id,
-      'country_id' => $country_id,
-      'agent_name' => $agent_name,
-      'company_name' => $company_name,
-      'phone' => $phone,
-      'logo' => $logo,
-      'is_active' => $is_active,
-      'created_at' => $created_at,
-      'updated_at' => $updated_at,
-      'deleted_at' => $deleted_at,
-    ];
   }
 }

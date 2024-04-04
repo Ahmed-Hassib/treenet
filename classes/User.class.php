@@ -13,7 +13,6 @@ class User extends Database
   {
     // create an object of Database class
     $db_obj = new Database("localhost", "jsl_db", "root", "@hmedH@ssib");
-
     $this->con = $db_obj->con;
   }
 
@@ -36,97 +35,8 @@ class User extends Database
     $stmt->execute(array($company_id)); // execute data
     $rows = $stmt->fetchAll(); // assign all data to variable
     $count = $stmt->rowCount(); // all count of data
-
-    // check count
-    if ($count > 0) {
-      // empty array for final result
-      $res = [];
-      // loop on users_info
-      foreach ($rows as $key => $user) {
-        $res[] = $this->prepare_data($user);
-      }
-      // return final result
-      return $res;
-    }
-
     // return
-    return null;
-  }
-
-  public function prepare_data($user_info)
-  {
-    // extract user
-    extract($user_info);
-    // push current user info to final result
-    return [
-      "UserID" => $UserID,
-      "company_id" => $company_id,
-      "username" => $username,
-      "password" => $password,
-      "email" => $email,
-      "email_verified_at" => $email_verified_at,
-      "fullname" => $fullname,
-      "is_tech" => $is_tech,
-      "job_title_id" => $job_title_id,
-      "gender" => $gender,
-      "address" => $address,
-      "phone" => $phone,
-      "is_activated_phone" => $is_activated_phone,
-      "date_of_birth" => $date_of_birth,
-      "remember_token" => $remember_token,
-      "trust_status" => $trust_status,
-      "reg_status" => $reg_status,
-      "added_by" => $added_by,
-      "is_root" => $is_root,
-      "joined_at" => $joined_at,
-      "updated_at" => $updated_at,
-      "deleted_at" => $deleted_at,
-      "is_online" => $is_online,
-      "system_lang" => $system_lang,
-      "system_theme" => $system_theme,
-      "twitter" => $twitter,
-      "facebook" => $facebook,
-      "profile_img" => $profile_img,
-      "ping_counter" => $ping_counter,
-      "user_add" => $user_add,
-      "user_update" => $user_update,
-      "user_delete" => $user_delete,
-      "user_show" => $user_show,
-      "mal_add" => $mal_add,
-      "mal_update" => $mal_update,
-      "mal_delete" => $mal_delete,
-      "mal_show" => $mal_show,
-      "mal_review" => $mal_review,
-      "mal_media_delete" => $mal_media_delete,
-      "mal_media_download" => $mal_media_download,
-      "comb_add" => $comb_add,
-      "comb_update" => $comb_update,
-      "comb_delete" => $comb_delete,
-      "comb_show" => $comb_show,
-      "comb_review" => $comb_review,
-      "comb_media_delete" => $comb_media_delete,
-      "comb_media_download" => $comb_media_download,
-      "pcs_add" => $pcs_add,
-      "pcs_update" => $pcs_update,
-      "pcs_delete" => $pcs_delete,
-      "pcs_show" => $pcs_show,
-      "clients_add" => $clients_add,
-      "clients_update" => $clients_update,
-      "clients_delete" => $clients_delete,
-      "clients_show" => $clients_show,
-      "dir_add" => $dir_add,
-      "dir_update" => $dir_update,
-      "dir_delete" => $dir_delete,
-      "dir_show" => $dir_show,
-      "connection_add" => $connection_add,
-      "connection_update" => $connection_update,
-      "connection_delete" => $connection_delete,
-      "connection_show" => $connection_show,
-      "permission_update" => $permission_update,
-      "permission_show" => $permission_show,
-      "change_mikrotik" => $change_mikrotik,
-      "change_company_img" => $change_company_img
-    ];
+    return $count > 0 ? $rows : null;
   }
 
   // function to get all users of specific company
@@ -150,17 +60,10 @@ class User extends Database
     // prepare the query
     $stmt = $this->con->prepare($user_info_query); // select all users
     $stmt->execute(array($user_id, $company_id)); // execute data
-    $rows = $stmt->fetch(); // assign all data to variable
+    $user_info = $stmt->fetch(); // assign all data to variable
     $count = $stmt->rowCount(); // all count of data
-
-    // check count
-    if ($count > 0) {
-      // return final result of user info
-      return $this->prepare_data($rows);
-    }
-
     // return
-    return null;
+    return $count > 0 ? $user_info : null;
   }
 
   /**
@@ -265,9 +168,8 @@ class User extends Database
     $stmt = $this->con->prepare($update_info_query);
     $stmt->execute($info);
     $count = $stmt->rowCount(); // get number of effected rows
-    // // return
-    // return $count > 0 ? true : false;
-  return $stmt;
+    // return
+    return $count > 0 ? true : false;
   }
 
   public function upload_profile_img($info)
@@ -457,26 +359,7 @@ class User extends Database
     $stmt->execute(array($company_id));
     $count = $stmt->rowCount(); // get number of effected rows
     $serach_res = $stmt->fetchAll(); // all count of data
-    // empty response
-    $response = [];
-    // loop on data
-    foreach ($serach_res as $key => $search) {
-      // extract
-      extract($search);
-      // prepare response
-      $response[] = [
-        'userid' => $UserID,
-        'fullname' => $fullname,
-        'username' => $username,
-        'email' => $email,
-        'is_tech' => $is_tech,
-        'job_title_id' => $job_title_id,
-        'address' => $address,
-        'phone' => $phone,
-      ];
-    }
-
     // return
-    return $count > 0 ?  $response : null;
+    return $count > 0 ?  $serach_res : null;
   }
 }

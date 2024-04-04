@@ -27,24 +27,8 @@ class Malfunction extends Database
     $stmt->execute();
     $mal_info = $stmt->fetchAll();
     $mal_count = $stmt->rowCount(); // count effected rows
-
-    if ($mal_count > 0) {
-      // check malfunction counter
-      if ($type == 1) {
-        return $this->prepare_data($mal_info[0]);
-      } elseif ($type > 1) {
-        // an empty array for final result
-        $res = [];
-        // loop on data to prepare it
-        foreach ($mal_info as $key => $mal) {
-          $res[] = $this->prepare_data($mal);
-        }
-        // return final result
-        return $res;
-      }
-    }
     // return result
-    return null;
+    return $mal_count > 0 ? $mal_info : null;
   }
 
   // get all Malfunctions
@@ -144,7 +128,7 @@ class Malfunction extends Database
     // return result
     return $mal_count > 0 ? true : false;
   }
-  
+
   // soft restore Malfunction info
   public function restore_malfunction($id)
   {
@@ -157,7 +141,7 @@ class Malfunction extends Database
     // return result
     return $mal_count > 0 ? true : false;
   }
-  
+
   // delete Malfunction info
   public function delete_malfunction($id)
   {
@@ -223,37 +207,6 @@ class Malfunction extends Database
     return $insert_count > 0 ? true : false;
   }
 
-  // prepare malfunction data
-  public function prepare_data($data)
-  {
-    extract($data);
-    return [
-      'mal_id' => $mal_id, 
-      'mng_id' => $mng_id, 
-      'tech_id' => $tech_id, 
-      'client_id' => $client_id, 
-      'descreption' => $descreption, 
-      'created_at' => $created_at, 
-      'mal_status' => $mal_status, 
-      'cost' => $cost, 
-      'cost_receipt' => $cost_receipt, 
-      'tech_comment' => $tech_comment, 
-      'tech_status_comment' => $tech_status_comment, 
-      'isShowed' => $isShowed, 
-      'showed_at' => $showed_at, 
-      'isAccepted' => $isAccepted, 
-      'repaired_at' => $repaired_at, 
-      'isReviewed' => $isReviewed, 
-      'reviewed_at' => $reviewed_at, 
-      'money_review' => $money_review, 
-      'qty_service' => $qty_service, 
-      'qty_emp' => $qty_emp, 
-      'qty_comment' => $qty_comment, 
-      'company_id' => $company_id, 
-      'deleted_at' => $deleted_at, 
-    ];
-  }
-
   /**
    * send_notification function
    * used to send a combination notification to technical man
@@ -277,7 +230,7 @@ class Malfunction extends Database
       $msg = ($time_period == 'am' ? lang('GOOD MORNING') : lang('GOOD AFTERNOON')) . " " . $tech['username'] . "\n";
       $msg .= " " . lang('ASSIGNED', $lang_file) . " " . $admin_name;
       $msg .= " " . lang('ASSIGN MALFUNCTION TO YOU', $lang_file) . "\n";
-      $msg .= "\t*" . lang('NAME', $lang_file) . ": " . $client['fullname'] . "\n";
+      $msg .= "\t*" . lang('NAME', $lang_file) . ": " . $client['full_name'] . "\n";
       $msg .= "\t*" . lang('ADDR', $lang_file) . ": " . $client['address'] . "\n";
       $msg .= "\t*" . lang('PHONE', $lang_file) . ": " . $client['phone'] . "\n";
       $msg .= "\t*" . lang('MAL DESC', $lang_file) . ": " . $descreption . "\n";

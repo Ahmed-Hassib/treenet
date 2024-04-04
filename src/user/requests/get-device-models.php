@@ -10,15 +10,12 @@ if ($device_id == 0) {
   // if device id not set return false
   echo json_encode(false);
 } else {
-  if (!isset($devices_obj)) {
-    // create an object of Model
-    $devices_obj = new Devices();
-  }
+  // create an object of Model
+  $devices_obj = new Devices();
   // get specific columns from pieces table
   $device_name = $devices_obj->select_specific_column("`device_name`", "`devices_info`", "WHERE `device_id` = $device_id")[0]['device_name'];
   // get specific columns from pieces table
-  $models_info = $devices_obj->get_all_device_models($device_id);
-  $data = $models_info[1];
+  $data = $devices_obj->get_all_device_models($device_id);
   // company name
   $company_name = $devices_obj->select_specific_column("`company_name`", "`companies`", "WHERE `company_id` = '" . base64_decode($company_id) . "'")[0]['company_name'];
   // convert data into json file
@@ -26,7 +23,7 @@ if ($device_id == 0) {
   // check server name
   if ($_SERVER['SERVER_NAME'] == 'tree-net.net') {
     // json location
-    $json_location = $document_root . "app/data/json/";
+    $json_location = $document_root . "data/json/";
   } else {
     // json location
     $json_location = $document_root . "/data/json/";
