@@ -46,7 +46,8 @@ $treenet_classes = [
 	'Mikrotik',
 	'Whatsapp',
 	'SystemSettings',
-	'Alerts'
+	'Alerts',
+	'Versions'
 ];
 
 // loop on classes

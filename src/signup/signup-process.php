@@ -95,7 +95,7 @@ if (empty($err_arr)) {
     // create an object of Registration class
     $reg_obj =  new Registration();
     // add new company
-    $is_inserted_company = $reg_obj->add_new_company(array($company_name, $company_code, $manager_name, $company_phone, $country, $agent, get_date_now()));
+    $is_inserted_company = $reg_obj->add_new_company(array($company_name, $company_code, $manager_name, $company_phone, $country, $agent, $sys_curr_version_id, get_date_now()));
     // check if company was added
     if ($is_inserted_company) {
       // add a success message
