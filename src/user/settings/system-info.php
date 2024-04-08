@@ -85,7 +85,7 @@ if ($license_info != null && count($license_info) > 0) {
             // check plan id
             if ($plan_id != 0) {
               // get plan data
-              $plan_data = $db_obj->select_specific_column("`name_ar`, `name_en`", "`pricing_plans`", "WHERE `id` = {$plan_id}")[0];
+              $plan_data = $db_obj->select_specific_column("`name_ar`, `name_en`", "`pricing_plans`", "WHERE `id` = {$plan_id}");
               // prepare plan name
               $plan_data = $_SESSION['sys']['lang'] == 'ar' ? $plan_data['name_ar'] : $plan_data['name_en'];
               // display plan 

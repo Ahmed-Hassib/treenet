@@ -42,7 +42,7 @@
       <span>
         <?php echo $sponsorCompany ?>
       </span>
-      <span>&copy; 2023&nbsp;&bull;&nbsp;<?php echo isset($_SESSION['sys']['username']) ? $_SESSION['sys']['curr_version_name'] : $sys_curr_version ?></span>
+      <span>&copy; 2023&nbsp;&bull;&nbsp;<?php echo isset($_SESSION['sys']['username']) ? $_SESSION['sys']['curr_version_name'] : $sys_curr_version_name ?></span>
     </p>
   </div>
 </footer>

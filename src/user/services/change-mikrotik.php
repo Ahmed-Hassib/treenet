@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       // craeet an object of Database class
       $db_obj = new Database("localhost", "jsl_db");
 
-      $next_ip = $db_obj->select_specific_column("`next_remote_ip`", "`settings`", "LIMIT 1")[0]["next_remote_ip"];
+      $next_ip = $db_obj->select_specific_column("`next_remote_ip`", "`settings`", "LIMIT 1")["next_remote_ip"];
       $is_exist_remote_ip = $db_obj->is_exist("`remote_ip`", "`companies`", "{$next_ip}");
       $is_exist_company_remote_ip = $company_obj->get_remote_ip("{$company_id}");
 
@@ -95,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       }
       $company_obj->set_remote_ip($company_id, $remote_ip);
 
-      $next_ip_list = $db_obj->select_specific_column("`next_ip_list`", "`settings`", "LIMIT 1")[0]["next_ip_list"];
+      $next_ip_list = $db_obj->select_specific_column("`next_ip_list`", "`settings`", "LIMIT 1")["next_ip_list"];
       $is_exist_ip_list = $db_obj->is_exist("`ip_list`", "`companies`", "{$next_ip_list}");
       $is_exist_company_ip_list = $company_obj->get_ip_list("{$company_id}");
 

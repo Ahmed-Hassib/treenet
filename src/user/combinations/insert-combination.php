@@ -68,9 +68,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $comb_obj->add_combination_updates(array($comb_id, $admin_id, 'insert combination', base64_decode($_SESSION['sys']['company_id'])));
 
         // // get admin info
-        // $admin_info = $comb_obj->select_specific_column("`username`", "`users`", "WHERE `UserID` = $admin_id")[0]['username'];
+        // $admin_info = $comb_obj->select_specific_column("`username`", "`users`", "WHERE `UserID` = $admin_id")['username'];
         // // get technical man info
-        // $tech_info = $comb_obj->select_specific_column("`username`, `phone`, `is_activated_phone`", "`users`", "WHERE `UserID` = $tech_id")[0];
+        // $tech_info = $comb_obj->select_specific_column("`username`, `phone`, `is_activated_phone`", "`users`", "WHERE `UserID` = $tech_id");
         // // client info
         // $client_info = ["name" => $client_name, "addr" => $client_addr, "phone" => $client_phone, "notes" => $client_notes];
         // // send a notification to technical man

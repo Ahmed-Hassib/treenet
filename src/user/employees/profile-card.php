@@ -85,7 +85,7 @@
                         $db_obj = new Database("localhost", "jsl_db", "root", "@hmedH@ssib");
                       }
                       // get job title
-                      $job_title = $db_obj->select_specific_column("`job_title_name`", "`users_job_title`", "WHERE `job_title_id` = " . $user_info['job_title_id'])[0]['job_title_name'];
+                      $job_title = $db_obj->select_specific_column("`job_title_name`", "`users_job_title`", "WHERE `job_title_id` = " . $user_info['job_title_id'])['job_title_name'];
                     } else {
                       $job_title = "NO DATA";
                     }

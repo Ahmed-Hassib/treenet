@@ -9,7 +9,7 @@
       // fetch data from database
       $system_status = $db_obj->select_specific_column("*", "`settings`", "LIMIT 1");
       // get value of seystem status
-      $system_status = !empty($system_status) && count($system_status) > 0 ? $system_status[0]['is_developing'] : null;
+      $system_status = !empty($system_status) && count($system_status) > 0 ? $system_status['is_developing'] : null;
       ?>
       <div class="dashboard-card card card-white bg-gradient">
         <img class="card-img <?php echo $page_dir == 'ltr' ? 'card-img-right' : 'card-img-left' ?>" src="<?php echo $treenet_assets . "patch-question.svg" ?>" loading="lazy" alt="">

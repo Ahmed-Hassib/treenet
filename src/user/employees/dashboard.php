@@ -67,7 +67,7 @@ if ($_SESSION['sys']['system_theme'] == 2) {
                   <p class="card-text text-secondary">
                     <?php
                     if ($user['job_title_id'] != 0) {
-                      $job_title = $user_obj->select_specific_column("`job_title_name`", "`users_job_title`", "WHERE `job_title_id` = " . $user['job_title_id'])[0]['job_title_name'];
+                      $job_title = $user_obj->select_specific_column("`job_title_name`", "`users_job_title`", "WHERE `job_title_id` = " . $user['job_title_id'])['job_title_name'];
                       echo lang($job_title, $lang_file);
                     } else {
                       echo lang('NOT JOB TITLE', $lang_file);

@@ -2,14 +2,13 @@
 // get malfunction id 
 $comb_id = isset($_GET['combid']) && !empty($_GET['combid']) ? base64_decode($_GET['combid']) : 0;
 // create an object of Combination
-$comb_obj = !isset($comb_obj) ? new Combination() : $comb_obj;
+$comb_obj = new Combination();
 // check if combid exist
 $is_exist = $comb_obj->is_exist("`comb_id`", "`combinations`", $comb_id);
 // check
 if ($is_exist == true) {
   // get combination info
-  $comb_info = $comb_obj->get_combinationS("`comb_id` = {$comb_id} AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']) . " AND `deleted_at` IS NULL", 1);
-
+  $comb_info = $comb_obj->get_combinations("`comb_id` = {$comb_id} AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']) . " AND `deleted_at` IS NULL", 1);
   // update comb status
   if ($comb_info['isShowed'] == 0) {
     if (base64_decode($_SESSION['sys']['UserID']) == $comb_info['UserID']) {
@@ -26,7 +25,7 @@ if ($is_exist == true) {
       <!-- submit -->
       <div class="mb-3 hstack gap-2">
         <?php if ($_SESSION['sys']['comb_update'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) { ?>
-          <div class="<?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>">
+          <div class="<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>">
             <button type="button" class="btn btn-primary text-capitalize form-control bg-gradient py-1 fs-12" id="" onclick="form_validation(this.form, 'submit')">
               <i class="bi bi-check-all"></i>
               <?php echo lang('SAVE') ?>
@@ -57,7 +56,7 @@ if ($is_exist == true) {
             <!-- Administrator name -->
             <div class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
               <!-- admin name -->
-              <?php $admin_name = $comb_obj->select_specific_column("`username`", "`users`", "WHERE `UserID` = " . $comb_info['addedBy'])[0]['username'] ?>
+              <?php $admin_name = $comb_obj->select_specific_column("`username`", "`users`", "WHERE `UserID` = " . $comb_info['addedBy'])['username'] ?>
               <input type="hidden" class="form-control" id="admin-id" name="admin-id" value="<?php echo base64_encode($comb_info['addedBy']) ?>" autocomplete="off" required data-no-astrisk="true" />
               <input type="text" class="form-control" id="admin-name" name="admin-name" placeholder="administrator name" value="<?php echo $admin_name ?>" autocomplete="off" required disabled />
               <label for="admin-name">
@@ -672,7 +671,7 @@ if ($is_exist == true) {
                         <?php if ($update['updated_by'] == 0) {
                           echo lang('TREE NET SYSTEM');
                         } else { ?>
-                          <?php $username = $comb_obj->select_specific_column("`username`", "`users`", "WHERE `UserID` = " . $update['updated_by'])[0]['username']; ?>
+                          <?php $username = $comb_obj->select_specific_column("`username`", "`users`", "WHERE `UserID` = " . $update['updated_by'])['username']; ?>
                           <?php if ($_SESSION['sys']['user_show']) { ?>
                             <a href="<?php echo $nav_up_level ?>employees/index.php?do=edit-user-info&userid=<?php echo base64_encode($update['updated_by']); ?>">
                               <?php echo $username ?>

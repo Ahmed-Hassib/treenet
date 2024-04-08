@@ -16,19 +16,13 @@ if (empty($user_id)) {
   // check if done
   if (!is_null($user_info)) {
     // company name
-    $company_name = $session_obj->select_specific_column("`company_name`", "`companies`", "WHERE `company_id` = " . $user_info['company_id'])[0]['company_name'];
+    $company_name = $session_obj->select_specific_column("`company_name`", "`companies`", "WHERE `company_id` = " . $user_info['company_id'])['company_name'];
     // // set user session
     // $session_obj->set_user_session($user_info[1]);
     // convert data into json file
     $json_data = json_encode($user_info);
-    // check server name
-    if ($_SERVER['SERVER_NAME'] == 'tree-net.net') {
-      // json location
-      $json_location = $document_root . "data/json/";
-    } else {
-      // json location
-      $json_location = $document_root . "/data/json/";
-    }
+    // json location
+    $json_location = $document_root . "/data/json/";
     // check if the directory is exist or not
     if (!file_exists($json_location)) {
       // create a directory for the company

@@ -65,7 +65,7 @@ $manufacture_companies = $dev_comp_obj->get_all_man_companies(base64_decode($_SE
               <td>
                 <?php
                 // get username that add company
-                $added_by_name = $dev_comp_obj->select_specific_column("`username`", "`users`", "WHERE `UserID` = " . $company['added_by'])[0]['username'];
+                $added_by_name = $dev_comp_obj->select_specific_column("`username`", "`users`", "WHERE `UserID` = " . $company['added_by'])['username'];
                 // check permission
                 if ($_SESSION['sys']['user_update'] == 1) { ?>
                   <a href="<?php echo $nav_up_level ?>employees/index.php?do=edit-user-info&userid=<?php echo base64_encode($company['added_by']) ?>">

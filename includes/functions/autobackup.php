@@ -54,7 +54,7 @@ foreach ($databases as $database) {
     // check backup file if exist
     if (file_exists($backup_location_file) && $is_exist) {
       // get file id
-      $file_id = $db_obj->select_specific_column("`id`", "`backups`", "WHERE `file_name` = '$db_backup_file_name' AND `backup_date` = '" . get_date_now() . "'")[0]['id'];
+      $file_id = $db_obj->select_specific_column("`id`", "`backups`", "WHERE `file_name` = '$db_backup_file_name' AND `backup_date` = '" . get_date_now() . "'")['id'];
       // add a record to backups table in database
       $db_obj->update_backup_info($database, array(get_time_now(), $file_id)) ? 'true' : 'null';
     } else {

@@ -131,7 +131,7 @@ function do_manager_updates($info)
   // get combination coordinates
   $coordinates = $_POST['coordinates'];
   // get previous combination tecnical id
-  $prev_tech_id = $comb_obj->select_specific_column("`UserID`", "`combinations`", "WHERE `comb_id` = $comb_id")[0]['UserID'];
+  $prev_tech_id = $comb_obj->select_specific_column("`UserID`", "`combinations`", "WHERE `comb_id` = $comb_id")['UserID'];
   // compare new tech with the old
   if ($tech_id == $prev_tech_id) {
     // update all compination info
@@ -172,7 +172,7 @@ function do_technical_updates($info, $cost_media, $media_path)
   $coordinates = $_POST['coordinates'];
   // check if combination has a receipt 
   $comb_info = $comb_obj->select_specific_column("`cost_receipt`", "`combinations`", "WHERE `comb_id` = $comb_id");
-  $cost_receipt_name = count($comb_info) ? $comb_info[0]['cost_receipt'] : null;
+  $cost_receipt_name = count($comb_info) ? $comb_info['cost_receipt'] : null;
 
   if ($cost_media !== null) {
     // file names

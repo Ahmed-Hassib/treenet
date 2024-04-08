@@ -133,7 +133,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_SESSION['sys']['isLicenseExpired']
         // check if not empty
         if (!empty($file_name)) {
           // get old pgoto
-          $old_name = $user_obj->select_specific_column("`profile_img`", "`users`", "WHERE `UserID` = $userid")[0]['profile_img'];
+          $old_name = $user_obj->select_specific_column("`profile_img`", "`users`", "WHERE `UserID` = $userid")['profile_img'];
           // check if not empty && exist
           if (!empty($old_name) && file_exists($path . $old_name)) {
             // delete old one

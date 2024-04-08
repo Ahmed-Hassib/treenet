@@ -16,7 +16,7 @@
   // create an object of Devices class
   $dev_obj = !isset($dev_obj) ? new Devices() : $dev_obj;
   // get company name
-  @$dev_company_name = $dev_obj->select_specific_column("`man_company_name`", "`manufacture_companies`", "WHERE `man_company_id` = " . $dev_company_id)[0]['man_company_name'];
+  @$dev_company_name = $dev_obj->select_specific_column("`man_company_name`", "`manufacture_companies`", "WHERE `man_company_id` = " . $dev_company_id)['man_company_name'];
   // check if company is exit
   $is_exist = $dev_obj->is_exist("`man_company_id`", "`manufacture_companies`", $dev_company_id);
   // check the value
@@ -24,9 +24,9 @@
     // get all devices of this company
     $devices = $dev_obj->get_all_company_devices($dev_company_id);
     // devices counter
-    $devices_counter = $devices[0];
+    $devices_counter = count($devices);
     // devices data
-    $devices_data = $devices[1];
+    $devices_data = $devices;
     // check the counter
     if ($devices_counter > 0) { ?>
       <!-- start table container -->
@@ -81,7 +81,7 @@
                 <td>
                   <?php
                   // get username that add device
-                  $added_by_name = $dev_obj->select_specific_column("`username`", "`users`", "WHERE `UserID` = " . $device['added_by'])[0]['username'];
+                  $added_by_name = $dev_obj->select_specific_column("`username`", "`users`", "WHERE `UserID` = " . $device['added_by'])['username'];
                   // check permission
                   if ($_SESSION['sys']['user_update'] == 1) { ?>
                     <a href="<?php echo $nav_up_level ?>employees/index.php?do=edit-user-info&userid=<?php echo base64_encode($device['added_by']) ?>">

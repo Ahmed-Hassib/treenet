@@ -167,7 +167,7 @@
                       $phones = $pcs_obj->select_specific_column("`phone`", "`pieces_phones`", "WHERE `id` = " . $piece['id']);
                       // check result
                       if (count($phones) > 0) {
-                        echo trim($phones[0]['phone']);
+                        echo trim($phones['phone']);
                       } else { ?>
                         <span class="text-danger fs-12 fw-bold">
                           <?php echo lang('NOT ASSIGNED') ?>

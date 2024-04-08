@@ -123,7 +123,7 @@ function do_manager_updates($info)
   // get malfunction description
   $descreption = $info['descreption'];
   // get previous malfunction tecnical id
-  $prev_tech_id = $mal_obj->select_specific_column("`tech_id`", "`malfunctions`", "WHERE `mal_id` = $mal_id")[0]['tech_id'];
+  $prev_tech_id = $mal_obj->select_specific_column("`tech_id`", "`malfunctions`", "WHERE `mal_id` = $mal_id")['tech_id'];
   // compare new tech with the old
   if ($tech_id == $prev_tech_id) {
     // update all malfunction info
@@ -164,7 +164,7 @@ function do_technical_updates($info, $cost_media, $media_path)
   $cost = $_POST['cost'];
   // get malfunctions cost receipt 
   $mal_info = $mal_obj->select_specific_column("`cost_receipt`", "`malfunctions`", "WHERE `mal_id` = $mal_id");
-  $cost_receipt_name = count($mal_info) > 0 ? $mal_info[0]['cost_receipt'] : null;
+  $cost_receipt_name = count($mal_info) > 0 ? $mal_info['cost_receipt'] : null;
 
   if ($cost_media !== null) {
     // file names

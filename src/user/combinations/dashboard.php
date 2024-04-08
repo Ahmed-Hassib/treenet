@@ -495,7 +495,7 @@ if (isset($_GET['year']) && !empty($_GET['year']) && filter_var(trim($_GET['year
                         <?php echo $comb['phone'] ?>
                       </td>
                       <td>
-                        <?php $techName = $comb_obj->select_specific_column("`username`", "`users`", "WHERE `UserID` = " . $comb['UserID'])[0]['username']; ?>
+                        <?php $techName = $comb_obj->select_specific_column("`username`", "`users`", "WHERE `UserID` = " . $comb['UserID'])['username']; ?>
                         <a href="<?php echo $nav_up_level ?>employees/index.php?do=edit-user-info&userid=<?php echo base64_encode($comb['UserID']); ?>">
                           <?php echo $techName ?>
                         </a>
@@ -592,7 +592,7 @@ if (isset($_GET['year']) && !empty($_GET['year']) && filter_var(trim($_GET['year
                       <?php echo lang('STATUS', $lang_file) ?>
                     </th>
                     <th>
-                      <?php echo lang('ADDED DATE', $lang_file) ?>
+                      <?php echo lang('ADDED DATE') ?>
                     </th>
                     <th>
                       <?php echo lang('MEDIA', $lang_file) ?>
@@ -618,7 +618,7 @@ if (isset($_GET['year']) && !empty($_GET['year']) && filter_var(trim($_GET['year
                         <?php
                         $tech_name = "";
                         if ($comb_obj->is_exist("`UserID`", "`users`", $comb['UserID'])) {
-                          $tech_name = $comb_obj->select_specific_column("`username`", "`users`", "WHERE `UserID` = " . $comb['UserID'])[0]['username'];
+                          $tech_name = $comb_obj->select_specific_column("`username`", "`users`", "WHERE `UserID` = " . $comb['UserID'])['username'];
                         }
                         ?>
                         <?php if (!empty($tech_name)) { ?>

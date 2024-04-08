@@ -58,7 +58,7 @@ if ($is_exist_mal == true) {
             <input type="hidden" name="mal-id" id="mal-id" value="<?php echo base64_encode($mal_info['mal_id']) ?>">
             <!-- Administrator name -->
             <div class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
-              <?php $admin_name = $mal_obj->select_specific_column("`username`", "`users`", "WHERE `UserID` = '" . $mal_info['mng_id'] . "' LIMIT 1")[0]['username']; ?>
+              <?php $admin_name = $mal_obj->select_specific_column("`username`", "`users`", "WHERE `UserID` = '" . $mal_info['mng_id'] . "' LIMIT 1")['username']; ?>
               <input type="hidden" class="form-control" id="admin-id" name="admin-id" value="<?php echo base64_encode($mal_info['mng_id']) ?>" autocomplete="off" required />
               <input type="text" class="form-control" id="admin-name" name="admin-name" placeholder="<?php echo lang('ADMIN NAME', $lang_file) ?>" value="<?php echo $admin_name ?>" autocomplete="off" required disabled />
               <label for="admin-name">
@@ -130,7 +130,7 @@ if ($is_exist_mal == true) {
             </h5>
             <hr />
           </div>
-          <?php $client_details = $mal_obj->select_specific_column("`id`, `full_name`, `ip`, `is_client`, `notes`, `visit_time`, `device_type`,`address`, `coordinates`", "`pieces_info`", "WHERE `id` = '" . $mal_info['client_id'] . "' LIMIT 1")[0]; ?>
+          <?php $client_details = $mal_obj->select_specific_column("`id`, `full_name`, `ip`, `is_client`, `notes`, `visit_time`, `device_type`,`address`, `coordinates`", "`pieces_info`", "WHERE `id` = '" . $mal_info['client_id'] . "' LIMIT 1"); ?>
           <div class="victim-info-content">
             <!-- client name -->
             <div class="victim-info-content__row">
@@ -177,7 +177,7 @@ if ($is_exist_mal == true) {
                 <?php $client_phone = $mal_obj->select_specific_column("`phone`", "`pieces_phones`", "WHERE `id` = '" . $mal_info['client_id'] . "' LIMIT 1"); ?>
                 <?php if (!empty($client_phone)) { ?>
                   <span class="text-primary">
-                    <?php echo $client_phone[0]['phone']; ?>
+                    <?php echo $client_phone['phone']; ?>
                   </span>
                 <?php } else { ?>
                   <span class="text-danger fw-bold">
@@ -242,7 +242,7 @@ if ($is_exist_mal == true) {
             <div class="victim-info-content__row">
               <label for="malfunction-counter">
                 <?php
-                $is_client = $mal_obj->select_specific_column("`is_client`", "`pieces_info`", "WHERE `id` = " . $mal_info['client_id'])[0]['is_client'];
+                $is_client = $mal_obj->select_specific_column("`is_client`", "`pieces_info`", "WHERE `id` = " . $mal_info['client_id'])['is_client'];
                 if ($is_client <= 0) {
                   $label = 'PCS MALS';
                   $file  = 'pieces';
@@ -723,7 +723,7 @@ if ($is_exist_mal == true) {
                         <?php if ($update['updated_by'] == 0) {
                           echo lang('SYS TREE');
                         } else { ?>
-                          <?php $username = $mal_obj->select_specific_column("`username`", "`users`", "WHERE `UserID` = " . $update['updated_by'])[0]['username']; ?>
+                          <?php $username = $mal_obj->select_specific_column("`username`", "`users`", "WHERE `UserID` = " . $update['updated_by'])['username']; ?>
                           <?php if ($_SESSION['sys']['user_show']) { ?>
                             <a href="<?php echo $nav_up_level ?>employees/index.php?do=edit-user-info&userid=<?php echo base64_encode($update['updated_by']); ?>">
                               <?php echo $username ?>

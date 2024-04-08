@@ -82,7 +82,7 @@ $total_results = $emp_count + $dir_count + $pcs_count + $clients_count;
                     <span class="m-1 badge bg-secondary">
                       <?php
                       // get user job name
-                      $job_name = $emp_obj->select_specific_column("`job_title_name`", "`users_job_title`", "WHERE `job_title_id` = " . $emp['job_title_id'])[0]['job_title_name'];
+                      $job_name = $emp_obj->select_specific_column("`job_title_name`", "`users_job_title`", "WHERE `job_title_id` = " . $emp['job_title_id'])['job_title_name'];
                       // disply job title
                       echo lang($job_name, 'employees');
                       ?>
@@ -177,35 +177,37 @@ $total_results = $emp_count + $dir_count + $pcs_count + $clients_count;
                     <td><?php echo $key + 1 ?></td>
                     <td>
                       <?php if ($_SESSION['sys']['pcs_show'] == 1) { ?>
-                        <a href="?do=edit-piece&piece-id=<?php echo base64_encode($pcs['id']); ?>" target="">
-                          <?php echo trim($pcs['fullname'], ' ') ?>
+                        <a href="?do=edit-piece&piece-id=<?php echo base64_encode($piece['id']); ?>" target="">
+                          <?php echo trim($piece['full_name'], ' ') ?>
                         </a>
                       <?php } else { ?>
                         <span>
-                          <?php echo trim($pcs['fullname'], ' ') ?>
+                          <?php echo trim($piece['full_name'], ' ') ?>
                         </span>
                       <?php } ?>
-                      <?php if ($pcs['direction_id'] == 0) { ?>
-                        <i class="bi bi-exclamation-triangle-fill text-danger fw-bold" title="<?php echo lang("NOT ASSIGNED") ?>"></i>
+                      <?php if ($piece['direction_id'] == 0) { ?>
+                        <i class="bi bi-exclamation-triangle-fill text-danger fw-bold" title="<?php echo lang("direction not assigned", $lang_file) ?>"></i>
                       <?php } ?>
-                      <?php if ($pcs['added_date'] == date('Y-m-d')) { ?>
+                      <?php if (date_format(date_create($piece['created_at']), 'Y-m-d') == date('Y-m-d')) { ?>
                         <span class="badge bg-danger p-1 <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'me-1' : 'ms-1' ?>">
                           <?php echo lang('NEW') ?>
                         </span>
                       <?php } ?>
+                      <?php if ($_SESSION['sys']['mikrotik']['status'] && isset($is_connected_mikrotik) && $is_connected_mikrotik && isset($piece['ip']) && $piece['ip'] !== '0.0.0.0') { ?>
+                        <a class="mx-1 btn btn-outline-primary fs-12 px-3 py-0" href="?do=mikrotik&ip=<?php echo $piece['ip'] ?>&port=<?php echo $piece['port'] == '80' ? '80' : '443' ?>" target='_blank'>
+                          <?php echo lang('VISIT DEVICE', $lang_file) ?>
+                        </a>
+                      <?php } ?>
                     </td>
+                    <!-- piece address -->
                     <td>
-                      <?php
-                      // get piece address
-                      $addr = $pcs_obj->select_specific_column("`address`", "`pieces_addr`", "WHERE `id` = " . $pcs['id']);
-                      // check result
-                      if (count($addr) > 0) {
-                        echo trim($addr[0]['address']);
-                      } else { ?>
+                      <?php if (is_null($piece['address'])) { ?>
                         <span class="text-danger fs-12 fw-bold">
                           <?php echo lang('NOT ASSIGNED') ?>
                         </span>
-                      <?php } ?>
+                      <?php } else {
+                        echo wordwrap(trim($piece['address']), "50", "<br>");
+                      } ?>
                     </td>
                     <!-- piece phone -->
                     <td>
@@ -214,7 +216,7 @@ $total_results = $emp_count + $dir_count + $pcs_count + $clients_count;
                       $phones = $pcs_obj->select_specific_column("`phone`", "`pieces_phones`", "WHERE `id` = " . $pcs['id']);
                       // check result
                       if (count($phones) > 0) {
-                        echo trim($phones[0]['phone']);
+                        echo trim($phones['phone']);
                       } else { ?>
                         <span class="text-danger fs-12 fw-bold">
                           <?php echo lang('NOT ASSIGNED') ?>
@@ -222,19 +224,22 @@ $total_results = $emp_count + $dir_count + $pcs_count + $clients_count;
                       <?php } ?>
                     </td>
                     <!-- piece direction -->
-                    <td class="text-capitalize">
-                      <?php $dir_name = $db_obj->select_specific_column("`direction_name`", "`direction`", "WHERE `direction_id` = " . $pcs['direction_id'])[0]['direction_name']; ?>
-                      <?php if ($pcs['direction_id'] != 0 && $_SESSION['sys']['dir_update'] == 1) { ?>
-                        <a href="<?php echo $nav_up_level ?>directions/index.php?do=show-direction-tree&dir-id=<?php echo base64_encode($pcs['direction_id']); ?>">
-                          <?php echo $dir_name ?>
-                        </a>
-                      <?php } elseif ($_SESSION['sys']['dir_update'] == 0) { ?>
-                        <span>
-                          <?php echo $dir_name ?>
-                        </span>
+                    <td class="text-capitalize big-data">
+                      <?php $dir_name = is_null($piece['direction_id']) ? null : $pcs_obj->select_specific_column("`direction_name`", "`direction`", "WHERE `direction_id` = " . $piece['direction_id'])['direction_name']; ?>
+                      <?php if (!is_null($dir_name)) { ?>
+                        <?php if ($_SESSION['sys']['dir_update'] == 0) { ?>
+                          <span>
+                            <?php echo $dir_name ?>
+                          </span>
+                        <?php } else { ?>
+                          <a href="<?php echo $nav_up_level ?>directions/index.php?do=show-direction-tree&dir-id=<?php echo base64_encode($piece['direction_id']); ?>">
+                            <?php echo $dir_name ?>
+                          </a>
+                        <?php } ?>
                       <?php } else { ?>
                         <span class="text-danger fs-12 fw-bold">
-                          <?php echo lang("NOT ASSIGNED") ?>
+                          <i class="bi bi-exclamation-triangle-fill text-danger fw-bold" title="<?php echo lang("direction not assigned", $lang_file) ?>"></i>
+                          <?php echo lang("direction not assigned", $lang_file) ?>
                         </span>
                       <?php } ?>
                     </td>
@@ -301,9 +306,10 @@ $total_results = $emp_count + $dir_count + $pcs_count + $clients_count;
                 <?php foreach ($clients as $key => $client) { ?>
                   <tr>
                     <td><?php echo $key + 1 ?></td>
+                    <!-- client name -->
                     <td>
                       <?php if ($_SESSION['sys']['pcs_show'] == 1) { ?>
-                        <a href="?do=edit-piece&piece-id=<?php echo base64_encode($client['id']); ?>" target="">
+                        <a href="?do=edit-client&client-id=<?php echo base64_encode($client['id']); ?>" target="">
                           <?php echo trim($client['full_name'], ' ') ?>
                         </a>
                       <?php } else { ?>
@@ -311,22 +317,25 @@ $total_results = $emp_count + $dir_count + $pcs_count + $clients_count;
                           <?php echo trim($client['full_name'], ' ') ?>
                         </span>
                       <?php } ?>
-                      <?php if ($client['direction_id'] == 0) { ?>
-                        <i class="bi bi-exclamation-triangle-fill text-danger fw-bold" title="<?php echo lang("NOT ASSIGNED") ?>"></i>
+                      <?php if (is_null($client['direction_id']) || $client['direction_id'] == 0) { ?>
+                        <i class="bi bi-exclamation-triangle-fill text-danger fw-bold" title="<?php echo lang("direction not assigned", 'pieces') ?>"></i>
                       <?php } ?>
-                      <?php if ($client['added_date'] == date('Y-m-d')) { ?>
-                        <span class="badge bg-danger p-1 <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'me-1' : 'ms-1' ?>">
+                      <?php if ($client['created_at'] == date('Y-m-d')) { ?>
+                        <span class="badge bg-danger p-1 <?php echo $_SESSION['sys']['lang'] == 'ar' ? 'me-1' : 'ms-1' ?>">
                           <?php echo lang('NEW') ?>
                         </span>
                       <?php } ?>
+                      <?php if ($_SESSION['sys']['mikrotik']['status'] && $is_connected_mikrotik && isset($client['ip']) && $client['ip'] !== '0.0.0.0') { ?>
+                        <a class="mx-1 btn btn-outline-primary fs-12 px-3 py-0" href="<?php echo $nav_up_level ?>pieces/index.php?do=mikrotik&ip=<?php echo $client['ip'] ?>&port=<?php echo $client['port'] == '80' ? '80' : '443' ?>" target='_blank'>
+                          <?php echo lang('VISIT DEVICE', $lang_file) ?>
+                        </a>
+                      <?php } ?>
                     </td>
+                    <!-- client address -->
                     <td>
                       <?php
-                      // get piece address
-                      $addr = $pcs_obj->select_specific_column("`address`", "`pieces_addr`", "WHERE `id` = " . $client['id']);
-                      // check result
-                      if (count($addr) > 0) {
-                        echo trim($addr[0]['address']);
+                      if (!is_null($client['address'])) {
+                        echo trim($client['address']);
                       } else { ?>
                         <span class="text-danger fs-12 fw-bold">
                           <?php echo lang('NOT ASSIGNED') ?>
@@ -340,7 +349,7 @@ $total_results = $emp_count + $dir_count + $pcs_count + $clients_count;
                       $phones = $pcs_obj->select_specific_column("`phone`", "`pieces_phones`", "WHERE `id` = " . $client['id']);
                       // check result
                       if (count($phones) > 0) {
-                        echo trim($phones[0]['phone']);
+                        echo trim($phones['phone']);
                       } else { ?>
                         <span class="text-danger fs-12 fw-bold">
                           <?php echo lang('NOT ASSIGNED') ?>
@@ -349,15 +358,17 @@ $total_results = $emp_count + $dir_count + $pcs_count + $clients_count;
                     </td>
                     <!-- client direction -->
                     <td class="text-capitalize">
-                      <?php $dir_name = $db_obj->select_specific_column("`direction_name`", "`direction`", "WHERE `direction_id` = " . $client['direction_id'])[0]['direction_name']; ?>
-                      <?php if ($client['direction_id'] != 0 && $_SESSION['sys']['dir_update'] == 1) { ?>
-                        <a href="<?php echo $nav_up_level ?>directions/index.php?do=show-direction-tree&dir-id=<?php echo base64_encode($client['direction_id']); ?>">
-                          <?php echo $dir_name ?>
-                        </a>
-                      <?php } elseif ($_SESSION['sys']['dir_update'] == 0) { ?>
-                        <span>
-                          <?php echo $dir_name ?>
-                        </span>
+                      <?php $dir_name = is_null($client['direction_id']) ? null : $pcs_obj->select_specific_column("`direction_name`", "`direction`", "WHERE `direction_id` = " . $client['direction_id'])['direction_name']; ?>
+                      <?php if (!is_null($dir_name)) { ?>
+                        <?php if ($_SESSION['sys']['dir_update'] == 1) { ?>
+                          <a href="<?php echo $nav_up_level ?>directions/index.php?do=show-direction-tree&dir-id=<?php echo base64_encode($client['direction_id']); ?>">
+                            <?php echo $dir_name ?>
+                          </a>
+                        <?php } else { ?>
+                          <span>
+                            <?php echo $dir_name ?>
+                          </span>
+                        <?php } ?>
                       <?php } else { ?>
                         <span class="text-danger fs-12 fw-bold">
                           <?php echo lang("NOT ASSIGNED") ?>
@@ -374,7 +385,7 @@ $total_results = $emp_count + $dir_count + $pcs_count + $clients_count;
                         $mac_addr = lang('NOT ASSIGNED');
                         $mac_class = 'text-danger fs-12 fw-bold';
                       } else {
-                        $mac_addr = $mac_addr_info[0]['mac_add'];
+                        $mac_addr = $mac_addr_info['mac_add'];
                         $mac_class = '';
                       }
                       ?>

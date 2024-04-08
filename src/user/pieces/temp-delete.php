@@ -4,7 +4,7 @@ $pcs_obj = new Pieces();
 // check if Get request piece-id is numeric and get the integer value
 $piece_id = isset($_GET['piece-id']) && !empty($_GET['piece-id']) ? base64_decode($_GET['piece-id']) : 0;
 // get piece name
-$piece_name = $pcs_obj->select_specific_column("`full_name`", "`pieces_info`", "WHERE `id` = $piece_id")[0]['full_name'];
+$piece_name = $pcs_obj->select_specific_column("`full_name`", "`pieces_info`", "WHERE `id` = $piece_id")['full_name'];
 // get back flag if return back is possible
 $is_back = isset($_GET['back']) && !empty($_GET['back']) ? 'back' : null;
 // get user info from database

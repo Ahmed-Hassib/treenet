@@ -10,7 +10,7 @@ $is_exist = $pcs_obj->is_exist("`id`", "`pieces_info`", $piece_id);
 // check if exist
 if ($is_exist == true) {
   // get piece name
-  $piece_name = $pcs_obj->select_specific_column("`full_name`", "`pieces_info`", "WHERE `id` = {$piece_id}")[0]['full_name'];
+  $piece_name = $pcs_obj->select_specific_column("`full_name`", "`pieces_info`", "WHERE `id` = {$piece_id}")['full_name'];
   // check license
   if ($_SESSION['sys']['isLicenseExpired'] == 0) {
     // check if the piece have a children or not

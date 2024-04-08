@@ -4,7 +4,7 @@ $pricing_obj = new Pricing();
 // get all pricing plans
 $pricing_plans = $pricing_obj->get_all_pricing_plans();
 // get country id
-$country_id = $pricing_obj->select_specific_column("`country_id`", "`companies`", "WHERE `company_id` = " . base64_decode($_SESSION['sys']['company_id']))[0]['country_id'];
+$country_id = $pricing_obj->select_specific_column("`country_id`", "`companies`", "WHERE `company_id` = " . base64_decode($_SESSION['sys']['company_id']))['country_id'];
 // get all clients numbers
 $clients_counter = $pricing_obj->count_records("`id`", "`pieces_info`", "WHERE `is_client` = 1 AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']));
 ?>

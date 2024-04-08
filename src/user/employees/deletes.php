@@ -136,7 +136,7 @@ $user_obj = new User();
                     <td>
                       <?php
                       if ($employee['job_title_id'] != 0) {
-                        $job_title = $user_obj->select_specific_column("`job_title_name`", "`users_job_title`", "WHERE `job_title_id` = " . $employee['job_title_id'])[0]['job_title_name'];
+                        $job_title = $user_obj->select_specific_column("`job_title_name`", "`users_job_title`", "WHERE `job_title_id` = " . $employee['job_title_id'])['job_title_name'];
                         echo lang($job_title, 'employees');
                       } else {
                         echo lang('NOT JOB TITLE', 'employees');

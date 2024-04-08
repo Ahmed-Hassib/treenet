@@ -69,15 +69,15 @@
           $dates = $comp_obj->select_specific_column("`start_date`, `expire_date`", "`license`", "WHERE `isEnded` = 0 AND `company_id` = " . $company['company_id']);
           // check the value
           if (count($dates) > 0) {
-            $start_date = date_create($dates[0]['start_date']);
-            $expire_date = date_create($dates[0]['expire_date']);
-            $expire = $dates[0]['expire_date'];
+            $start_date = date_create($dates['start_date']);
+            $expire_date = date_create($dates['expire_date']);
+            $expire = $dates['expire_date'];
             $is_ended = $expire < date("Y-m-d");
           } else {
             $is_ended = true;
             // get company dates
             $expire = $comp_obj->select_specific_column("`expire_date`", "`license`", "WHERE `isEnded` = 1 AND `company_id` = " . $company['company_id'] . " ORDER BY `expire_date` DESC LIMIT 1");
-            $expire = !empty($expire) ? $expire[0]['expire_date'] : '';
+            $expire = !empty($expire) ? $expire['expire_date'] : '';
           }
           ?>
           <tr>
@@ -104,7 +104,7 @@
             </td>
             <!-- company version -->
             <td>
-              <?php echo $comp_obj->select_specific_column("`v_name`", "`versions`", "WHERE `v_id` = " . $company['version'])[0]['v_name']; ?>
+              <?php echo $comp_obj->select_specific_column("`v_name`", "`versions`", "WHERE `v_id` = " . $company['version'])['v_name']; ?>
             </td>
             <!-- company joined date -->
             <td><?php echo !empty($company['joined_date']) ? $company['joined_date'] : lang('NOT ASSIGNED', $lang_file) ?></td>

@@ -49,13 +49,13 @@ if (empty($errors)) {
             <?php foreach ($data as $index => $row) { ?>
               <tr>
                 <td><?php echo ($index + 1); ?></td>
-                <td><?php echo $comp_sugg_obj->select_specific_column("`fullname`", "`users`", "WHERE `UserID` = " . $row['added_by'])[0]['fullname'] ?></td>
+                <td><?php echo $comp_sugg_obj->select_specific_column("`fullname`", "`users`", "WHERE `UserID` = " . $row['added_by'])['fullname'] ?></td>
                 <td>
                   <?php
                   // get company name info
                   $company_info = $comp_sugg_obj->select_specific_column("`company_id`, `company_name`", "`companies`", "WHERE `company_id` = " . $row['company_id']);
-                  $company_id = empty($company_info) ? null : $company_info[0]['company_id'];
-                  $company_name = empty($company_info) ? null : $company_info[0]['company_name'];
+                  $company_id = empty($company_info) ? null : $company_info['company_id'];
+                  $company_name = empty($company_info) ? null : $company_info['company_name'];
                   ?>
                   <a href="<?php echo $nav_up_level ?>companies/index.php?do=details&company-id=<?php echo base64_encode($company_id) ?>" target="_blank"><?php echo $company_name ?></a>
                 </td>

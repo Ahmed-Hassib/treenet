@@ -1,6 +1,6 @@
 <?php
 // create an object of PiecesDeletes Class
-$pcs_obj = new PiecesDeletes();
+$pcs_obj = new Pieces();
 // check if Get request piece-id is numeric and get the integer value
 $piece_id = isset($_GET['piece-id']) && !empty($_GET['piece-id']) ? base64_decode($_GET['piece-id']) : null;
 // check if Get request deleted is numeric and get the integer value
@@ -10,12 +10,12 @@ if ($is_deleted) {
   // get user info from database
   $is_exist = $pcs_obj->is_exist("`id`", "`deleted_pieces_info`", $piece_id);
   // get piece name
-  $piece_name = $is_exist ? $pcs_obj->select_specific_column("`full_name`", "`deleted_pieces_info`", "WHERE `id` = {$piece_id}")[0]['full_name'] : null;
+  $piece_name = $is_exist ? $pcs_obj->select_specific_column("`full_name`", "`deleted_pieces_info`", "WHERE `id` = {$piece_id}")['full_name'] : null;
 } else {
   // get user info from database
   $is_exist = $pcs_obj->is_exist("`id`", "`pieces_info`", $piece_id);
   // get piece name
-  $piece_name = $is_exist ? $pcs_obj->select_specific_column("`full_name`", "`pieces_info`", "WHERE `id` = {$piece_id}")[0]['full_name'] : null;
+  $piece_name = $is_exist ? $pcs_obj->select_specific_column("`full_name`", "`pieces_info`", "WHERE `id` = {$piece_id}")['full_name'] : null;
 }
 // get back flag if return back is possible
 $is_back = isset($_GET['back']) && !empty($_GET['back']) ? 'back' : null;
@@ -28,7 +28,7 @@ if ($_SESSION['sys']['isLicenseExpired'] == 0) {
     // check the counter
     if ($count_child == 0) {
       // call delete function
-      $is_deleted = $pcs_obj->permanent_delete_piece($piece_id);
+      $is_deleted = $pcs_obj->delete($piece_id);
       // log message
       $log_msg = "Delete piece with name `$piece_name`";
       create_logs($_SESSION['sys']['username'], $log_msg, 3);

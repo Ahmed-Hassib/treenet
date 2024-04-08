@@ -28,7 +28,7 @@
                 (<span class="num" data-goal="<?php echo $clients; ?>">0</span>)
               </span>
             </h5>
-            <?php $new_clients_counter = $db_obj->count_records("`id`", "`pieces_info`", "WHERE `deleted_at` IS NULL AND `is_client` = 1 AND Date(`created_at`) = CURRENT_DATE() AND `company_id` = " . base64_decode($_SESSION['sys']['company_id'])); 
+            <?php $new_clients_counter = $db_obj->count_records("`id`", "`pieces_info`", "WHERE `deleted_at` IS NULL AND `is_client` = 1 AND Date(`created_at`) = CURRENT_DATE() AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']));
             // check the counter
             if ($new_clients_counter > 0) {
               echo "<h5>(" . ($new_clients_counter) . " " . lang('NEW') . ")</h5>";
@@ -68,9 +68,9 @@
     </div>
 
     <?php if ($_SESSION['sys']['clients_show'] == 1) { ?>
-      <?php $is_connected_mikrotik = false; // flag for mikrotik connection 
-      ?>
-      <?php $is_big_data_ping = true; // flag for include js code 
+      <?php
+      $is_connected_mikrotik = false; // flag for mikrotik connection 
+      $is_big_data_ping = true; // flag for include js code 
       ?>
       <!-- latest added clients -->
       <div class="mb-3 row row-cols-1 g-3">
@@ -133,7 +133,7 @@
                         </span>
                       <?php } ?>
                       <?php if (is_null($client['direction_id']) || $client['direction_id'] == 0) { ?>
-                        <i class="bi bi-exclamation-triangle-fill text-danger fw-bold" title="<?php echo lang("NOT ASSIGNED") ?>"></i>
+                        <i class="bi bi-exclamation-triangle-fill text-danger fw-bold" title="<?php echo lang("direction not assigned", 'pieces') ?>"></i>
                       <?php } ?>
                       <?php if ($client['created_at'] == date('Y-m-d')) { ?>
                         <span class="badge bg-danger p-1 <?php echo $_SESSION['sys']['lang'] == 'ar' ? 'me-1' : 'ms-1' ?>">
@@ -164,7 +164,7 @@
                       $phones = $pcs_obj->select_specific_column("`phone`", "`pieces_phones`", "WHERE `id` = " . $client['id']);
                       // check result
                       if (count($phones) > 0) {
-                        echo trim($phones[0]['phone']);
+                        echo trim($phones['phone']);
                       } else { ?>
                         <span class="text-danger fs-12 fw-bold">
                           <?php echo lang('NOT ASSIGNED') ?>

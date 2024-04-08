@@ -17,17 +17,11 @@ if (empty($dir_id) || empty($company_id)) {
   // get specific columns from pieces table
   $data = $pcs_obj->select_specific_column("`id`, `ip`, `full_name`", "`pieces_info`", $pcs_condition);
   // company name
-  $company_name = $pcs_obj->select_specific_column("`company_name`", "`companies`", "WHERE `company_id` = " . base64_decode($company_id))[0]['company_name'];
+  $company_name = $pcs_obj->select_specific_column("`company_name`", "`companies`", "WHERE `company_id` = " . base64_decode($company_id))['company_name'];
   // convert data into json file
   $json_data = json_encode($data);
-  // check server name
-  if ($_SERVER['SERVER_NAME'] == 'tree-net.net') {
-    // json location
-    $json_location = $document_root . "data/json/dirs/";
-  } else {
-    // json location
-    $json_location = $document_root . "/data/json/dirs/";
-  }
+  // json location
+  $json_location = $document_root . "/data/json/dirs/";
   // check if the directory is exist or not
   if (!file_exists($json_location)) {
     // create a directory for the company

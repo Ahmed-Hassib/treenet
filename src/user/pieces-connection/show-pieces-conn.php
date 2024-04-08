@@ -13,7 +13,7 @@ $conn_type_name = $pcs_obj->select_specific_column("`connection_name`", "`connec
 // check the connection id 
 if (!is_null($connection_id)) {
   // page subtitle
-  $subtitle = $conn_type_name[0]['connection_name'];
+  $subtitle = $conn_type_name['connection_name'];
 } else {
   // page subtitle
   $subtitle = '';
@@ -143,7 +143,7 @@ if (!is_null($all_data)) {
               </td>
               <!-- piece direction -->
               <td class="text-capitalize">
-                <?php $dir_name = $db_obj->select_specific_column("`direction_name`", "`direction`", "WHERE `direction_id` = " . $piece['direction_id'])[0]['direction_name']; ?>
+                <?php $dir_name = $db_obj->select_specific_column("`direction_name`", "`direction`", "WHERE `direction_id` = " . $piece['direction_id'])['direction_name']; ?>
                 <?php if ($piece['direction_id'] != 0 && $_SESSION['sys']['dir_update'] == 1) { ?>
                   <a href="<?php echo $nav_up_level ?>directions/index.php?do=show-direction-tree&dir-id=<?php echo base64_encode($piece['direction_id']); ?>">
                     <?php echo $dir_name ?>
@@ -159,7 +159,7 @@ if (!is_null($all_data)) {
                 <?php } ?>
               </td>
               <!-- piece source -->
-              <?php $source_ip = $piece['source_id'] == 0 ? $piece['ip'] : $db_obj->select_specific_column("`ip`", "`pieces_info`", "WHERE `id` = " . $piece['source_id'])[0]['ip']; ?>
+              <?php $source_ip = $piece['source_id'] == 0 ? $piece['ip'] : $db_obj->select_specific_column("`ip`", "`pieces_info`", "WHERE `id` = " . $piece['source_id'])['ip']; ?>
               <td class="text-capitalize" data-ip="<?php echo convert_ip($source_ip) ?>">
                 <?php if (trim($source_ip, ' \t\n\v') == '0.0.0.0') { ?>
                   <span class="text-danger fs-12 fw-bold">
@@ -209,7 +209,7 @@ if (!is_null($all_data)) {
                   $device_type = lang('NOT ASSIGNED');
                   $device_class = 'text-danger fs-12 fw-bold';
                 } else {
-                  $device_type = $db_obj->select_specific_column("`device_name`", "`devices_info`", "WHERE `device_id` = " . $piece['device_id'])[0]['device_name'];
+                  $device_type = $db_obj->select_specific_column("`device_name`", "`devices_info`", "WHERE `device_id` = " . $piece['device_id'])['device_name'];
                   $device_class = '';
                 }
                 ?>
@@ -224,7 +224,7 @@ if (!is_null($all_data)) {
                   $model_name = lang('NOT ASSIGNED');
                   $model_class = 'text-danger fs-12 fw-bold';
                 } else {
-                  $model_name = $db_obj->select_specific_column("`model_name`", "`devices_model`", "WHERE `model_id` = " . $piece['device_model'])[0]['model_name'];
+                  $model_name = $db_obj->select_specific_column("`model_name`", "`devices_model`", "WHERE `model_id` = " . $piece['device_model'])['model_name'];
                   $model_class = '';
                 }
                 ?>
@@ -234,7 +234,7 @@ if (!is_null($all_data)) {
               </td>
               <!-- connection type -->
               <td class="text-uppercase" data-value="<?php echo $piece['connection_type'] ?>">
-                <?php echo $piece['connection_type'] == 0 ? 'none' : $db_obj->select_specific_column("`connection_name`", "`connection_types`", "WHERE `id` = " . $piece['connection_type'])[0]['connection_name']; ?>
+                <?php echo $piece['connection_type'] == 0 ? 'none' : $db_obj->select_specific_column("`connection_name`", "`connection_types`", "WHERE `id` = " . $piece['connection_type'])['connection_name']; ?>
               </td>
               <!-- added date -->
               <td>

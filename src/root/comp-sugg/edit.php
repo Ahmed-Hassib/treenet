@@ -89,8 +89,8 @@ if ($data != null) {
               <?php
               // get company name info
               $company_info = $obj->select_specific_column("`company_id`, `company_name`", "`companies`", "WHERE `company_id` = " . $data['company_id']);
-              $company_id = empty($company_info) ? null : $company_info[0]['company_id'];
-              $company_name = empty($company_info) ? null : $company_info[0]['company_name'];
+              $company_id = empty($company_info) ? null : $company_info['company_id'];
+              $company_name = empty($company_info) ? null : $company_info['company_name'];
               ?>
               <a href="<?php echo $nav_up_level ?>companies/index.php?do=details&company-id=<?php echo base64_encode($company_id) ?>" target="_blank"><?php echo $company_name ?></a>
             </span>
@@ -100,8 +100,8 @@ if ($data != null) {
             <span>
               <?php
               $user_info = $obj->select_specific_column("`UserID`, `fullname`", "`users`", "WHERE `UserID` = " . $data['added_by']);
-              $user_id = empty($user_info) ? null : $user_info[0]['UserID'];
-              $fullname = empty($user_info) ? null : $user_info[0]['fullname'];
+              $user_id = empty($user_info) ? null : $user_info['UserID'];
+              $fullname = empty($user_info) ? null : $user_info['fullname'];
               echo $fullname;
               // <a href="<?php echo $nav_up_level //companies/index.php?do=details&company-id=<?php echo base64_encode($company_id) " target="_blank"><?php echo $company_name </a>
               ?>

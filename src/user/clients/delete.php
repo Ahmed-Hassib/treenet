@@ -6,7 +6,7 @@ $client_id = isset($_GET['client-id']) && !empty($_GET['client-id']) ? base64_de
 // get user info from database
 $is_exist = $pcs_obj->is_exist("`id`", "`pieces_info`", $client_id);
 // get client name
-$client_name = $is_exist ? $pcs_obj->select_specific_column("`full_name`", "`pieces_info`", "WHERE `id` = $client_id")[0]['full_name'] : null;
+$client_name = $is_exist ? $pcs_obj->select_specific_column("`full_name`", "`pieces_info`", "WHERE `id` = $client_id")['full_name'] : null;
 // get back flag if return back is possible
 $is_back = isset($_GET['back']) && !empty($_GET['back']) ? 'back' : null;
 // check license

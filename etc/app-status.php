@@ -3,7 +3,7 @@
 // connect to database from configration file
 require_once 'local-conf.php';
 // is app suspended
-$is_developing = $db_obj->select_specific_column("`is_developing`", "`settings`", "LIMIT 1")[0]['is_developing'] ?? 0;
+$is_developing = $db_obj->select_specific_column("`is_developing`", "`settings`", "LIMIT 1")['is_developing'] ?? 0;
 
 // check session
 if ($page_category == 'treenet' && isset($_SESSION['sys'])) {

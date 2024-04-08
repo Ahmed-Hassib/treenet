@@ -12,9 +12,9 @@ if ($is_exist_piece) {
   // get piece info
   $piece_info = $mal_obj->select_specific_column("`is_client`, `full_name`", "`pieces_info`", "WHERE `id` = $pieceid AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']));
   // get piece type
-  $piece_type = $piece_info[0]['is_client'] == 1 ? 'clients' : 'pieces';
+  $piece_type = $piece_info['is_client'] == 1 ? 'clients' : 'pieces';
   // get piece name
-  $piece_name = $piece_info[0]['full_name'];
+  $piece_name = $piece_info['full_name'];
 }
 ?>
 <!-- start add new user page -->
@@ -124,7 +124,7 @@ if ($is_exist_piece) {
                 $is_exist_admin = $mal_obj->is_exist("`UserID`", "`users`", $row['mng_id']);
                 // if exist
                 if ($is_exist_admin) {
-                  $admin_name = $mal_obj->select_specific_column("`username`", "`users`", "WHERE `UserID` = " . $row['mng_id'])[0]['username'];
+                  $admin_name = $mal_obj->select_specific_column("`username`", "`users`", "WHERE `UserID` = " . $row['mng_id'])['username'];
                 ?>
                   <a href="<?php echo $nav_up_level ?>employees/index.php?do=edit-user-info&userid=<?php echo $row['mng_id']; ?>">
                     <?php echo $admin_name ?>
@@ -142,7 +142,7 @@ if ($is_exist_piece) {
                 $is_exist_tech = $mal_obj->is_exist("`UserID`", "`users`", $row['tech_id']);
                 // if exist
                 if ($is_exist_tech) {
-                  $tech_name = $mal_obj->select_specific_column("`username`", "`users`", "WHERE `UserID` = " . $row['tech_id'])[0]['username']; ?>
+                  $tech_name = $mal_obj->select_specific_column("`username`", "`users`", "WHERE `UserID` = " . $row['tech_id'])['username']; ?>
                   <a href="<?php echo $nav_up_level ?>employees/index.php?do=edit-user-info&userid=<?php echo $row['tech_id']; ?>">
                     <?php echo $tech_name ?>
                   </a>
@@ -160,7 +160,7 @@ if ($is_exist_piece) {
                 // if exist
                 if ($is_exist_device) {
                   // get info
-                  $info = $mal_obj->select_specific_column("`full_name`, `is_client`", "`pieces_info`", "WHERE `id` = " . $row['client_id'] . " LIMIT 1")[0];
+                  $info = $mal_obj->select_specific_column("`full_name`, `is_client`", "`pieces_info`", "WHERE `id` = " . $row['client_id'] . " LIMIT 1");
                   // get name
                   $name = $info['full_name'];
                   // get type

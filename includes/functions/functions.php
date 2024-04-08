@@ -362,7 +362,7 @@ function get_dir_name($dir_id)
   // get result
   $res = $db_obj->select_specific_column("`direction_name`", "`direction`", "WHERE `direction_id` = {$dir_id}");
   // get direction name
-  return count($res) > 0 ? $res[0]['direction_name'] : null;
+  return count($res) > 0 ? $res['direction_name'] : null;
 }
 
 /**
@@ -376,7 +376,7 @@ function get_src_name($src_id)
   // get result
   $res = $db_obj->select_specific_column("`full_name`", "`pieces_info`", "WHERE `id` = $src_id");
   // get source name
-  return count($res) > 0 ? $res[0]['full_name'] : null;
+  return count($res) > 0 ? $res['full_name'] : null;
 }
 
 /**
@@ -390,7 +390,7 @@ function get_device_name($dev_id)
   // get result
   $res = $db_obj->select_specific_column("`device_name`", "`devices_info`", "WHERE `device_id` = $dev_id");
   // get source name
-  return count($res) > 0 ? $res[0]['device_name'] : null;
+  return count($res) > 0 ? $res['device_name'] : null;
 }
 
 /**
@@ -404,7 +404,7 @@ function get_model_name($dev_id)
   // get result
   $res = $db_obj->select_specific_column("`model_name`", "`devices_model`", "WHERE `device_id` = $dev_id");
   // get source name
-  return count($res) > 0 ? $res[0]['model_name'] : null;
+  return count($res) > 0 ? $res['model_name'] : null;
 }
 
 /**
@@ -418,7 +418,7 @@ function get_conn_name($conn_id)
   // get result
   $res = $db_obj->select_specific_column("`connection_name`", "`connection_types`", "WHERE `id` = $conn_id");
   // get source name
-  return count($res) > 0 ? $res[0]['connection_name'] : null;
+  return count($res) > 0 ? $res['connection_name'] : null;
 }
 
 /**

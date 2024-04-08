@@ -7,9 +7,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // get clients counter 
     $company_clients_counter = intval($db_obj->count_records("`id`", "`pieces_info`", "WHERE `is_client` = 1 AND `company_id` = " . base64_decode($_SESSION['sys']['company_id'])));
     // get plan clients
-    $plan_clients_counter = intval($db_obj->select_specific_column("`clients`", "`pricing_plans`", "WHERE `id` = " . base64_decode($_SESSION['sys']['plan_id']))[0]['clients']);
+    $plan_clients_counter = intval($db_obj->select_specific_column("`clients`", "`pricing_plans`", "WHERE `id` = " . base64_decode($_SESSION['sys']['plan_id']))['clients']);
     // get latest id in pieces table
-    $latest_id = intval($pcs_obj->get_latest_records("`id`", "`pieces_info`", "", "`id`", 1)[0]['id']);
+    $latest_id = intval($pcs_obj->get_latest_records("`id`", "`pieces_info`", "", "`id`", 1)['id']);
     // get next id
     $id = $latest_id + 1;
     // get piece info from the form

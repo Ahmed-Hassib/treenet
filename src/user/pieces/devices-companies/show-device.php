@@ -164,7 +164,7 @@
                       <td>
                         <?php
                         // get username that add model
-                        $added_by_name = $dev_obj->select_specific_column("`username`", "`users`", "WHERE `UserID` = " . $model['added_by'])[0]['username'];
+                        $added_by_name = $dev_obj->select_specific_column("`username`", "`users`", "WHERE `UserID` = " . $model['added_by'])['username'];
                         // check permission
                         if ($_SESSION['sys']['user_update'] == 1) { ?>
                           <a href="<?php echo $nav_up_level ?>employees/index.php?do=edit-user-info&userid=<?php echo base64_encode($model['added_by']) ?>">

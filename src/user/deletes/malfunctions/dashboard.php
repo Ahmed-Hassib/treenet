@@ -148,7 +148,7 @@ $mal_obj = new Malfunction();
                     $is_exist_admin = $mal_obj->is_exist("`UserID`", "`users`", $mal['mng_id']);
                     // if exist
                     if ($is_exist_admin) {
-                      $admin_name = $mal_obj->select_specific_column("`username`", "`users`", "WHERE `UserID` = " . $mal['mng_id'])[0]['username'];
+                      $admin_name = $mal_obj->select_specific_column("`username`", "`users`", "WHERE `UserID` = " . $mal['mng_id'])['username'];
                     ?>
                       <a href="<?php echo $nav_up_level ?>employees/index.php?do=edit-user-info&userid=<?php echo base64_encode($mal['mng_id']); ?>">
                         <?php echo $admin_name ?>
@@ -166,7 +166,7 @@ $mal_obj = new Malfunction();
                     $is_exist_tech = $mal_obj->is_exist("`UserID`", "`users`", $mal['tech_id']);
                     // if exist
                     if ($is_exist_tech) {
-                      $tech_name = $mal_obj->select_specific_column("`username`", "`users`", "WHERE `UserID` = " . $mal['tech_id'])[0]['username']; ?>
+                      $tech_name = $mal_obj->select_specific_column("`username`", "`users`", "WHERE `UserID` = " . $mal['tech_id'])['username']; ?>
                       <a href="<?php echo $nav_up_level ?>employees/index.php?do=edit-user-info&userid=<?php echo base64_encode($mal['tech_id']); ?>">
                         <?php echo $tech_name ?>
                       </a>
@@ -184,7 +184,7 @@ $mal_obj = new Malfunction();
                     // if exist
                     if ($is_exist_device) {
                       // get info
-                      $info = $mal_obj->select_specific_column("`full_name`, `is_client`", "`pieces_info`", "WHERE `id` = " . $mal['client_id'] . " LIMIT 1")[0];
+                      $info = $mal_obj->select_specific_column("`full_name`, `is_client`", "`pieces_info`", "WHERE `id` = " . $mal['client_id'] . " LIMIT 1");
                       // get name
                       $name = $info['full_name'];
                       // get type

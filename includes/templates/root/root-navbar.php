@@ -40,9 +40,9 @@
             <?php if (!empty($_SESSION['sys']['job_title_id'])) { ?>
               <div class="profile-job">
                 <?php
-                $db_obj = !isset($db_obj) ? new Database() : $db_obj;
+                $db_obj = new Database();
                 // get job title
-                $job_title = $db_obj->select_specific_column("`job_title_name`", "`users_job_title`", "WHERE `job_title_id` = " . base64_decode($_SESSION['sys']['job_title_id']))[0]['job_title_name'];
+                $job_title = $db_obj->select_specific_column("`job_title_name`", "`users_job_title`", "WHERE `job_title_id` = " . base64_decode($_SESSION['sys']['job_title_id']))['job_title_name'];
                 // display job title
                 echo lang($job_title);
                 ?>

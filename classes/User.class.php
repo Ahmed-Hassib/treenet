@@ -20,7 +20,7 @@ class User extends Database
   public function get_user_id($username)
   {
     // get user id by user name
-    $user_id = $this->select_specific_column("`UserID`", "`users`", "WHERE `username` = '{$username}'")[0]['UserID'];
+    $user_id = $this->select_specific_column("`UserID`", "`users`", "WHERE `username` = '{$username}'")['UserID'];
     // return
     return $user_id;
   }

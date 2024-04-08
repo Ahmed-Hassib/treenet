@@ -4,7 +4,7 @@ $pcs_obj = new Pieces();
 // check if Get request client-id is numeric and get the integer value
 $client_id = isset($_GET['client-id']) && !empty($_GET['client-id']) ? base64_decode($_GET['client-id']) : 0;
 // get client name
-$client_name = $pcs_obj->select_specific_column("`full_name`", "`pieces_info`", "WHERE `id` = $client_id")[0]['full_name'];
+$client_name = $pcs_obj->select_specific_column("`full_name`", "`pieces_info`", "WHERE `id` = $client_id")['full_name'];
 // get back flag if return back is possible
 $is_back = isset($_GET['back']) && !empty($_GET['back']) ? 'back' : null;
 // get user info from database

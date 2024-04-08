@@ -167,8 +167,9 @@ $pcs_obj = new Pieces();
                     <!-- piece direction -->
                     <td class="text-capitalize">
                       <?php
-                      if (!empty($db_obj->select_specific_column("`direction_name`", "`direction`", "WHERE `direction_id` = " . $piece['direction_id']))) {
-                        $dir_name = $db_obj->select_specific_column("`direction_name`", "`direction`", "WHERE `direction_id` = " . $piece['direction_id'])[0]['direction_name'];
+                        $dir_info = $db_obj->select_specific_column("`direction_name`", "`direction`", "WHERE `direction_id` = " . $piece['direction_id']);
+                      if (!empty($dir_info)) {
+                        $dir_name = $dir_info['direction_name'];
                       } else {
                         $dir_name = null;
                       }

@@ -13,7 +13,7 @@ if ($is_exist == true) {
   // check license
   if ($_SESSION['sys']['isLicenseExpired'] == 0) {
     // get user name
-    $username = $user_obj->select_specific_column("`username`", "`users`", "WHERE `UserID` = " . $userid)[0]['username'];
+    $username = $user_obj->select_specific_column("`username`", "`users`", "WHERE `UserID` = " . $userid)['username'];
     // call delete user function
     $is_deleted = $user_obj->temp_delete_user($userid);
     

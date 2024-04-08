@@ -10,7 +10,7 @@ $all_data = $pcs_obj->get_pieces($clients_condition);
 
 
 // get direction name
-$dir_name = $pcs_obj->select_specific_column("`direction_name`", "`direction`", "WHERE `direction_id` = " . $dir_id)[0]['direction_name'];
+$dir_name = $pcs_obj->select_specific_column("`direction_name`", "`direction`", "WHERE `direction_id` = " . $dir_id)['direction_name'];
 // main title
 $main_title = "DIR CLTS";
 ?>
@@ -163,7 +163,7 @@ if (!is_null($all_data)) {
                 $phones = $pcs_obj->select_specific_column("`phone`", "`pieces_phones`", "WHERE `id` = " . $client['id']);
                 // check result
                 if (count($phones) > 0) {
-                  $phone = $phones[0]['phone'];
+                  $phone = $phones['phone'];
                   $phone_ex = explode(",", $phone);
                   if (count($phone_ex) > 1) {
                     foreach ($phone_ex as $key => $ph) {
@@ -234,7 +234,7 @@ if (!is_null($all_data)) {
               </td>
               <!-- client direction -->
               <td class="text-capitalize">
-                <?php $dir_name = is_null($client['direction_id']) ? null : $pcs_obj->select_specific_column("`direction_name`", "`direction`", "WHERE `direction_id` = " . $client['direction_id'])[0]['direction_name']; ?>
+                <?php $dir_name = is_null($client['direction_id']) ? null : $pcs_obj->select_specific_column("`direction_name`", "`direction`", "WHERE `direction_id` = " . $client['direction_id'])['direction_name']; ?>
                 <?php if (!is_null($dir_name)) { ?>
                   <?php if ($_SESSION['sys']['dir_update'] == 1) { ?>
                     <a href="<?php echo $nav_up_level ?>directions/index.php?do=show-direction-tree&dir-id=<?php echo base64_encode($client['direction_id']); ?>">
@@ -259,9 +259,9 @@ if (!is_null($all_data)) {
                 $source_info = is_null($source_id) ? null : $pcs_obj->select_specific_column("`full_name`, `ip`, `port`", "`pieces_info`", "WHERE `id` = {$source_id}");
                 // check info
                 if (!empty($source_info)) {
-                  $source_name = trim($source_info[0]['full_name'], ' \t\n\v');
-                  $source_ip = trim($source_info[0]['ip'], ' \t\n\v');
-                  $source_port = trim($source_info[0]['port'], ' \t\n\v');
+                  $source_name = trim($source_info['full_name'], ' \t\n\v');
+                  $source_ip = trim($source_info['ip'], ' \t\n\v');
+                  $source_port = trim($source_info['port'], ' \t\n\v');
                 } elseif ($client['source_id'] == 0) {
                   $source_name = trim($client['full_name'], ' \t\n\v');
                   $source_ip = trim($client['ip'], ' \t\n\v');
@@ -313,9 +313,9 @@ if (!is_null($all_data)) {
                 $alt_source_port = null;
                 // check info
                 if (!empty($alt_source_info)) {
-                  $alt_source_name = trim($alt_source_info[0]['full_name'], ' \t\n\v');
-                  $source_ip = trim($alt_source_info[0]['ip'], ' \t\n\v');
-                  $alt_source_port = trim($alt_source_info[0]['port'], ' \t\n\v');
+                  $alt_source_name = trim($alt_source_info['full_name'], ' \t\n\v');
+                  $source_ip = trim($alt_source_info['ip'], ' \t\n\v');
+                  $alt_source_port = trim($alt_source_info['port'], ' \t\n\v');
                 } elseif ($client['alt_source_id'] == 0) {
                   $alt_source_name = trim($client['full_name'], ' \t\n\v');
                   $alt_source_ip = trim($client['ip'], ' \t\n\v');
@@ -354,7 +354,7 @@ if (!is_null($all_data)) {
                   $device_type = lang('NOT ASSIGNED');
                   $device_class = 'text-danger fs-12 fw-bold';
                 } else {
-                  $device_type = $pcs_obj->select_specific_column("`device_name`", "`devices_info`", "WHERE `device_id` = " . $client['device_id'])[0]['device_name'];
+                  $device_type = $pcs_obj->select_specific_column("`device_name`", "`devices_info`", "WHERE `device_id` = " . $client['device_id'])['device_name'];
                   $device_class = '';
                 }
                 ?>
@@ -369,7 +369,7 @@ if (!is_null($all_data)) {
                   $model_name = lang('NOT ASSIGNED');
                   $model_class = 'text-danger fs-12 fw-bold';
                 } else {
-                  $model_name = $pcs_obj->select_specific_column("`model_name`", "`devices_model`", "WHERE `model_id` = " . $client['device_model'])[0]['model_name'];
+                  $model_name = $pcs_obj->select_specific_column("`model_name`", "`devices_model`", "WHERE `model_id` = " . $client['device_model'])['model_name'];
                   $model_class = '';
                 }
                 ?>
@@ -384,7 +384,7 @@ if (!is_null($all_data)) {
                   $conn_name = lang('NOT ASSIGNED');
                   $conn_class = 'text-danger fs-12 fw-bold';
                 } else {
-                  $conn_name = $pcs_obj->select_specific_column("`connection_name`", "`connection_types`", "WHERE `id` = " . $client['connection_type'])[0]['connection_name'];
+                  $conn_name = $pcs_obj->select_specific_column("`connection_name`", "`connection_types`", "WHERE `id` = " . $client['connection_type'])['connection_name'];
                   $conn_class = '';
                 }
                 ?>

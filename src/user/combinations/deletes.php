@@ -149,7 +149,7 @@ $comb_obj = new Combination();
                       $is_exist_admin = $comb_obj->is_exist("`UserID`", "`users`", $comb['addedBy']);
                       // if exist
                       if ($is_exist_admin) {
-                        $admin_name = $comb_obj->select_specific_column("`username`", "`users`", "WHERE `UserID` = " . $comb['addedBy'])[0]['username'];
+                        $admin_name = $comb_obj->select_specific_column("`username`", "`users`", "WHERE `UserID` = " . $comb['addedBy'])['username'];
                       ?>
                         <a href="<?php echo $nav_up_level ?>employees/index.php?do=edit-user-info&userid=<?php echo base64_encode($comb['addedBy']); ?>">
                           <?php echo $admin_name ?>
@@ -167,7 +167,7 @@ $comb_obj = new Combination();
                       $is_exist_tech = $comb_obj->is_exist("`UserID`", "`users`", $comb['UserID']);
                       // if exist
                       if ($is_exist_tech) {
-                        $tech_name = $comb_obj->select_specific_column("`username`", "`users`", "WHERE `UserID` = " . $comb['UserID'])[0]['username']; ?>
+                        $tech_name = $comb_obj->select_specific_column("`username`", "`users`", "WHERE `UserID` = " . $comb['UserID'])['username']; ?>
                         <a href="<?php echo $nav_up_level ?>employees/index.php?do=edit-user-info&userid=<?php echo base64_encode($comb['UserID']); ?>">
                           <?php echo $tech_name ?>
                         </a>

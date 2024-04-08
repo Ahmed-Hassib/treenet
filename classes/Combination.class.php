@@ -24,8 +24,8 @@ class Combination extends Database
     // prepare the query
     $stmt = $this->con->prepare($select_query);
     $stmt->execute();
-    $comb_info = $stmt->fetchAll();
     $comb_count = $stmt->rowCount(); // count effected rows
+    $comb_info = $comb_count == 1 ? $stmt->fetch() : $stmt->fetchAll();
 
     // return null result
     return $comb_count > 0 ? $comb_info : null;
@@ -216,7 +216,7 @@ class Combination extends Database
     return $insert_count > 0 ? true : false;
   }
 
-    /**
+  /**
    * send_notification function
    * used to send a combination notification to technical man
    */

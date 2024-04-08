@@ -55,9 +55,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $mal_obj->add_malfunction_updates(array($mal_id, 0, 'insert malfunction', base64_decode($_SESSION['sys']['company_id'])));
 
         // get admin info
-        $admin_info = $mal_obj->select_specific_column("`username`", "`users`", "WHERE `UserID` = $mng_id")[0]['username'];
+        $admin_info = $mal_obj->select_specific_column("`username`", "`users`", "WHERE `UserID` = $mng_id")['username'];
         // get technical man info
-        $tech_info = $mal_obj->select_specific_column("`username`, `phone`, `is_activated_phone`", "`users`", "WHERE `UserID` = $tech_id")[0];
+        $tech_info = $mal_obj->select_specific_column("`username`, `phone`, `is_activated_phone`", "`users`", "WHERE `UserID` = $tech_id");
 
         // create an object of Pieces class
         $pcs_obj = new Pieces();

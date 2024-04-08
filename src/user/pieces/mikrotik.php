@@ -35,7 +35,7 @@ if (isset($_SESSION['sys']['UserID'])) {
     // create an object of Company class
     $company_obj = new Company();
     // check number of opened port from database
-    $opened_ports = intval($pcs_obj->select_specific_column("`opened_ports`", "`companies`", "WHERE `company_id` = " . base64_decode($_SESSION['sys']['company_id']))[0]['opened_ports']);
+    $opened_ports = intval($pcs_obj->select_specific_column("`opened_ports`", "`companies`", "WHERE `company_id` = " . base64_decode($_SESSION['sys']['company_id']))['opened_ports']);
     // check number of opened ports
     if ($opened_ports >= $conf['available_ports']) {
       // reset opened ports
@@ -48,7 +48,7 @@ if (isset($_SESSION['sys']['UserID'])) {
     // update number of opened port in database
     $company_obj->update_opened_ports(base64_decode($_SESSION['sys']['company_id']), $opened_ports);
     // get refused ports
-    $refused_ports = $company_obj->select_specific_column("`refused_port`", "`settings`", "LIMIT 1")[0]['refused_port'];
+    $refused_ports = $company_obj->select_specific_column("`refused_port`", "`settings`", "LIMIT 1")['refused_port'];
     $refused_ports = explode(",", $refused_ports);
 
     do {

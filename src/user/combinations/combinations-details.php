@@ -235,7 +235,7 @@ $count = $stmt->rowCount(); // get row count
                 $is_exist_admin = $comb_obj->is_exist("`UserID`", "`users`", $row['addedBy']);
                 // if exist
                 if ($is_exist_admin) {
-                  $admin_name = $comb_obj->select_specific_column("`username`", "`users`", "WHERE `UserID` = " . $row['addedBy'])[0]['username'];
+                  $admin_name = $comb_obj->select_specific_column("`username`", "`users`", "WHERE `UserID` = " . $row['addedBy'])['username'];
                 ?>
                   <a href="<?php echo $nav_up_level ?>employees/index.php?do=edit-user-info&userid=<?php echo base64_encode($row['addedBy']); ?>">
                     <?php echo $admin_name ?>
@@ -253,7 +253,7 @@ $count = $stmt->rowCount(); // get row count
                 $is_exist_tech = $comb_obj->is_exist("`UserID`", "`users`", $row['UserID']);
                 // if exist
                 if ($is_exist_tech) {
-                  $tech_name = $comb_obj->select_specific_column("`username`", "`users`", "WHERE `UserID` = " . $row['UserID'])[0]['username']; ?>
+                  $tech_name = $comb_obj->select_specific_column("`username`", "`users`", "WHERE `UserID` = " . $row['UserID'])['username']; ?>
                   <a href="<?php echo $nav_up_level ?>employees/index.php?do=edit-user-info&userid=<?php echo base64_encode($row['UserID']); ?>">
                     <?php echo $tech_name ?>
                   </a>

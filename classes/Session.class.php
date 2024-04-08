@@ -82,11 +82,11 @@ class Session extends Database
     // additional info
     $license_id = $this->get_license_id($info['company_id']);
     $_SESSION['sys']['license_id'] = base64_encode($license_id);
-    $expire_date = $this->select_specific_column("`expire_date`", "`license`", "WHERE `ID` = $license_id")[0]['expire_date'];
-    $_SESSION['sys']['expire_date'] = $this->select_specific_column("`expire_date`", "`license`", "WHERE `ID` = $license_id")[0]['expire_date'];
+    $expire_date = $this->select_specific_column("`expire_date`", "`license`", "WHERE `ID` = $license_id")['expire_date'];
+    $_SESSION['sys']['expire_date'] = $this->select_specific_column("`expire_date`", "`license`", "WHERE `ID` = $license_id")['expire_date'];
     $_SESSION['sys']['isLicenseExpired'] = $this->is_expired($expire_date);
-    $_SESSION['sys']['isTrial'] = $this->select_specific_column("`isTrial`", "`license`", "WHERE `ID` = $license_id")[0]['isTrial'];
-    $_SESSION['sys']['plan_id'] = base64_encode($this->select_specific_column("`plan_id`", "`license`", "WHERE `ID` = $license_id")[0]['plan_id']);
+    $_SESSION['sys']['isTrial'] = $this->select_specific_column("`isTrial`", "`license`", "WHERE `ID` = $license_id")['isTrial'];
+    $_SESSION['sys']['plan_id'] = base64_encode($this->select_specific_column("`plan_id`", "`license`", "WHERE `ID` = $license_id")['plan_id']);
     // set version info into session
     $this->set_version_info($info['company_id'], $info['UserID']);
 
@@ -144,7 +144,7 @@ class Session extends Database
   public function get_version_id($id)
   {
     // get version id by company id
-    $ver_id = $this->select_specific_column("`version`", "`companies`", "WHERE `company_id` = '$id'")[0]['version'];
+    $ver_id = $this->select_specific_column("`version`", "`companies`", "WHERE `company_id` = '$id'")['version'];
     // return
     return $ver_id;
   }
@@ -153,7 +153,7 @@ class Session extends Database
   public function get_version_info($v_id)
   {
     // get ver_info id by version id
-    $ver_info = $this->select_specific_column("*", "`versions`", "WHERE `v_id` = '$v_id'")[0];
+    $ver_info = $this->select_specific_column("*", "`versions`", "WHERE `v_id` = '$v_id'");
     // return
     return $ver_info;
   }

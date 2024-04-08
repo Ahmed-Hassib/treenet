@@ -8,7 +8,7 @@
       // create an object of Direction class
       $dir_obj = new Direction();
       // check if name is exist or not
-      $is_exist = $dir_obj->count_records("`direction_id`", "`direction`", "WHERE `direction_name` = $dir_name AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']));
+      $is_exist = $dir_obj->count_records("`direction_id`", "`direction`", "WHERE `direction_name` = '{$dir_name}' AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']));
 
       // check if direction is exist or not
       if ($is_exist == true) {

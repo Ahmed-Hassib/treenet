@@ -13,21 +13,15 @@ if ($device_id == 0) {
   // create an object of Model
   $devices_obj = new Devices();
   // get specific columns from pieces table
-  $device_name = $devices_obj->select_specific_column("`device_name`", "`devices_info`", "WHERE `device_id` = $device_id")[0]['device_name'];
+  $device_name = $devices_obj->select_specific_column("`device_name`", "`devices_info`", "WHERE `device_id` = $device_id")['device_name'];
   // get specific columns from pieces table
   $data = $devices_obj->get_all_device_models($device_id);
   // company name
-  $company_name = $devices_obj->select_specific_column("`company_name`", "`companies`", "WHERE `company_id` = '" . base64_decode($company_id) . "'")[0]['company_name'];
+  $company_name = $devices_obj->select_specific_column("`company_name`", "`companies`", "WHERE `company_id` = '" . base64_decode($company_id) . "'")['company_name'];
   // convert data into json file
   $json_data = json_encode($data);
-  // check server name
-  if ($_SERVER['SERVER_NAME'] == 'tree-net.net') {
-    // json location
-    $json_location = $document_root . "data/json/";
-  } else {
-    // json location
-    $json_location = $document_root . "/data/json/";
-  }
+  // json location
+  $json_location = $document_root . "/data/json/";
   // check if the directory is exist or not
   if (!file_exists($json_location)) {
     // create a directory for the company

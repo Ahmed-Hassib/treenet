@@ -10,7 +10,7 @@
   <div class="company-img-container" id="company-image-container">
     <?php
     $company_img_name_db = $db_obj->select_specific_column("`company_img`", "`companies`", "WHERE `company_id` = " . base64_decode($_SESSION['sys']['company_id']));
-    $company_img_name_db = count($company_img_name_db) > 0 ? $company_img_name_db[0]['company_img'] : null;
+    $company_img_name_db = count($company_img_name_db) > 0 ? $company_img_name_db['company_img'] : null;
     $company_img_name = empty($company_img_name_db) || $company_img_name_db == null ? 'treenet.jpg' : $company_img_name_db;
     $company_img_path = empty($company_img_name_db) || $company_img_name_db == null ? $treenet_assets : $uploads . "companies-img/" . base64_decode($_SESSION['sys']['company_id']);
     // check if image exists
