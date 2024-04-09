@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // check if combination is exist or not
     if ($comb_obj->is_exist("`comb_id`", "`combinations`", $comb_id)) {
       // get combination basics info
-      $comb_info = $comb_obj->get_combinations("`comb_id` = {$comb_id} AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']) . " AND `deleted_at` IS NULL", 1);
+      $comb_info = $comb_obj->get_combinations("`comb_id` = {$comb_id} AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']) . " AND `deleted_at` IS NULL");
       // check if exist again
       if (!is_null($comb_info)) {
         // get new malfunction info

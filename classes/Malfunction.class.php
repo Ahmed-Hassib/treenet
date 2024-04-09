@@ -18,15 +18,15 @@ class Malfunction extends Database
   }
 
   // get specific malfunction
-  public function get_malfunctions($condition, $type = 2)
+  public function get_malfunctions($condition)
   {
     // select query
     $select_query = "SELECT *FROM `malfunctions` WHERE {$condition};";
     // prepare the query
     $stmt = $this->con->prepare($select_query);
     $stmt->execute();
-    $mal_info = $stmt->fetchAll();
     $mal_count = $stmt->rowCount(); // count effected rows
+    $mal_info = $mal_count == 1 ? $stmt->fetch() : $stmt->fetchAll();
     // return result
     return $mal_count > 0 ? $mal_info : null;
   }

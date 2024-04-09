@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // check if malfunction is exist or not
     if ($mal_obj->is_exist("`mal_id`", "`malfunctions`", $mal_id)) {
       // get malfunction basics info
-      $mal_info = $mal_obj->get_malfunctions("`mal_id` = " . $mal_id . " AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']), 1);
+      $mal_info = $mal_obj->get_malfunctions("`mal_id` = " . $mal_id . " AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']));
       // check if exist again
       if (!is_null($mal_info)) {
         // get new malfunction info

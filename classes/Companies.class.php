@@ -77,7 +77,7 @@ class Company extends Database
     $stmt->execute(array($new_version_id, $company_id));    // execute query
     $count = $stmt->rowCount();    // all count of data
     // return
-    return $count > 0 ? $count : $count;
+    return $count > 0 ? $count : null;
   }
 
   /**

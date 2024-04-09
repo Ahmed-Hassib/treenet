@@ -16,7 +16,7 @@ class Pieces extends Database
     $this->con = $db_obj->con;
   }
 
-  public function get_pieces($condition, $type = 2)
+  public function get_pieces($condition)
   {
     // query statement
     $query = "SELECT 
@@ -33,8 +33,8 @@ class Pieces extends Database
     // prepare the query
     $stmt = $this->con->prepare($query);
     $stmt->execute(); // execute query
-    $pieces_data = $type == 1 ? $stmt->fetch() : $stmt->fetchAll(); // fetch data
     $pieces_counter = $stmt->rowCount();       // count effected rows
+    $pieces_data = $pieces_counter == 1 ? $stmt->fetch() : $stmt->fetchAll(); // fetch data
 
     // return null result
     return $pieces_counter > 0 ? $pieces_data : null;

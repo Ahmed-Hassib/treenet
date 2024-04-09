@@ -14,7 +14,7 @@
             <?php echo lang('TREENET ADV DESC', 'description') ?>
           </p>
           <div class="my-3 hstack gap-3">
-            <a href="https://wa.me/+201016100346" target="_blank">
+            <a href="https://wa.me/+201016100346?text=<?php echo lang('whatsapp message from web') ?>" target="_blank">
               <i class="bi bi-whatsapp"></i>
               <?php echo lang('contact us on whatsapp') ?>
             </a>

@@ -8,7 +8,7 @@ $is_exist_mal = $mal_obj->is_exist("`mal_id`", "`malfunctions`", $mal_id);
 // check
 if ($is_exist_mal == true) {
   // get malfunction details
-  $mal_info = $mal_obj->get_malfunctions("`mal_id` = {$mal_id} AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']), 1);
+  $mal_info = $mal_obj->get_malfunctions("`mal_id` = {$mal_id} AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']));
 
   // check if malfunction is showed or not
   if ($mal_info['isShowed'] == 0) {

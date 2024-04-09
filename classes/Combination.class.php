@@ -17,7 +17,7 @@ class Combination extends Database
   }
 
   // get specific combination
-  public function get_combinations($condition, $type = 2)
+  public function get_combinations($condition)
   {
     // select query
     $select_query = "SELECT *FROM `combinations` WHERE {$condition};";
@@ -34,9 +34,6 @@ class Combination extends Database
   // function to get all combinations of specific company
   public function get_all_combinations()
   {
-    // $count = $stmt->rowCount() ;    // all count of data
-    // // return
-    // return $count > 0 ? [true, $companies_data] : [false, null];
   }
 
   // get combination media

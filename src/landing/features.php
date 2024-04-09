@@ -135,6 +135,6 @@ return [
     'media' => null,
     'media_type' => null,
     'increased' => 400,
-    'is_developing' => true
+    'is_developing' => false
   ],
 ];

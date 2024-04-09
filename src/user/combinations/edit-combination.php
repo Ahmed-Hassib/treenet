@@ -8,7 +8,7 @@ $is_exist = $comb_obj->is_exist("`comb_id`", "`combinations`", $comb_id);
 // check
 if ($is_exist == true) {
   // get combination info
-  $comb_info = $comb_obj->get_combinations("`comb_id` = {$comb_id} AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']) . " AND `deleted_at` IS NULL", 1);
+  $comb_info = $comb_obj->get_combinations("`comb_id` = {$comb_id} AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']) . " AND `deleted_at` IS NULL");
   // update comb status
   if ($comb_info['isShowed'] == 0) {
     if (base64_decode($_SESSION['sys']['UserID']) == $comb_info['UserID']) {

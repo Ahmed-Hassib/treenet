@@ -200,6 +200,7 @@ function global_($phrase)
     'CLICK HERE' => 'إضغط هنا',
 
     // large global words
+    'WHATSAPP MESSAGE FROM WEB' => 'مرحباً بكم، انا قادم لكم من خلال موقع تطبيق  Tree Net',
     'EMPTY FIELDS' => 'توجد حقول فارغة',
     'SELECT PAYMENT METHOD' => 'اختر طريقة الدفع',
     'SYS UNDER DEVELOPING' => 'نعتذر منكم! السيستم الآن تحت التطوير',
