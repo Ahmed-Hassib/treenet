@@ -8,7 +8,7 @@ $is_exist_id = $pcs_obj->is_exist("`id`", "`pieces_info`", $client_id);
 // condition
 if ($client_id != 0 && $is_exist_id) {
   // get client or client info
-  $client_data = $pcs_obj->get_pieces("WHERE `pieces_info`.`id` = {$client_id}");
+  $client_data = $pcs_obj->get_pieces("WHERE `pieces_info`.`id` = {$client_id}", 1);
   // check type
   if ($client_data['is_client'] == 0) {
     // redirect to pieces page

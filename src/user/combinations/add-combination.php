@@ -1,8 +1,8 @@
 <?php
 // create an object of Database class
-$db_obj = !isset($db_obj) ? new Database() : $db_obj;
+$users_obj = new User();
 // get counter of employees, clients and pieces
-$emp_counter = $db_obj->count_records("`UserID`", "`users`", "WHERE `is_tech` = 1 AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']));
+$emp_counter = $users_obj->count_records("`UserID`", "`users`", "WHERE `is_tech` = 1 AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']));
 // check the permission
 if ($_SESSION['sys']['comb_add'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) {
   // check technical counter
@@ -48,7 +48,7 @@ if ($_SESSION['sys']['comb_add'] == 1 && $_SESSION['sys']['isLicenseExpired'] ==
                     </option>
                     <?php
                     // get Employees ID and Names
-                    $usersRows = $db_obj->select_specific_column("`UserID`, `username`, `fullname`", "`users`", "WHERE `is_tech` = 1 AND `job_title_id` = 2 AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']));
+                    $usersRows = $users_obj->get_all_users(base64_decode($_SESSION['sys']['company_id']), "AND `is_tech` = 1 AND `job_title_id` = 2 ");
                     // check the length of result
                     if (count($usersRows) > 0) {
                       // loop on result ..

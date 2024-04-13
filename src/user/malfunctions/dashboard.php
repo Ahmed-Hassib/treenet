@@ -451,7 +451,7 @@ if (isset($_GET['year']) && !empty($_GET['year']) && filter_var(trim($_GET['year
             </header>
             <?php
             // get malfunctions of today
-            $today_mal = $mal_obj->select_specific_column("*", "`malfunctions`", "WHERE Date(`created_at`) = '" . get_date_now() . "' AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']) . " AND `deleted_at` IS NULL $techCondition1 ORDER BY `created_at` DESC LIMIT 5");
+            $today_mal = array($mal_obj->select_specific_column("*", "`malfunctions`", "WHERE Date(`created_at`) = '" . get_date_now() . "' AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']) . " AND `deleted_at` IS NULL $techCondition1 ORDER BY `created_at` DESC LIMIT 5"));
             // check if array not empty
             if (!empty($today_mal)) {
               $index = 0;
@@ -487,11 +487,22 @@ if (isset($_GET['year']) && !empty($_GET['year']) && filter_var(trim($_GET['year
                     <?php
                     // loop on data
                     foreach ($today_mal as $index => $mal) {
+                      $client_name = "";
+                      $client_type = "";
+                      $tech_name = "";
                       // get client info
-                      $client_name = $mal_obj->select_specific_column("`full_name`", "`pieces_info`", "WHERE `id` = " . $mal['client_id'])['full_name'];
-                      $client_type = $mal_obj->select_specific_column("`is_client`", "`pieces_info`", "WHERE `id` = " . $mal['client_id'])['is_client'];
+                      if ($mal_obj->is_exist("`id`", "`pieces_info`", $mal['client_id'])) {
+                        $client_info = $mal_obj->select_specific_column("`full_name`, `is_client`, `address`", "`pieces_info`", "WHERE `id` = " . $mal['client_id']);
+                        $client_name = $client_info['full_name'];
+                        $client_type = $client_info['is_client'];
+                        $client_addr = $client_info['address'];
+                      }
+                      // client phone
                       $client_phone = $mal_obj->select_specific_column("`phone`", "`pieces_phones`", "WHERE `id` = " . $mal['client_id']);
-                      $tech_name = $mal_obj->select_specific_column("`username`", "`users`", "WHERE `UserID` = " . $mal['tech_id'])['username'];
+
+                      if ($mal_obj->is_exist("`UserID`", "`users`", $mal['tech_id'])) {
+                        $tech_name = $mal_obj->select_specific_column("`username`", "`users`", "WHERE `UserID` = " . $mal['tech_id'])['username'];
+                      }
                     ?>
                       <tr class="text-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
                         <!-- name -->
@@ -505,10 +516,10 @@ if (isset($_GET['year']) && !empty($_GET['year']) && filter_var(trim($_GET['year
                           <?php } ?>
                         </td>
                         <!-- address -->
-                        <td class="<?php echo is_null($mal['address']) ? 'text-danger fw-bold fs-12' : '' ?>">
-                          <?php if (!is_null($mal['address'])) { ?>
+                        <td class="<?php echo is_null($client_addr) ? 'text-danger fw-bold fs-12' : '' ?>">
+                          <?php if (!is_null($client_addr)) { ?>
                             <span>
-                              <?php echo wordwrap($mal['address'], 50, "<br>"); ?>
+                              <?php echo wordwrap($client_addr, 50, "<br>"); ?>
                             </span>
                           <?php } else { ?>
                             <span class="text danger">
@@ -517,10 +528,10 @@ if (isset($_GET['year']) && !empty($_GET['year']) && filter_var(trim($_GET['year
                           <?php } ?>
                         </td>
                         <!-- phone -->
-                        <td class="<?php echo empty($mal['address']) ? 'text-danger fw-bold fs-12' : '' ?>">
+                        <td class="<?php echo empty($client_phone) ? 'text-danger fw-bold fs-12' : '' ?>">
                           <?php if (!empty($client_phone)) { ?>
                             <span>
-                              <?php echo $client_phone['phone']; ?>
+                              <?php echo $client_phone; ?>
                             </span>
                           <?php } else { ?>
                             <span class="text danger">
@@ -654,6 +665,7 @@ if (isset($_GET['year']) && !empty($_GET['year']) && filter_var(trim($_GET['year
                       $client_type = $client_info['is_client'];
                       $client_addr = $client_info['address'];
                     }
+                    // client phone
                     $client_phone = $mal_obj->select_specific_column("`phone`", "`pieces_phones`", "WHERE `id` = " . $mal['client_id']);
 
                     if ($mal_obj->is_exist("`UserID`", "`users`", $mal['tech_id'])) {

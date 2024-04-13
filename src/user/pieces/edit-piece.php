@@ -8,7 +8,7 @@ $is_exist_id = $pcs_obj->is_exist("`id`", "`pieces_info`", $piece_id);
 // condition
 if ($piece_id != 0 && $is_exist_id) {
   // get piece or client info
-  $piece_data = $pcs_obj->get_pieces("WHERE `pieces_info`.`id` = {$piece_id}");
+  $piece_data = $pcs_obj->get_pieces("WHERE `pieces_info`.`id` = {$piece_id}", 1);
 
   // check type
   if ($piece_data['is_client'] == 1) {

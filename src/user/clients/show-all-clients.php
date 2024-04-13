@@ -150,7 +150,7 @@ if (!is_null($all_data)) {
                 // get piece phone
                 $phones = $pcs_obj->select_specific_column("`phone`", "`pieces_phones`", "WHERE `id` = " . $client['id']);
                 // check result
-                if (count($phones) > 0) {
+                if (!empty($phones)) {
                   $phone = $phones['phone'];
                   $phone_ex = explode(",", $phone);
                   if (count($phone_ex) > 1) {
