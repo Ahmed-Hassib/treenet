@@ -15,7 +15,7 @@ if (empty($dir_id) || empty($company_id)) {
   // condition
   $pcs_condition = "WHERE `is_client` = 0 AND `direction_id` = $dir_id AND `company_id` = " . base64_decode($company_id) . " ORDER BY `direction_id` ASC, `id` ASC";
   // get specific columns from pieces table
-  $data = $pcs_obj->select_specific_column("`id`, `ip`, `full_name`", "`pieces_info`", $pcs_condition);
+  $data = $pcs_obj->select_specific_column("`id`, `ip`, `full_name`", "`pieces_info`",$pcs_condition, 'multiple');
   // company name
   $company_name = $pcs_obj->select_specific_column("`company_name`", "`companies`", "WHERE `company_id` = " . base64_decode($company_id))['company_name'];
   // convert data into json file

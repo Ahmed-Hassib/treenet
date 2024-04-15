@@ -83,7 +83,7 @@ class Session extends Database
     $license_id = $this->get_license_id($info['company_id']);
     $_SESSION['sys']['license_id'] = base64_encode($license_id);
     $expire_date = $this->select_specific_column("`expire_date`", "`license`", "WHERE `ID` = $license_id")['expire_date'];
-    $_SESSION['sys']['expire_date'] = $this->select_specific_column("`expire_date`", "`license`", "WHERE `ID` = $license_id")['expire_date'];
+    $_SESSION['sys']['expire_date'] = $expire_date;
     $_SESSION['sys']['isLicenseExpired'] = $this->is_expired($expire_date);
     $_SESSION['sys']['isTrial'] = $this->select_specific_column("`isTrial`", "`license`", "WHERE `ID` = $license_id")['isTrial'];
     $_SESSION['sys']['plan_id'] = base64_encode($this->select_specific_column("`plan_id`", "`license`", "WHERE `ID` = $license_id")['plan_id']);

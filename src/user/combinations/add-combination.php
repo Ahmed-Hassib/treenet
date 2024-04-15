@@ -148,7 +148,7 @@ if ($_SESSION['sys']['comb_add'] == 1 && $_SESSION['sys']['isLicenseExpired'] ==
                   display: block;
                 }
               </style>
-              <script src="<?php echo $treenet_js ?>map.js"></script>
+              <script src="<?php echo $js ?>map.js"></script>
               <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
               <script async src="https://maps.googleapis.com/maps/api/js?key=<?php echo $conf['map_api_key'] ?>&callback=initMap&libraries=maps,marker&v=weekly"></script>
 

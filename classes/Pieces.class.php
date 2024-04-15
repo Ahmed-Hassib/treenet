@@ -112,7 +112,7 @@ class Pieces extends Database
       if ($children_count > 0) {
         $update_query .= "UPDATE `pieces_info` SET `direction_id` = '{$new_direction_id}' WHERE `id` = {$source_id};";
         // fetch all children
-        $children = $this->select_specific_column("`id`", "`pieces_info`", "WHERE `source_id` = {$source_id}");
+        $children = $this->select_specific_column("`id`", "`pieces_info`", "WHERE `source_id` = {$source_id}", 'multiple');
         // loop on it
         foreach ($children as $child) {
           // get the children of the current piece

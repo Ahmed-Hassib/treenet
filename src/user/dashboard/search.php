@@ -215,7 +215,7 @@ $total_results = $emp_count + $dir_count + $pcs_count + $clients_count;
                       // get piece phone
                       $phones = $pcs_obj->select_specific_column("`phone`", "`pieces_phones`", "WHERE `id` = " . $pcs['id']);
                       // check result
-                      if (count($phones) > 0) {
+                      if (!is_null($phones) && count($phones) > 0) {
                         echo trim($phones['phone']);
                       } else { ?>
                         <span class="text-danger fs-12 fw-bold">
@@ -348,7 +348,7 @@ $total_results = $emp_count + $dir_count + $pcs_count + $clients_count;
                       // get client phone
                       $phones = $pcs_obj->select_specific_column("`phone`", "`pieces_phones`", "WHERE `id` = " . $client['id']);
                       // check result
-                      if (count($phones) > 0) {
+                      if (!is_null($phones) && count($phones) > 0) {
                         echo trim($phones['phone']);
                       } else { ?>
                         <span class="text-danger fs-12 fw-bold">
@@ -381,7 +381,7 @@ $total_results = $emp_count + $dir_count + $pcs_count + $clients_count;
                       // get mac address
                       $mac_addr_info = $db_obj->select_specific_column("`mac_add`", "`pieces_mac_addr`", "WHERE `id` = " . $client['id']);
                       // check result
-                      if (count($mac_addr_info) <= 0 || $mac_addr_info == null) {
+                      if (is_null($mac_addr_info)) {
                         $mac_addr = lang('NOT ASSIGNED');
                         $mac_class = 'text-danger fs-12 fw-bold';
                       } else {

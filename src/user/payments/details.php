@@ -168,7 +168,7 @@ $rest = $diffrence->invert ? 0 : round(($diffrence->days / $total_days->days) * 
                   // get plan data
                   $plan_data = $db_obj->select_specific_column("`name_ar`, `name_en`", "`pricing_plans`", "WHERE `id` = {$plan_id}");
                   // prepare plan name
-                  $plan_data = $_SESSION['sys']['lang'] == 'ar' ? $plan_data['name_ar'] : $plan_data['name_en'];
+                  $plan_data = $_SESSION['sys']['lang'] == 'ar' ? $plan_data['name_ar'] : $plan_data['name_ar'];
                   // display plan 
                   echo "{$plan_data}/{$type}";
                 } else {

@@ -263,12 +263,12 @@
                 <!-- connection type -->
                 <div class="col-12">
                   <div class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
-                    <?php $conn_type_data = $db_obj->select_specific_column("*", "`connection_types`", "WHERE `company_id` = " . base64_decode($_SESSION['sys']['company_id'])); ?>
+                    <?php $conn_type_data = $db_obj->select_specific_column("*", "`connection_types`", "WHERE `company_id` = " . base64_decode($_SESSION['sys']['company_id']), 'multiple'); ?>
                     <select class="form-select text-uppercase" name="conn-type" id="conn-type">
                       <option value="default" selected disabled>
                         <?php echo lang('SELECT CONN TYPE', 'pieces') ?>
                       </option>
-                      <?php if (count($conn_type_data) > 0) { ?>
+                      <?php if (!is_null($conn_type_data)) { ?>
                         <?php foreach ($conn_type_data as $conn_type_row) { ?>
                           <option value='<?php echo $conn_type_row['id'] ?>'>
                             <?php echo $conn_type_row['connection_name'] ?>
@@ -279,7 +279,7 @@
                     <label for="conn-type">
                       <?php echo lang('CONN TYPE', 'pieces') ?>
                     </label>
-                    <?php if (count($conn_type_data) == 0) { ?>
+                    <?php if (is_null($conn_type_data)) { ?>
                       <span class="text-danger fs-12">
                         <i class="bi bi-exclamation-triangle-fill"></i>
                         <?php echo lang('NO DATA') ?>

@@ -8,7 +8,6 @@ $clients_condition = "WHERE `is_client` = 1 AND `direction_id` = {$dir_id} AND `
 // get all clients
 $all_data = $pcs_obj->get_pieces($clients_condition);
 
-
 // get direction name
 $dir_name = $pcs_obj->select_specific_column("`direction_name`", "`direction`", "WHERE `direction_id` = " . $dir_id)['direction_name'];
 // main title
@@ -16,8 +15,6 @@ $main_title = "DIR CLTS";
 ?>
 <!-- start edit profile page -->
 <div class="container" dir="<?php echo $page_dir ?>">
-
-
   <div class="mb-3 hstack gap-3">
     <?php if ($_SESSION['sys']['clients_add'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) { ?>
       <a href="?do=add-new-client" class="btn btn-outline-primary py-1 fs-12">
@@ -162,7 +159,7 @@ if (!is_null($all_data)) {
                 // get piece phone
                 $phones = $pcs_obj->select_specific_column("`phone`", "`pieces_phones`", "WHERE `id` = " . $client['id']);
                 // check result
-                if (count($phones) > 0) {
+                if (!is_null($phones) && !empty($phones)) {
                   $phone = $phones['phone'];
                   $phone_ex = explode(",", $phone);
                   if (count($phone_ex) > 1) {
@@ -258,7 +255,7 @@ if (!is_null($all_data)) {
                 // get source info
                 $source_info = is_null($source_id) ? null : $pcs_obj->select_specific_column("`full_name`, `ip`, `port`", "`pieces_info`", "WHERE `id` = {$source_id}");
                 // check info
-                if (!empty($source_info)) {
+                if (!is_null($source_info)) {
                   $source_name = trim($source_info['full_name'], ' \t\n\v');
                   $source_ip = trim($source_info['ip'], ' \t\n\v');
                   $source_port = trim($source_info['port'], ' \t\n\v');
@@ -312,7 +309,7 @@ if (!is_null($all_data)) {
                 $alt_source_ip = null;
                 $alt_source_port = null;
                 // check info
-                if (!empty($alt_source_info)) {
+                if (!is_null($alt_source_info)) {
                   $alt_source_name = trim($alt_source_info['full_name'], ' \t\n\v');
                   $source_ip = trim($alt_source_info['ip'], ' \t\n\v');
                   $alt_source_port = trim($alt_source_info['port'], ' \t\n\v');
@@ -399,10 +396,6 @@ if (!is_null($all_data)) {
                   <span class="text-danger fs-12 fw-bold">
                     <?php echo lang('NOT ASSIGNED') ?>
                   </span>
-                <?php } elseif (filter_var($client['ip'], FILTER_VALIDATE_IP) !== false) { ?>
-                  <span class="text-danger fs-12 fw-bold">
-                    <?php echo lang('invalid ip') ?>
-                  </span>
                 <?php } else { ?>
                   <span class="device-status">
                     <span class="ping-preloader ping-preloader-table position-relative">
@@ -442,9 +435,6 @@ if (!is_null($all_data)) {
               <td>
                 <?php if (is_null($client['mac_add'])) {
                   $mac_addr = lang('NOT ASSIGNED');
-                  $mac_class = 'text-danger fs-12 fw-bold';
-                } elseif (filter_var($client['mac_add'], FILTER_VALIDATE_MAC) !== false) {
-                  $mac_addr = lang('invalid mac');
                   $mac_class = 'text-danger fs-12 fw-bold';
                 } else {
                   $mac_addr = $client['mac_add'];

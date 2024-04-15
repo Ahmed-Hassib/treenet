@@ -172,7 +172,7 @@ function do_technical_updates($info, $cost_media, $media_path)
   $coordinates = $_POST['coordinates'];
   // check if combination has a receipt 
   $comb_info = $comb_obj->select_specific_column("`cost_receipt`", "`combinations`", "WHERE `comb_id` = $comb_id");
-  $cost_receipt_name = count($comb_info) ? $comb_info['cost_receipt'] : null;
+  $cost_receipt_name = !is_null($comb_info) ? $comb_info['cost_receipt'] : null;
 
   if ($cost_media !== null) {
     // file names

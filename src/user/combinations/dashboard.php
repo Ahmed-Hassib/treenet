@@ -453,7 +453,7 @@ if (isset($_GET['year']) && !empty($_GET['year']) && filter_var(trim($_GET['year
             </header>
             <?php
             // get `combinations` of today of the cureent employee
-            $today_comb = $comb_obj->select_specific_column("*", "`combinations`", "WHERE Date(`created_at`) = '" . get_date_now() . "' AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']) . " AND `deleted_at` IS NULL " . $techCondition1 . " ORDER BY `created_at` DESC LIMIT 5");
+            $today_comb = $comb_obj->select_specific_column("*", "`combinations`", "WHERE Date(`created_at`) = '" . get_date_now() . "' AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']) . " AND `deleted_at` IS NULL " . $techCondition1 ." ORDER BY `created_at` DESC LIMIT 5", 'multiple');
             ?>
             <div class="table-responsive-sm">
               <table class="table table-bordered table-striped display compact nowrap" data-scroll-x="true" data-scroll-y="<?php echo $all_comb_today <= 5 ? 'auto' : 400 ?>" data-last-td=" null" style="width:100%">

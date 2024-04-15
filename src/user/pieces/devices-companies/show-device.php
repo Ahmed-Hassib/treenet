@@ -50,19 +50,14 @@
                 <select class="form-select" id="manufacture-company-id" name="manufacture-company-id" required>
                   <?php
                   // get all manufucture companies
-                  $man_companies = $dev_obj->select_specific_column("*", "`manufacture_companies`", "WHERE `company_id` = " . base64_decode($_SESSION['sys']['company_id']));
-                  // data counter
-                  $companies_counter = count($man_companies);
+                  $man_companies_data = $dev_obj->select_specific_column("*", "`manufacture_companies`", "WHERE `company_id` = " . base64_decode($_SESSION['sys']['company_id']), 'multiple');
                   // check the return value
-                  if ($companies_counter > 0) {
-                    // companies data
-                    $companies_data = $man_companies;
-                    // loop on companies
+                  if (!is_null($man_companies_data)) {
                   ?>
                     <option value="default" selected disabled>
                       <?php echo lang('SELECT MAN COMPANY', $lang_file) ?>
                     </option>
-                    <?php foreach ($companies_data as $key => $company) { ?>
+                    <?php foreach ($man_companies_data as $key => $company) { ?>
                       <option value="<?php echo base64_encode($company['man_company_id']) ?>" <?php echo $company['man_company_id'] == $device_data['device_company_id'] ? 'selected' : '' ?>>
                         <?php echo $company['man_company_name'] ?>
                       </option>

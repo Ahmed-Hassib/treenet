@@ -72,8 +72,8 @@ if ($is_exist_mal == true) {
                 <option value="default" disabled selected>
                   <?php echo lang('SELECT TECH NAME', $lang_file) ?>
                 </option>
-                <?php $users_rows = $mal_obj->select_specific_column("`UserID`, `username`", "`users`", "WHERE `is_tech` = 1 AND `company_id` = " . base64_decode($_SESSION['sys']['company_id'])); ?>
-                <?php if (count($users_rows) > 0) { ?>
+                <?php $users_rows = $mal_obj->select_specific_column("`UserID`, `username`", "`users`", "WHERE `is_tech` = 1 AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']), 'multiple'); ?>
+                <?php if (!is_null($users_rows)) { ?>
                   <?php foreach ($users_rows as $user_row) { ?>
                     <option value="<?php echo base64_encode($user_row['UserID']) ?>" <?php echo $user_row['UserID'] == $mal_info['tech_id'] ? 'selected' : '' ?>>
                       <?php echo $user_row['username']; ?>
@@ -84,7 +84,7 @@ if ($is_exist_mal == true) {
               <label for="technical-id">
                 <?php echo lang('TECH NAME', $lang_file) ?>
               </label>
-              <?php if (count($users_rows) <= 0) { ?>
+              <?php if (is_null($users_rows)) { ?>
                 <div class="text-danger fw-bold">
                   <i class="bi bi-exclamation-triangle-fill"></i>
                   <?php echo lang("NO DATA") ?>
@@ -175,7 +175,7 @@ if ($is_exist_mal == true) {
               </label>
               <div class="col-sm-12 col-md-7 position-relative position-relative">
                 <?php $client_phone = $mal_obj->select_specific_column("`phone`", "`pieces_phones`", "WHERE `id` = '" . $mal_info['client_id'] . "' LIMIT 1"); ?>
-                <?php if (!empty($client_phone)) { ?>
+                <?php if (!is_null($client_phone)) { ?>
                   <span class="text-primary">
                     <?php echo $client_phone['phone']; ?>
                   </span>
@@ -287,7 +287,7 @@ if ($is_exist_mal == true) {
                     display: block;
                   }
                 </style>
-                <script src="<?php echo $treenet_js ?>map.js"></script>
+                <script src="<?php echo $js ?>map.js"></script>
                 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
                 <script async src="https://maps.googleapis.com/maps/api/js?key=<?php echo $conf['map_api_key'] ?>&callback=initMap&libraries=maps,marker&v=weekly"></script>
 

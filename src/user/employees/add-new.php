@@ -1,15 +1,12 @@
 <!-- start add new user page -->
 <div class="container" dir="<?php echo $page_dir ?>">
   <!-- start add new user form -->
-  <form class="profile-form" action="?do=insert-user" method="POST" id="add-new-user" enctype="multipart/form-data"
-    onchange="form_validation(this)">
+  <form class="profile-form" action="?do=insert-user" method="POST" id="add-new-user" enctype="multipart/form-data" onchange="form_validation(this)">
     <!-- start buttons section -->
     <div class="hstack gap-2">
       <?php if ($_SESSION['sys']['user_add'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) { ?>
         <!-- submit button -->
-        <button type="button" form="add-new-user"
-          class="btn btn-primary text-capitalize py-1 fs-12 <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>"
-          onclick="form_validation(this.form, 'submit')">
+        <button type="button" form="add-new-user" class="btn btn-primary text-capitalize py-1 fs-12 <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>" onclick="form_validation(this.form, 'submit')">
           <span>
             <?php echo lang('ADD NEW', $lang_file) ?>
           </span>&nbsp;<i class="bi bi-person-plus"></i>
@@ -38,18 +35,15 @@
             <hr>
           </header>
           <!-- start full name field -->
-          <div
-            class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
-            <input type="text" class="form-control" name="fullname" id="fullname"
-              placeholder="<?php echo lang('FULLNAME', $lang_file) ?>" aria-describedby="fullNameHelp" required>
+          <div class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
+            <input type="text" class="form-control" name="fullname" id="fullname" placeholder="<?php echo lang('FULLNAME', $lang_file) ?>" aria-describedby="fullNameHelp" required>
             <label for="fullname">
               <?php echo lang('FULLNAME', $lang_file) ?>
             </label>
           </div>
           <!-- end full name field -->
           <!-- start gender field -->
-          <div
-            class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
+          <div class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
             <select class="form-select" name="gender" id="gender" required>
               <option value="default" selected disabled>
                 <?php echo lang('SELECT GENDER', $lang_file) ?>
@@ -67,30 +61,24 @@
           </div>
           <!-- end gender field -->
           <!-- start address field -->
-          <div
-            class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
-            <input type="text" class="form-control" name="address" id="address" aria-describedby="address"
-              placeholder="<?php echo lang('THE ADDRESS', $lang_file) ?>">
+          <div class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
+            <input type="text" class="form-control" name="address" id="address" aria-describedby="address" placeholder="<?php echo lang('THE ADDRESS', $lang_file) ?>">
             <label for="address">
               <?php echo lang('ADDRESS', $lang_file) ?>
             </label>
           </div>
           <!-- end address field -->
           <!-- strat phone field -->
-          <div
-            class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
-            <input type="text" maxlength="11" class="form-control" name="phone" id="phone"
-              placeholder="<?php echo lang('PHONE', $lang_file) ?>">
+          <div class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
+            <input type="text" maxlength="11" class="form-control" name="phone" id="phone" placeholder="<?php echo lang('PHONE', $lang_file) ?>">
             <label for="phone">
               <?php echo lang('PHONE', $lang_file) ?>
             </label>
           </div>
           <!-- end phone field -->
           <!-- strat date of birth field -->
-          <div
-            class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
-            <input type="date" class="form-control px-5" name="date-of-birth" id="date-of-birth"
-              placeholder="<?php echo lang('BIRTH', $lang_file) ?>" min="2005-01-01">
+          <div class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
+            <input type="date" class="form-control px-5" name="date-of-birth" id="date-of-birth" placeholder="<?php echo lang('BIRTH', $lang_file) ?>" min="2005-01-01">
             <label for="date-of-birth">
               <?php echo lang('BIRTH', $lang_file) ?>
             </label>
@@ -110,8 +98,7 @@
             <hr>
           </header>
           <!-- strat email field -->
-          <div
-            class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
+          <div class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
             <input type="email" class="form-control" name="email" id="email" placeholder="example@example.com">
             <label for="email">
               <?php echo lang('EMAIL', $lang_file) ?>
@@ -121,9 +108,7 @@
           <!-- start user name field -->
           <div class="mb-3 position-relative">
             <div class="form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
-              <input type="text" class="form-control" name="username" id="username"
-                placeholder="<?php echo lang('USERNAME') ?>" autocomplete="off" aria-describedby="usernameHelp"
-                onblur="check_username(this);" required>
+              <input type="text" class="form-control" name="username" id="username" placeholder="<?php echo lang('USERNAME') ?>" autocomplete="off" aria-describedby="usernameHelp" onblur="check_username(this);" required>
               <label for="username">
                 <?php echo lang('USERNAME') ?>
               </label>
@@ -136,10 +121,8 @@
           <!-- strat password field -->
           <div class="mb-3 position-relative">
             <div class="form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
-              <input type="password" class="form-control" name="password" id="password" placeholder=""
-                autocomplete="new-password" aria-describedby="passHelp" required>
-              <i class="bi bi-eye-slash show-pass <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'show-pass-left' : 'show-pass-right' ?>"
-                onclick="show_pass(this)" id="show-pass"></i>
+              <input type="password" class="form-control" name="password" id="password" placeholder="" autocomplete="new-password" aria-describedby="passHelp" required>
+              <i class="bi bi-eye-slash show-pass <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'show-pass-left' : 'show-pass-right' ?>" onclick="show_pass(this)" id="show-pass"></i>
               <label for="password">
                 <?php echo lang('PASSWORD') ?>
               </label>
@@ -171,7 +154,7 @@
                 </option>
                 <?php
                 $db_obj = new Database("localhost", "jsl_db", "root", "@hmedH@ssib");
-                $job_titles = $db_obj->select_specific_column('*', "`users_job_title`", "WHERE `admin_only` = '0'"); ?>
+                $job_titles = $db_obj->select_specific_column('*', "`users_job_title`", "WHERE `admin_only` = '0'", 'multiple'); ?>
                 <?php foreach ($job_titles as $job_title) { ?>
                   <option value="<?php echo $job_title['job_title_id'] ?>">
                     <?php echo lang($job_title['job_title_name'], $lang_file) ?>
@@ -183,8 +166,7 @@
               </label>
             </div>
             <?php if ($_SESSION['sys']['user_update'] == 0) { ?>
-              <div id="updatePermissionHelp" class="form-text"
-                dir="<?php echo @$_SESSION['sys']['lang'] == "ar" ? "rtl" : "ltr" ?>">
+              <div id="updatePermissionHelp" class="form-text" dir="<?php echo @$_SESSION['sys']['lang'] == "ar" ? "rtl" : "ltr" ?>">
                 <p class="text-danger">
                   <?php echo lang('PERMISSION UPDATE FAILED', $lang_file); ?>
                 </p>
@@ -207,26 +189,18 @@
           </header>
           <!-- strat twitter field -->
           <div class="input-group mb-3">
-            <span
-              class="input-group-text bg-white <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'input-group-right' : 'input-group-left' ?>"
-              id="twitter"><i class="bi bi-twitter text-primary"></i></span>
+            <span class="input-group-text bg-white <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'input-group-right' : 'input-group-left' ?>" id="twitter"><i class="bi bi-twitter text-primary"></i></span>
             <div class="form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
-              <input type="text"
-                class="form-control <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'form-control-left' : 'form-control-right' ?>"
-                name="twitter" placeholder="twitter" aria-label="twitter" aria-describedby="twitter">
+              <input type="text" class="form-control <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'form-control-left' : 'form-control-right' ?>" name="twitter" placeholder="twitter" aria-label="twitter" aria-describedby="twitter">
               <label for="twitter">twitter</label>
             </div>
           </div>
           <!-- end twitter field -->
           <!-- strat facebook field -->
           <div class="input-group mb-3">
-            <span
-              class="input-group-text bg-white <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'input-group-right' : 'input-group-left' ?>"
-              id="facebook"><i class="bi bi-facebook text-primary"></i></span>
+            <span class="input-group-text bg-white <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'input-group-right' : 'input-group-left' ?>" id="facebook"><i class="bi bi-facebook text-primary"></i></span>
             <div class="form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
-              <input type="text"
-                class="form-control <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'form-control-left' : 'form-control-right' ?>"
-                name="facebook" placeholder="facebook" aria-label="facebook" aria-describedby="facebook">
+              <input type="text" class="form-control <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'form-control-left' : 'form-control-right' ?>" name="facebook" placeholder="facebook" aria-label="facebook" aria-describedby="facebook">
               <label for="facebook">facebook</label>
             </div>
           </div>
@@ -254,9 +228,7 @@
     <div class="hstack gap-2">
       <?php if ($_SESSION['sys']['user_add'] == 1 && $_SESSION['sys']['isLicenseExpired'] == 0) { ?>
         <!-- submit button -->
-        <button type="button" form="add-new-user"
-          class="btn btn-primary text-capitalize py-1 fs-12 <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>"
-          onclick="form_validation(this.form, 'submit')">
+        <button type="button" form="add-new-user" class="btn btn-primary text-capitalize py-1 fs-12 <?php echo @$_SESSION['sys']['lang'] == 'ar' ? 'me-auto' : 'ms-auto' ?>" onclick="form_validation(this.form, 'submit')">
           <span>
             <?php echo lang('ADD NEW', $lang_file) ?>
           </span>&nbsp;<i class="bi bi-person-plus"></i>

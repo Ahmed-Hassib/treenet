@@ -451,9 +451,9 @@ if (isset($_GET['year']) && !empty($_GET['year']) && filter_var(trim($_GET['year
             </header>
             <?php
             // get malfunctions of today
-            $today_mal = array($mal_obj->select_specific_column("*", "`malfunctions`", "WHERE Date(`created_at`) = '" . get_date_now() . "' AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']) . " AND `deleted_at` IS NULL $techCondition1 ORDER BY `created_at` DESC LIMIT 5"));
+            $today_mal = array($mal_obj->select_specific_column("*", "`malfunctions`", "WHERE Date(`created_at`) = '" . get_date_now() . "' AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']) . " AND `deleted_at` IS NULL $techCondition1 ORDER BY `created_at` DESC LIMIT 5", 'multiple'));
             // check if array not empty
-            if (!empty($today_mal)) {
+            if (!is_null($today_mal)) {
               $index = 0;
             ?>
               <div class="table-responsive-sm">
@@ -610,8 +610,8 @@ if (isset($_GET['year']) && !empty($_GET['year']) && filter_var(trim($_GET['year
       </div>
     <?php } ?>
 
-    <?php $latest_mal = $mal_obj->select_specific_column("*", "`malfunctions`", "WHERE YEAR(`created_at`) = '{$target_year}' AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']) . " AND `deleted_at` IS NULL $techCondition1 ORDER BY `created_at` DESC, `created_at` DESC LIMIT 5"); ?>
-    <?php if (!empty($latest_mal)) { ?>
+    <?php $latest_mal = $mal_obj->select_specific_column("*", "`malfunctions`", "WHERE YEAR(`created_at`) = '{$target_year}' AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']) . " AND `deleted_at` IS NULL $techCondition1 ORDER BY `created_at` DESC, `created_at` DESC LIMIT 5", 'multiple'); ?>
+    <?php if (!is_null($latest_mal)) { ?>
       <div class="mb-3 row">
         <div class="col-12">
           <div class="section-block">

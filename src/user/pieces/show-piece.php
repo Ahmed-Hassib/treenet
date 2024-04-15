@@ -32,8 +32,8 @@ if ($dir_id != -1 && $src_id != -1) {
               <?php echo lang('EDIT') ?>
             </a>
           <?php } ?>
-          <?php $src_ip = $db_obj->select_specific_column("`ip`", "`pieces_info`", "WHERE `id` = $src_id")['ip'] ?>
-          <?php $src_port = $db_obj->select_specific_column("`port`", "`pieces_info`", "WHERE `id` = $src_id")['port'] ?>
+          <?php $src_ip = $db_obj->select_specific_column("`ip`", "`pieces_info`", "WHERE `id` = {$src_id}")['ip'] ?>
+          <?php $src_port = $db_obj->select_specific_column("`port`", "`pieces_info`", "WHERE `id` = {$src_id}")['port'] ?>
           <?php if ($_SESSION['sys']['mikrotik']['status'] && isset($src_ip) && $src_ip !== '0.0.0.0') { ?>
             <!-- visit current device -->
             <a class="mx-1 btn btn-outline-primary fs-12 px-3 py-1" href="?do=mikrotik&ip=<?php echo $src_ip ?>&port=<?php echo $src_port == '80' ? '80' : '443' ?>" target='_blank'>
@@ -162,7 +162,7 @@ if ($dir_id != -1 && $src_id != -1) {
                   // get piece phone
                   $phones = $pcs_obj->select_specific_column("`phone`", "`pieces_phones`", "WHERE `id` = " . $piece['id']);
                   // check result
-                  if (count($phones) > 0) {
+                  if (!is_null($phones) && !empty($phones)) {
                     $phone = $phones['phone'];
                     $phone_ex = explode(",", $phone);
                     if (count($phone_ex) > 1) {
@@ -259,7 +259,7 @@ if ($dir_id != -1 && $src_id != -1) {
                   // get source info
                   $source_info = is_null($source_id) ? null : $pcs_obj->select_specific_column("`full_name`, `ip`, `port`", "`pieces_info`", "WHERE `id` = {$source_id}");
                   // check info
-                  if (!empty($source_info) && !is_null($source_info)) {
+                  if (!is_null($source_info)) {
                     $source_name = trim($source_info['full_name'], ' ');
                     $source_ip = trim($source_info['ip'], ' ');
                     $source_port = trim($source_info['port'], ' ');
@@ -311,7 +311,7 @@ if ($dir_id != -1 && $src_id != -1) {
                   $alt_source_ip = null;
                   $alt_source_port = null;
                   // check info
-                  if (!empty($alt_source_info) || !is_null($alt_source_info)) {
+                  if (!is_null($alt_source_info)) {
                     $alt_source_name = trim($alt_source_info['full_name'], ' ');
                     $source_ip = trim($alt_source_info['ip'], ' ');
                     $alt_source_port = trim($alt_source_info['port'], ' ');

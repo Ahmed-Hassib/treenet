@@ -302,124 +302,124 @@ function generate_random_string($length = 5)
 //   );
 // }
 
-/**
- * function prepare_pcs_datatables v1
- * is used to prepared data and remove all key numbers
- * accepts 1 param => all_data
- */
-function prepare_pcs_datatables($all_data, $lang_file)
-{
-  // create parent array
-  $res_arr = array();
-  // loop on data
-  foreach ($all_data as $key_ => $data) {
-    // loop on child data
-    foreach ($data as $key => $value) {
-      // chekc if key is string
-      if (is_string($key)) {
-        // check key
-        if ($key == 'direction_id') {
-          $res_arr[$key_]['direction_name'] = get_dir_name($value);
-        } elseif ($key == 'source_id') {
-          $res_arr[$key_]['source_name'] = $value == 0 ? get_src_name($data['id']) : get_src_name($value);
-        } elseif ($key == 'alt_source_id' && $value != -1) {
-          $res_arr[$key_]['alt_source_name'] = $value == 0 ? get_src_name($data['id']) : get_src_name($value);
-        } elseif ($key == 'is_client' && $value == 0) {
-          if ($data['device_type'] == 1) {
-            $type = lang('TRANSMITTER', $lang_file);
-          } elseif ($data['device_type'] == 2) {
-            $type = lang('RECEIVER', $lang_file);
-          } else {
-            $type = lang('NOT ASSIGNED');
-          }
-          $res_arr[$key_]['type'] = $type;
-        } elseif ($key == 'device_id' && $value > 0) {
-          $res_arr[$key_]['device_name'] = get_device_name($value);
-        } elseif ($key == 'device_model' && $value > 0) {
-          $res_arr[$key_]['model_name'] = get_model_name($data['device_id']);
-        } elseif ($key == 'visit_time' && $value > 0) {
-          $res_arr[$key_]['visit_time_name'] = get_visit_time_name($value);
-        } elseif ($key == 'connection_type' && $value > 0) {
-          $res_arr[$key_]['conn_name'] = get_conn_name($value);
-        }
-        // push data into parent array
-        $res_arr[$key_][$key] = $value;
-      }
-    }
-  }
-  // print data
-  return $res_arr;
-}
+// /**
+//  * function prepare_pcs_datatables v1
+//  * is used to prepared data and remove all key numbers
+//  * accepts 1 param => all_data
+//  */
+// function prepare_pcs_datatables($all_data, $lang_file)
+// {
+//   // create parent array
+//   $res_arr = array();
+//   // loop on data
+//   foreach ($all_data as $key_ => $data) {
+//     // loop on child data
+//     foreach ($data as $key => $value) {
+//       // chekc if key is string
+//       if (is_string($key)) {
+//         // check key
+//         if ($key == 'direction_id') {
+//           $res_arr[$key_]['direction_name'] = get_dir_name($value);
+//         } elseif ($key == 'source_id') {
+//           $res_arr[$key_]['source_name'] = $value == 0 ? get_src_name($data['id']) : get_src_name($value);
+//         } elseif ($key == 'alt_source_id' && $value != -1) {
+//           $res_arr[$key_]['alt_source_name'] = $value == 0 ? get_src_name($data['id']) : get_src_name($value);
+//         } elseif ($key == 'is_client' && $value == 0) {
+//           if ($data['device_type'] == 1) {
+//             $type = lang('TRANSMITTER', $lang_file);
+//           } elseif ($data['device_type'] == 2) {
+//             $type = lang('RECEIVER', $lang_file);
+//           } else {
+//             $type = lang('NOT ASSIGNED');
+//           }
+//           $res_arr[$key_]['type'] = $type;
+//         } elseif ($key == 'device_id' && $value > 0) {
+//           $res_arr[$key_]['device_name'] = get_device_name($value);
+//         } elseif ($key == 'device_model' && $value > 0) {
+//           $res_arr[$key_]['model_name'] = get_model_name($data['device_id']);
+//         } elseif ($key == 'visit_time' && $value > 0) {
+//           $res_arr[$key_]['visit_time_name'] = get_visit_time_name($value);
+//         } elseif ($key == 'connection_type' && $value > 0) {
+//           $res_arr[$key_]['conn_name'] = get_conn_name($value);
+//         }
+//         // push data into parent array
+//         $res_arr[$key_][$key] = $value;
+//       }
+//     }
+//   }
+//   // print data
+//   return $res_arr;
+// }
 
-/**
- * function get_dir_name v1
- * is used to get direction name
- * accepts 1 param => dir_id
- */
-function get_dir_name($dir_id)
-{
-  global $db_obj;
-  // get result
-  $res = $db_obj->select_specific_column("`direction_name`", "`direction`", "WHERE `direction_id` = {$dir_id}");
-  // get direction name
-  return count($res) > 0 ? $res['direction_name'] : null;
-}
+// /**
+//  * function get_dir_name v1
+//  * is used to get direction name
+//  * accepts 1 param => dir_id
+//  */
+// function get_dir_name($dir_id)
+// {
+//   global $db_obj;
+//   // get result
+//   $res = $db_obj->select_specific_column("`direction_name`", "`direction`", "WHERE `direction_id` = {$dir_id}");
+//   // get direction name
+//   return count($res) > 0 ? $res['direction_name'] : null;
+// }
 
-/**
- * function get_src_name v1
- * is used to get source name
- * accepts 1 param => src_id
- */
-function get_src_name($src_id)
-{
-  global $db_obj;
-  // get result
-  $res = $db_obj->select_specific_column("`full_name`", "`pieces_info`", "WHERE `id` = $src_id");
-  // get source name
-  return count($res) > 0 ? $res['full_name'] : null;
-}
+// /**
+//  * function get_src_name v1
+//  * is used to get source name
+//  * accepts 1 param => src_id
+//  */
+// function get_src_name($src_id)
+// {
+//   global $db_obj;
+//   // get result
+//   $res = $db_obj->select_specific_column("`full_name`", "`pieces_info`", "WHERE `id` = $src_id");
+//   // get source name
+//   return count($res) > 0 ? $res['full_name'] : null;
+// }
 
-/**
- * function get_device_name v1
- * is used to get source name
- * accepts 1 param => dev_id
- */
-function get_device_name($dev_id)
-{
-  global $db_obj;
-  // get result
-  $res = $db_obj->select_specific_column("`device_name`", "`devices_info`", "WHERE `device_id` = $dev_id");
-  // get source name
-  return count($res) > 0 ? $res['device_name'] : null;
-}
+// /**
+//  * function get_device_name v1
+//  * is used to get source name
+//  * accepts 1 param => dev_id
+//  */
+// function get_device_name($dev_id)
+// {
+//   global $db_obj;
+//   // get result
+//   $res = $db_obj->select_specific_column("`device_name`", "`devices_info`", "WHERE `device_id` = $dev_id");
+//   // get source name
+//   return count($res) > 0 ? $res['device_name'] : null;
+// }
 
-/**
- * function get_model_name v1
- * is used to get source name
- * accepts 1 param => dev_id
- */
-function get_model_name($dev_id)
-{
-  global $db_obj;
-  // get result
-  $res = $db_obj->select_specific_column("`model_name`", "`devices_model`", "WHERE `device_id` = $dev_id");
-  // get source name
-  return count($res) > 0 ? $res['model_name'] : null;
-}
+// /**
+//  * function get_model_name v1
+//  * is used to get source name
+//  * accepts 1 param => dev_id
+//  */
+// function get_model_name($dev_id)
+// {
+//   global $db_obj;
+//   // get result
+//   $res = $db_obj->select_specific_column("`model_name`", "`devices_model`", "WHERE `device_id` = $dev_id");
+//   // get source name
+//   return count($res) > 0 ? $res['model_name'] : null;
+// }
 
-/**
- * function get_conn_name v1
- * is used to get source name
- * accepts 1 param => conn_id
- */
-function get_conn_name($conn_id)
-{
-  global $db_obj;
-  // get result
-  $res = $db_obj->select_specific_column("`connection_name`", "`connection_types`", "WHERE `id` = $conn_id");
-  // get source name
-  return count($res) > 0 ? $res['connection_name'] : null;
-}
+// /**
+//  * function get_conn_name v1
+//  * is used to get source name
+//  * accepts 1 param => conn_id
+//  */
+// function get_conn_name($conn_id)
+// {
+//   global $db_obj;
+//   // get result
+//   $res = $db_obj->select_specific_column("`connection_name`", "`connection_types`", "WHERE `id` = $conn_id");
+//   // get source name
+//   return count($res) > 0 ? $res['connection_name'] : null;
+// }
 
 /**
  * function get_visit_time_name v1

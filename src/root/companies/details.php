@@ -309,7 +309,7 @@ if ($company_id != null) {
                       <?php
                       if ($emp['job_title_id'] != null) {
                         $job_name = $emp_obj->select_specific_column("`job_title_name`", "`users_job_title`", "WHERE `job_title_id` = " . $emp['job_title_id']);
-                        if (!empty($job_name)) {
+                        if (!is_null($job_name)) {
                           $job_name = $job_name['job_title_name'];
                           $job_lang_file = 'employees';
                         } else {

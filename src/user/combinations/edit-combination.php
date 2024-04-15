@@ -71,14 +71,14 @@ if ($is_exist == true) {
                     <?php echo lang('SELECT TECH NAME', $lang_file) ?>
                   </option>
                   <?php $emp_info = $comb_obj->select_specific_column("`UserID`, `username`", "users", "WHERE `is_tech` = 1 AND `job_title_id` = 2 AND `company_id` = " . base64_decode($_SESSION['sys']['company_id'])); ?>
-                  <?php if (count($emp_info) > 0) { ?>
+                  <?php if (!is_null($emp_info) > 0) { ?>
                     <?php foreach ($emp_info as $uer_row) { ?>
                       <option value="<?php echo base64_encode($uer_row['UserID']) ?>" <?php echo $comb_info['UserID'] == $uer_row['UserID'] ? 'selected' : '' ?>>
                         <?php echo $uer_row['username']; ?>
                       </option>
                     <?php } ?>
                   <?php } ?>
-                  <?php if (count($emp_info) <= 0) { ?>
+                  <?php if (is_null($emp_info) <= 0) { ?>
                     <div class="text-danger fw-bold">
                       <i class="bi bi-exclamation-triangle-fill"></i>
                       <?php echo lang("NO DATA") ?>
@@ -241,7 +241,7 @@ if ($is_exist == true) {
                     display: block;
                   }
                 </style>
-                <script src="<?php echo $treenet_js; ?>map.js" defer></script>
+                <script src="<?php echo $js; ?>map.js" defer></script>
                 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
                 <script async src="https://maps.googleapis.com/maps/api/js?key=<?php echo $conf['map_api_key'] ?>&callback=initMap&libraries=maps,marker&v=weekly"></script>
 

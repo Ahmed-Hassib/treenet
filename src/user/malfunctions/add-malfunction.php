@@ -52,9 +52,9 @@ if (empty($err_arr)) {
                   <option value="default" disabled selected><?php echo lang('SELECT TECH NAME', $lang_file) ?></option>
                   <?php
                   // get Employees ID and Names
-                  $usersRows = $db_obj->select_specific_column("`UserID`, `username`, `fullname`", "`users`", "WHERE `is_tech` = 1 AND `job_title_id` = 2 AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']));
+                  $usersRows = $db_obj->select_specific_column("`UserID`, `username`, `fullname`", "`users`", "WHERE `is_tech` = 1 AND `job_title_id` = 2 AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']), 'multiple');
                   // check the length of result
-                  if (count($usersRows) > 0) {
+                  if (!is_null($usersRows)) {
                     // loop on result ..
                     foreach ($usersRows as $userRow) { ?>
                       <!-- get all information of pieces -->
@@ -66,7 +66,7 @@ if (empty($err_arr)) {
                 </select>
                 <label for="technical-id"><?php echo lang('TECH NAME', $lang_file) ?></label>
               </div>
-              <?php if (count($usersRows) <= 0) { ?>
+              <?php if (is_null($usersRows)) { ?>
                 <div class="text-danger fw-bold">
                   <i class="bi bi-exclamation-triangle-fill"></i>
                   <?php echo lang("NO DATA") ?>

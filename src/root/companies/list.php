@@ -76,7 +76,7 @@
           // get company dates
           $dates = $company_obj->select_specific_column("`start_date`, `expire_date`", "`license`", "WHERE `isEnded` = 0 AND `company_id` = " . $company_id);
           // check the value
-          if (count($dates) > 0) {
+          if (!is_null($dates) && count($dates) > 0) {
             $start_date = date_create($dates['start_date']);
             $expire_date = date_create($dates['expire_date']);
             $expire = $dates['expire_date'];
@@ -85,7 +85,7 @@
             $is_ended = true;
             // get company dates
             $expire = $company_obj->select_specific_column("`expire_date`", "`license`", "WHERE `isEnded` = 1 AND `company_id` = " . $company_id . " ORDER BY `expire_date` DESC LIMIT 1");
-            $expire = !empty($expire) ? $expire['expire_date'] : '';
+            $expire = !is_null($expire) ? $expire['expire_date'] : '';
           }
           ?>
           <tr>

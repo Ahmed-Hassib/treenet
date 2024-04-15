@@ -170,7 +170,7 @@ if (!is_null($all_data)) {
                 // get piece phone
                 $phones = $pcs_obj->select_specific_column("`phone`", "`pieces_phones`", "WHERE `id` = " . $piece['id']);
                 // check result
-                if (count($phones) > 0) {
+                if (!is_null($phones) && !empty($phones)) {
                   $phone = $phones['phone'];
                   $phone_ex = explode(",", $phone);
                   if (count($phone_ex) > 1) {
@@ -267,7 +267,7 @@ if (!is_null($all_data)) {
                 // get source info
                 $source_info = is_null($source_id) ? null : $pcs_obj->select_specific_column("`full_name`, `ip`, `port`", "`pieces_info`", "WHERE `id` = {$source_id}");
                 // check info
-                if (!empty($source_info) && !is_null($source_info)) {
+                if (!is_null($source_info)) {
                   $source_name = trim($source_info['full_name'], ' ');
                   $source_ip = trim($source_info['ip'], ' ');
                   $source_port = trim($source_info['port'], ' ');
@@ -319,7 +319,7 @@ if (!is_null($all_data)) {
                 $alt_source_ip = null;
                 $alt_source_port = null;
                 // check info
-                if (!empty($alt_source_info) || !is_null($alt_source_info)) {
+                if (!is_null($alt_source_info)) {
                   $alt_source_name = trim($alt_source_info['full_name'], ' ');
                   $source_ip = trim($alt_source_info['ip'], ' ');
                   $alt_source_port = trim($alt_source_info['port'], ' ');
@@ -406,10 +406,6 @@ if (!is_null($all_data)) {
                   <span class="text-danger fs-12 fw-bold">
                     <?php echo lang('NOT ASSIGNED') ?>
                   </span>
-                <?php } elseif (filter_var($piece['ip'], FILTER_VALIDATE_IP) !== false) { ?>
-                  <span class="text-danger fs-12 fw-bold">
-                    <?php echo lang('invalid ip') ?>
-                  </span>
                 <?php } else { ?>
                   <span class="device-status">
                     <span class="ping-preloader ping-preloader-table position-relative">
@@ -450,9 +446,6 @@ if (!is_null($all_data)) {
               <td>
                 <?php if (is_null($piece['mac_add'])) {
                   $mac_addr = lang('NOT ASSIGNED');
-                  $mac_class = 'text-danger fs-12 fw-bold';
-                } elseif (filter_var($piece['mac_add'], FILTER_VALIDATE_MAC) !== false) {
-                  $mac_addr = lang('invalid mac');
                   $mac_class = 'text-danger fs-12 fw-bold';
                 } else {
                   $mac_addr = $piece['mac_add'];

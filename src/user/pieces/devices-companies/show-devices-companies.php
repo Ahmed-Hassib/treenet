@@ -14,9 +14,9 @@
   // get devices company id
   $dev_company_id = isset($_GET['dev-company-id']) && !empty($_GET['dev-company-id']) ? base64_decode($_GET['dev-company-id']) : 0;
   // create an object of Devices class
-  $dev_obj = !isset($dev_obj) ? new Devices() : $dev_obj;
+  $dev_obj = new Devices();
   // get company name
-  @$dev_company_name = $dev_obj->select_specific_column("`man_company_name`", "`manufacture_companies`", "WHERE `man_company_id` = " . $dev_company_id)['man_company_name'];
+  $dev_company_name = $dev_obj->select_specific_column("`man_company_name`", "`manufacture_companies`", "WHERE `man_company_id` = " . $dev_company_id)['man_company_name'];
   // check if company is exit
   $is_exist = $dev_obj->is_exist("`man_company_id`", "`manufacture_companies`", $dev_company_id);
   // check the value
@@ -28,7 +28,7 @@
     // devices data
     $devices_data = $devices;
     // check the counter
-    if ($devices_counter > 0) { ?>
+    if (!is_null($devices) && $devices_counter > 0) { ?>
       <!-- start table container -->
       <div class="section-block">
         <div class="section-header">

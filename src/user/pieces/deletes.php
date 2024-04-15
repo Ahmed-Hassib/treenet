@@ -168,7 +168,7 @@ $pcs_obj = new Pieces();
                     <td class="text-capitalize">
                       <?php
                         $dir_info = $db_obj->select_specific_column("`direction_name`", "`direction`", "WHERE `direction_id` = " . $piece['direction_id']);
-                      if (!empty($dir_info)) {
+                      if (!is_null($dir_info)) {
                         $dir_name = $dir_info['direction_name'];
                       } else {
                         $dir_name = null;

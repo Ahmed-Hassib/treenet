@@ -214,14 +214,10 @@ if ($piece_id != 0 && $is_exist_id) {
                         </option>
                         <?php
                         // get all directions
-                        $dirs = $pcs_obj->select_specific_column("*", "`direction`", "WHERE `company_id` = " . base64_decode($_SESSION['sys']['company_id']) . " ORDER BY `direction_name` ASC");
-                        // counter
-                        $dirs_count = count($dirs);
-                        // directions data
-                        $dir_data = $dirs;
+                        $dirs_data = $pcs_obj->select_specific_column("*", "`direction`", "WHERE `company_id` = " . base64_decode($_SESSION['sys']['company_id']) . " ORDER BY `direction_name` ASC", 'multiple');
                         // check the row dirs_count
-                        if ($dirs_count > 0) { ?>
-                          <?php foreach ($dir_data as $dir) { ?>
+                        if (!is_null($dirs_data)) { ?>
+                          <?php foreach ($dirs_data as $dir) { ?>
                             <option value="<?php echo base64_encode($dir['direction_id']) ?>" data-dir-company="<?php echo base64_decode($_SESSION['sys']['company_id']) ?>" <?php echo $piece_data['direction_id'] == $dir['direction_id'] ? 'selected' : '' ?>>
                               <?php echo $dir['direction_name'] ?>
                             </option>
@@ -243,7 +239,7 @@ if ($piece_id != 0 && $is_exist_id) {
                         </option>
                         <?php
                         $condition = is_null($piece_data['direction_id']) ? "WHERE `pieces_info`.`is_client` = 0 AND `pieces_info`.`company_id` = " . base64_decode($_SESSION['sys']['company_id']) : "LEFT JOIN `direction` ON `direction`.`direction_id` = `pieces_info`.`direction_id` WHERE `pieces_info`.`direction_id` = " . $piece_data['direction_id'] . " AND `pieces_info`.`is_client` = 0 AND `pieces_info`.`company_id` = " . base64_decode($_SESSION['sys']['company_id']);
-                        $sources_data = is_null($piece_data['direction_id']) ? null : $pcs_obj->select_specific_column("`pieces_info`.`id`, `pieces_info`.`full_name`, `pieces_info`.`ip`", "`pieces_info`", $condition);
+                        $sources_data = is_null($piece_data['direction_id']) ? null : $pcs_obj->select_specific_column("`pieces_info`.`id`, `pieces_info`.`full_name`, `pieces_info`.`ip`", "`pieces_info`", $condition, 'multiple');
                         // check the row sources_count
                         if (!is_null($sources_data)) { ?>
                           <?php foreach ($sources_data as $source) { ?>
@@ -355,12 +351,12 @@ if ($piece_id != 0 && $is_exist_id) {
                   <!-- connection type -->
                   <div class="col-12">
                     <div class="mb-3 form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
-                      <?php $conn_type_data = $db_obj->select_specific_column("*", "`connection_types`", "WHERE `company_id` = " . base64_decode($_SESSION['sys']['company_id'])); ?>
+                      <?php $conn_type_data = $db_obj->select_specific_column("*", "`connection_types`", "WHERE `company_id` = " . base64_decode($_SESSION['sys']['company_id']), 'multiple'); ?>
                       <select class="form-select text-uppercase" name="conn-type" id="conn-type">
                         <option value="default" selected disabled>
                           <?php echo lang('SELECT CONN TYPE', $lang_file) ?>
                         </option>
-                        <?php if (count($conn_type_data) > 0) { ?>
+                        <?php if (!is_null($conn_type_data)) { ?>
                           <?php foreach ($conn_type_data as $conn_type_row) { ?>
                             <option value="<?php echo base64_encode($conn_type_row['id']) ?>" <?php echo $piece_data['connection_type'] == $conn_type_row['id'] ? 'selected' : '' ?>>
                               <?php echo $conn_type_row['connection_name'] ?>
@@ -371,7 +367,7 @@ if ($piece_id != 0 && $is_exist_id) {
                       <label for="conn-type">
                         <?php echo lang('CONN TYPE', $lang_file) ?>
                       </label>
-                      <?php if (count($conn_type_data) == 0) { ?>
+                      <?php if (is_null($conn_type_data)) { ?>
                         <div id="emailHelp" class="form-text text-danger">
                           <?php echo lang('NO DATA') ?>
                         </div>
@@ -406,7 +402,7 @@ if ($piece_id != 0 && $is_exist_id) {
                       display: block;
                     }
                   </style>
-                  <script src="<?php echo $treenet_js ?>map.js"></script>
+                  <script src="<?php echo $js ?>map.js"></script>
                   <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
                   <script async src="https://maps.googleapis.com/maps/api/js?key=<?php echo $conf['map_api_key'] ?>&callback=initMap&libraries=maps,marker&v=weekly"></script>
 

@@ -249,7 +249,7 @@ if ($user_id == base64_decode($_SESSION['sys']['UserID']) || $_SESSION['sys']['u
                 <div class="mb-3 position-relative">
                   <div class="form-floating form-floating-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'right' : 'left' ?>">
                     <select class="form-select" name="job_title_id" id="job_title_id" <?php echo $_SESSION['sys']['user_update'] == 0 ? 'disabled' : '' ?> required>
-                      <?php $job_titles = $db_obj->select_specific_column('*', "`users_job_title`", "WHERE `admin_only` = '0'"); ?>
+                      <?php $job_titles = $db_obj->select_specific_column('*', "`users_job_title`", "WHERE `admin_only` = '0'", 'multiple'); ?>
                       <option value="default" <?php echo $user_info['job_title_id'] == 0 ? 'selected' : '' ?> disabled>
                         <?php echo lang('JOB TITLE', $lang_file) ?>
                       </option>
