@@ -53,8 +53,7 @@ foreach ($rows as $row) {
         <i class="carousel-control-prev-icon"></i>
       </button>
       <!-- scroll right button -->
-      <button type="button" role="button"
-        class="scroll-button scroll-next <?php echo $_SESSION['sys']['lang'] == 'ar' ? 'scroll-next-left' : 'scroll-next-right' ?>">
+      <button type="button" role="button" class="scroll-button scroll-next <?php echo $_SESSION['sys']['lang'] == 'ar' ? 'scroll-next-left' : 'scroll-next-right' ?>">
         <i class="carousel-control-next-icon"></i>
       </button>
     </div>
@@ -62,19 +61,39 @@ foreach ($rows as $row) {
     <!-- zoom buttons -->
     <div class="fixed-zoom-btn">
       <div class="btn-group" role="group" aria-label="zoom-btns">
-        <button type="button" class="btn btn-outline-primary py-1 fs-12" id="zoom_in_btn"
-          onclick="zoom_in(this, zoom_out_btn, direction_tree); add_transform_origin(direction_tree)"
-          data-zoom-value="1"><i class="bi bi-zoom-in"></i></button>
-        <button type="button" class="btn btn-outline-primary py-1 fs-12" id="reset_zoom"
-          onclick="reset_zoom(zoom_in_btn, zoom_out_btn, direction_tree); remove_transform_origin(direction_tree)"><i
-            class="bi bi-x-lg"></i></button>
-        <button type="button" class="btn btn-outline-primary py-1 fs-12" id="zoom_out_btn"
-          onclick="zoom_out(this, zoom_in_btn, direction_tree); add_transform_origin(direction_tree)"
-          data-zoom-value="1"><i class="bi bi-zoom-out"></i></button>
+        <button type="button" class="btn btn-outline-primary py-1 fs-12" id="zoom_in_btn" onclick="zoom_in(this, zoom_out_btn, direction_tree); add_transform_origin(direction_tree)" data-zoom-value="1"><i class="bi bi-zoom-in"></i></button>
+        <button type="button" class="btn btn-outline-primary py-1 fs-12" id="reset_zoom" onclick="reset_zoom(zoom_in_btn, zoom_out_btn, direction_tree); remove_transform_origin(direction_tree)"><i class="bi bi-x-lg"></i></button>
+        <button type="button" class="btn btn-outline-primary py-1 fs-12" id="zoom_out_btn" onclick="zoom_out(this, zoom_in_btn, direction_tree); add_transform_origin(direction_tree)" data-zoom-value="1"><i class="bi bi-zoom-out"></i></button>
       </div>
     </div>
   </div>
   <!-- end showing directions tree -->
+
+  <!-- modal to show options -->
+  <div class="modal fade" id="directionOptions" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="directionOptionsLabel" aria-hidden="true" dir="<?php echo $page_dir ?>">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="directionOptionsLabel"></h1>
+          <button type="button" class="btn-close btn-close-<?php echo $_SESSION['sys']['lang'] == 'ar' ? 'left' : 'right' ?>" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row g-3 row-cols-sm-1 row-cols-md-2">
+            <div class="col">
+              <a class="btn btn-outline-primary w-100" id="show-details-btn" target="_blank"><?php echo lang('connected piece', 'pieces') ?></a>
+            </div>
+            <div class="col">
+              <a class="btn btn-outline-primary w-100" id="visit-device-btn" target="_blank"><?php echo lang('visit device', 'pieces') ?></a>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary py-1 px-5 fs-12" data-bs-dismiss="modal"><?php echo lang('close') ?></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 <?php } else {
   include_once $globmod . 'no-data-founded-no-redirect.php';
 } ?>

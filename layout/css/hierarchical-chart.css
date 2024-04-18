@@ -103,7 +103,7 @@
 	height: 20px;
 }
 
-.genealogy-tree li a {
+.genealogy-tree li :is(a, button) {
 	padding: .5rem 1rem;
 	border: 2px solid #666;
 	text-decoration: none;
@@ -116,17 +116,17 @@
 	-moz-border-radius: 5px;
 }
 
-.genealogy-tree li a:hover,
-.genealogy-tree li a:hover+ul li a,
-.genealogy-tree li a:hover+ul li::after,
-.genealogy-tree li a:hover+ul li::before,
-.genealogy-tree li a:hover+ul::before,
-.genealogy-tree li a:hover+ul ul::before {
+.genealogy-tree li :is(a:hover, button:hover),
+.genealogy-tree li :is(a:hover, button:hover)+ul li :is(a, button),
+.genealogy-tree li :is(a:hover, button:hover)+ul li::after,
+.genealogy-tree li :is(a:hover, button:hover)+ul li::before,
+.genealogy-tree li :is(a:hover, button:hover)+ul::before,
+.genealogy-tree li :is(a:hover, button:hover)+ul ul::before {
 	border-color: #5fcca4;
 }
 
-.genealogy-tree li a:hover,
-.genealogy-tree li a:hover+ul li a {
+.genealogy-tree li :is(a:hover, button:hover),
+.genealogy-tree li :is(a:hover, button:hover)+ul li :is(a, button) {
 	color: #f1f1f1;
 	background-color: #5fcca4;
 }

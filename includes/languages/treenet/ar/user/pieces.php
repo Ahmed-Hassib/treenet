@@ -76,7 +76,7 @@ function pieces($phrase)
     'VISIT DEVICE' => 'زيارة الجهاز',
     'SENDER POINT' => 'نقطة إرسال',
     'RECEIVER POINT' => 'نقطة إستقبال',
-    'CONNECTED PIECE' => 'المتصلين بجهاز',
+    'CONNECTED PIECE' => 'المتصلين بالجهاز',
     'DIR PIECES' => 'أجهزة إتجاه',
     'MIKROTIK SERVICE' => 'خدمة ميكروتيك',
     'COMPANY`S DEVICES' => 'أجهزة شركة',

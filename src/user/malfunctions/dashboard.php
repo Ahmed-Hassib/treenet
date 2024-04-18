@@ -451,7 +451,7 @@ if (isset($_GET['year']) && !empty($_GET['year']) && filter_var(trim($_GET['year
             </header>
             <?php
             // get malfunctions of today
-            $today_mal = array($mal_obj->select_specific_column("*", "`malfunctions`", "WHERE Date(`created_at`) = '" . get_date_now() . "' AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']) . " AND `deleted_at` IS NULL $techCondition1 ORDER BY `created_at` DESC LIMIT 5", 'multiple'));
+            $today_mal = $mal_obj->select_specific_column("*", "`malfunctions`", "WHERE Date(`created_at`) = '" . get_date_now() . "' AND `company_id` = " . base64_decode($_SESSION['sys']['company_id']) . " AND `deleted_at` IS NULL $techCondition1 ORDER BY `created_at` DESC LIMIT 5", 'multiple');
             // check if array not empty
             if (!is_null($today_mal)) {
               $index = 0;
@@ -497,6 +497,7 @@ if (isset($_GET['year']) && !empty($_GET['year']) && filter_var(trim($_GET['year
                         $client_type = $client_info['is_client'];
                         $client_addr = $client_info['address'];
                       }
+
                       // client phone
                       $client_phone = $mal_obj->select_specific_column("`phone`", "`pieces_phones`", "WHERE `id` = " . $mal['client_id']);
 

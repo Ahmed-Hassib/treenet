@@ -83,19 +83,21 @@ function build_direction_tree($arr, $parent, $level = 0, $prelevel = -1, $nav_up
 
       // show data
       echo "<li>";
-      echo "<a href='$node_url'>";
+      // echo "<a href='$node_url'>";
+      echo "<button type='button' class='btn' data-bs-toggle='modal' data-bs-target='#directionOptions' data-href='$node_url' data-modal-id='directionOptions' onclick=\"show_modal_options(this)\">";
       if ($data['ip'] != '0.0.0.0') {
         echo "<span class='device-status'>";
         echo "<span class='ping-preloader ping-preloader-table position-relative'>";
         echo "<span class='ping-spinner ping-spinner-table spinner-grow spinner-border'></span>";
         echo "</span>";
         echo "<span class='ping-status'></span>";
-        echo "<span class='pcs-ip' data-pcs-ip=" . $data['ip'] . " id=" . $data['ip'] . ">" . $data['full_name'] . "<br>" . $data['ip'] . "</span>";
+        echo "<span class='pcs-info' data-pcs-ip='" . $data['ip'] . "' data-pcs-name='" . $data['full_name'] . "'>" . $data['full_name'] . "<br>" . $data['ip'] . "</span>";
         echo '</span>';
       } else {
-        echo "<span id=" . $data['ip'] . ">" . $data['full_name'] . "<br>" . $data['ip'] . "</span>";
+        echo "<span class='pcs-info' data-pcs-name='" . $data['full_name'] . "'>" . $data['full_name'] . "<br>" . $data['ip'] . "</span>";
       }
-      echo "</a>";
+      // echo "</a>";
+      echo "</button>";
 
       if ($level > $prelevel) {
         $prelevel = $level;

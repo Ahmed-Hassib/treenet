@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['flash_message_icon'] = 'bi-exclamation-triangle-fill';
         $_SESSION['flash_message_class'] = 'danger';
         $_SESSION['flash_message_status'] = false;
-    $_SESSION['flash_message_lang_file'] = $lang_file;
+        $_SESSION['flash_message_lang_file'] = $lang_file;
       } else {
         // call delete direction function
         $dir_obj->delete_direction($direction_id);
@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['flash_message_icon'] = 'bi-check-circle-fill';
         $_SESSION['flash_message_class'] = 'success';
         $_SESSION['flash_message_status'] = true;
-    $_SESSION['flash_message_lang_file'] = $lang_file;
+        $_SESSION['flash_message_lang_file'] = $lang_file;
       }
     } else {
       // prepare flash session variables

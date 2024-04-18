@@ -21,7 +21,7 @@ class Direction extends Database
   public function get_all_directions($company)
   {
     // prepare query
-    $dirQuery = "SELECT *From `direction` WHERE `company_id` = ? ORDER BY `direction_name` ASC";
+    $dirQuery = "SELECT *From `direction` WHERE `company_id` = ? AND `deleted_at` IS NULL ORDER BY `direction_name` ASC";
     $stmt = $this->con->prepare($dirQuery); // select all users
     $stmt->execute(array($company)); // execute data
     $dirs_info = $stmt->fetchAll(); // assign all data to variable

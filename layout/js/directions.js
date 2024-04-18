@@ -58,6 +58,23 @@
     dir_tree_body.scrollLeft = dir_tree_body.offsetWidth / 2 * 3;
     // tree initialization
     tree_int(dir_tree, zoom_in_btn, zoom_out_btn);
+
+    const directionOptionsEl = document.getElementById('directionOptions')
+    directionOptionsEl.addEventListener('hidden.bs.modal', event => {
+      event.preventDefault();
+      // get modal label
+      let modal_label = document.querySelector(`#directionOptionsLabel`);
+      // get modal label
+      let visit_device_btn = directionOptionsEl.querySelector(`#visit-device-btn`);
+      // get modal label
+      let details_btn = directionOptionsEl.querySelector(`#show-details-btn`);
+
+      // clear modal label
+      modal_label.textContent = '';
+      // clear href from visit device button and details button
+      visit_device_btn.href = '';
+      details_btn.href = '';
+    })
   }
 
 })()
@@ -186,4 +203,39 @@ function store_scale_value(scale_value) {
 function update_buttons_scale_value(input_in, input_out, scale_value) {
   input_in.dataset.zoomValue = scale_value;
   input_out.dataset.zoomValue = scale_value;
+}
+
+function show_modal_options(button) {
+  // get modal id
+  let modal_id = button.dataset.modalId;
+  // get modal
+  let modal = document.querySelector(`#${modal_id}`);
+  // get modal label
+  let modal_label = document.querySelector(`#${modal_id}Label`);
+  // get modal label
+  let visit_device_btn = modal.querySelector(`#visit-device-btn`);
+  // get modal label
+  let details_btn = modal.querySelector(`#show-details-btn`);
+  // get piece href
+  let target_href = button.dataset.href;
+  // get piece info
+  let pcs_info = button.querySelector('.pcs-info');
+  // get piece ip
+  let pcs_ip = pcs_info.dataset.pcsIp ?? null;
+  // get piece name
+  let pcs_name = pcs_info.dataset.pcsName ?? null;;
+
+  // put modal label
+  modal_label.textContent = pcs_name ?? null;
+
+  // put details button href
+  details_btn.href = target_href;
+
+  // check ip
+  if (pcs_ip == null) {
+    visit_device_btn.classList.add('d-none');
+  } else {
+    visit_device_btn.classList.contains('d-none') ? visit_device_btn.classList.remove('d-none') : null;
+    visit_device_btn.href = `http://${pcs_ip}`;
+  }
 }

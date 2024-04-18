@@ -90,7 +90,7 @@ if ($is_developing == false) {
       $possible_back = false;
     } elseif ($query == 'show-piece' && $_SESSION['sys']['pcs_show'] == 1) {
       $file_name = 'show-piece.php';
-      $page_subtitle = "connected piece";
+      $page_subtitle = "CONNECTED PIECE";
       $is_contain_table = true;
     } elseif ($query == 'show-dir-pieces' && $_SESSION['sys']['pcs_show'] == 1) {
       $file_name = 'show-dir-pieces.php';

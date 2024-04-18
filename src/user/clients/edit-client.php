@@ -195,7 +195,7 @@ if ($client_id != 0 && $is_exist_id) {
                         </option>
                         <?php
                         // get all directions
-                        $dirs_data = array($pcs_obj->select_specific_column("*", "`direction`", "WHERE `company_id` = " . base64_decode($_SESSION['sys']['company_id']) . " ORDER BY `direction_name` ASC", 'multiple'));
+                        $dirs_data = $pcs_obj->select_specific_column("*", "`direction`", "WHERE `company_id` = " . base64_decode($_SESSION['sys']['company_id']) . " ORDER BY `direction_name` ASC", 'multiple');
                         // check the row dirs_count
                         if (!is_null($dirs_data) && count($dirs_data) > 0) { ?>
                           <?php foreach ($dirs_data as $dir) { ?>
